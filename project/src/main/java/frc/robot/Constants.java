@@ -40,6 +40,19 @@ public final class Constants {
     LEFT_DOWN_DRIVE_MOTOR_PORT = 0,
     LEFT_DOWN_TURN_MOTOR_PORT = 0;
   }
+
+  public static class ArmValues {
+
+    public static final double 
+            FIRST_ARM_LENGTH = 0
+            ,SECOND_ARM_LENGTH = 0
+            ,FIRST_ARM_MIN = 0
+            ,FIRST_ARM_MAX = 270
+            ,SECOND_ARM_MIN = 0
+            ,SECOND_ARM_MAX = 0
+            ,JOYSTICK_TOLERANCE = 0.5
+            ,LIMIT_TOLERANCE = 5;
+}
   
   public final static  class Speeds{
     public final static double constantSpeed = 0.4;
