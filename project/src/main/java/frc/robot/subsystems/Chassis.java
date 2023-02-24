@@ -62,6 +62,11 @@ public class Chassis extends SubsystemBase{
         return -1;
     }
 
+    //TODO: implement later
+    public double getEncodersDist() {
+        return 0;
+    }
+
     
     
 }
