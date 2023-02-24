@@ -10,11 +10,6 @@ import frc.robot.subsystems.Chassis;
 public class TurnUntilWithInRange extends CommandBase {
     public double m_minAng, m_maxAng;
     private double m_endAng = -1;
-    @Override
-    public void schedule(boolean interruptible) {
-        // TODO Auto-generated method stub
-        super.schedule(interruptible);
-    }
 
     public TurnUntilWithInRange(double minAng, double maxAng) {
         addRequirements(Chassis.getInstance());
