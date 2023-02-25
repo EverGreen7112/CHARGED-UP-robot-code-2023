@@ -19,7 +19,7 @@ public class Gripper extends SubsystemBase{
 
     public static Gripper getInstance(){
         if (m_instance == null){
-            m_instance = new Gripper(new TalonSRX(Constants.MotorPorts.GRIPPER_PORT));
+            m_instance = new Gripper(new TalonSRX(Constants.Ports.GRIPPER_PORT));
         }
         return m_instance;
     }

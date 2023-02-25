@@ -1,21 +1,18 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
-import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Arm extends SubsystemBase {
 
-    private WPI_TalonSRX m_first, m_second;
+    private TalonFX m_first, m_second;
     private double m_firstMinRange, m_firstMaxRange, m_secondMinRange, m_secondMaxRange;
     private static Arm m_instance;
 
-    public Arm(WPI_TalonSRX first, WPI_TalonSRX second) {
+    public Arm(TalonFX first, TalonFX second) {
         m_first = first;
         m_firstMinRange = Constants.ArmValues.FIRST_ARM_MIN;
         m_firstMaxRange = Constants.ArmValues.FIRST_ARM_MAX;
@@ -29,6 +26,7 @@ public class Arm extends SubsystemBase {
         m_second = second;
         m_secondMinRange = Constants.ArmValues.SECOND_ARM_MIN;
         m_secondMaxRange = Constants.ArmValues.SECOND_ARM_MAX;
+        second.configFactoryDefault();
         second.selectProfileSlot(0, 0);
         second.config_kP(0, Constants.PidValues.SECOND_ARM_KP);
         second.config_kI(0, Constants.PidValues.SECOND_ARM_KI);
@@ -38,7 +36,7 @@ public class Arm extends SubsystemBase {
 
     public static Arm getInstance(){
         if(m_instance == null){
-            m_instance = new Arm(new WPI_TalonSRX(Constants.MotorPorts.FIRST_ARM_PORT), new WPI_TalonSRX(Constants.MotorPorts.SECOND_ARM_PORT));
+            m_instance = new Arm(new TalonFX(Constants.Ports.FIRST_ARM_PORT), new TalonFX(Constants.Ports.SECOND_ARM_PORT));
         }
         return m_instance;
     }
@@ -48,10 +46,10 @@ public class Arm extends SubsystemBase {
           double m_firstTarget = Constants.Conversions.angleToTicks(m_firstAngle + Constants.Conversions.closestAngle(m_firstAngle, m_firstAngle));
           if (m_firstAngle <= m_firstMaxRange && m_firstAngle >= m_firstMinRange){
             if (Math.abs(m_firstAngle - Math.abs(Constants.Conversions.modulo(Constants.Conversions.ticksToAngle(m_firstTarget), 360))) > m_firstMaxRange + Constants.ArmValues.LIMIT_TOLERANCE || Math.abs(m_firstAngle - Math.abs(Constants.Conversions.modulo(Constants.Conversions.ticksToAngle(m_firstTarget), 360))) < m_firstMinRange - Constants.ArmValues.LIMIT_TOLERANCE){
-              m_first.set(TalonSRXControlMode.Position, m_firstTarget);
+              m_first.set(TalonFXControlMode.Position, m_firstTarget);
             }
             else {
-              m_first.set(TalonSRXControlMode.Position, Constants.Conversions.angleToTicks(m_firstAngle));
+              m_first.set(TalonFXControlMode.Position, Constants.Conversions.angleToTicks(m_firstAngle));
             }
           }
     }
@@ -61,19 +59,19 @@ public class Arm extends SubsystemBase {
           double m_secondTarget = Constants.Conversions.angleToTicks(m_secondAngle + Constants.Conversions.closestAngle(m_secondAngle, m_secondAngle));
           if (m_secondAngle <= m_secondMaxRange && m_secondAngle >= m_secondMinRange){
             if (Math.abs(m_secondAngle - Math.abs(Constants.Conversions.modulo(Constants.Conversions.ticksToAngle(m_secondTarget), 360))) > m_secondMaxRange + Constants.ArmValues.LIMIT_TOLERANCE || Math.abs(m_secondAngle - Math.abs(Constants.Conversions.modulo(Constants.Conversions.ticksToAngle(m_secondTarget), 360))) < m_secondMinRange - Constants.ArmValues.LIMIT_TOLERANCE){
-              m_second.set(TalonSRXControlMode.Position, m_secondTarget);
+              m_second.set(TalonFXControlMode.Position, m_secondTarget);
             }
             else {
-              m_second.set(TalonSRXControlMode.Position, Constants.Conversions.angleToTicks(m_secondAngle));
+              m_second.set(TalonFXControlMode.Position, Constants.Conversions.angleToTicks(m_secondAngle));
             }
           }
     }
 
-    public WPI_TalonSRX getFirst(){
+    public TalonFX getFirst(){
       return m_first;
     }
 
-    public WPI_TalonSRX getSecond(){
+    public TalonFX getSecond(){
       return m_second;
     }
 }
