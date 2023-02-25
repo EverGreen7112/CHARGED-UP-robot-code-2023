@@ -1,18 +1,18 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.math.geometry.Twist2d;
-import edu.wpi.first.math.kinematics.MecanumDriveOdometry;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.TankDrive;
+import frc.robot.subsystems.Chassis;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -27,12 +27,15 @@ public class Robot extends TimedRobot {
 
   private long m_time;
   private double m_deltaTime; 
-  private CANSparkMax m_frontRightWheel = new CANSparkMax(Constants.Ports.RIGHT_FRONT_PORT, MotorType.kBrushless);
-  private CANSparkMax m_frontLeftWheel  = new CANSparkMax(Constants.Ports.LEFT_FRONT_PORT,  MotorType.kBrushless);
+  private CANSparkMax m_frontRightWheel = (CANSparkMax) Chassis.getInstance().m_rightBackEngine;
+  private CANSparkMax m_frontLeftWheel  = (CANSparkMax) Chassis.getInstance().m_leftBackEngine;
   private AHRS m_navx = new AHRS(SPI.Port.kMXP);
   private double m_xPos = 0;
   private double m_yPos = 0;
   
+  private double m_rightSideDistance = 0;
+  private double m_leftSideDistance = 0;
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -54,39 +57,46 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    SmartDashboard.putNumber("robot speed", 0.4);
   
     m_deltaTime = System.currentTimeMillis() / 1000.0 - m_time / 1000.0;
 
-    double leftSideVelocity = Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, m_frontLeftWheel.getEncoder().getVelocity());
-    double rightSideVelocity = Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, m_frontRightWheel.getEncoder().getVelocity());
+    double leftSideVelocity = Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, m_frontLeftWheel.getEncoder().getVelocity() / 10.97);
+    double rightSideVelocity = Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, m_frontRightWheel.getEncoder().getVelocity() / 10.97);
 
-    double leftSideDistance = leftSideVelocity * m_deltaTime;
-    double rightSideDistance = rightSideVelocity * m_deltaTime; 
+    m_leftSideDistance += leftSideVelocity * m_deltaTime;
+    m_rightSideDistance += rightSideVelocity * m_deltaTime; 
    
-    double leftSideAngle = leftSideDistance / Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT;
-    double rightSideAngle = rightSideDistance / Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT;
+    double leftSideAngle = m_leftSideDistance / Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT;
+    double rightSideAngle = m_rightSideDistance / Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT;
     
-    double leftSideX  = Math.cos(leftSideAngle) * Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT;
-    double leftSideY  = Math.sin(leftSideAngle) * Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT;
-    
+    double leftSideX = Math.cos(leftSideAngle) * Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT;
+    double leftSideY = Math.sin(leftSideAngle) * Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT;
+      
     double rightSideX = Math.cos(rightSideAngle) * Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT;
     double rightSideY = Math.sin(rightSideAngle) * Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT;
-
-    double deltaX = leftSideX + rightSideX;
-    double deltaY = leftSideY + rightSideY;
-
-    m_xPos += deltaX;
-    m_yPos += deltaY;
+    
+    m_xPos = (leftSideX + rightSideX) /2;
+    m_yPos = (leftSideY + rightSideY) /2;
 
     SmartDashboard.putNumber("x", m_xPos);
     SmartDashboard.putNumber("y", m_yPos);
+    SmartDashboard.putNumber("RPM left velocity",  m_frontLeftWheel.getEncoder().getVelocity() / 10.97);
+    SmartDashboard.putNumber("RPM right velocity", m_frontRightWheel.getEncoder().getVelocity() / 10.97);
+    SmartDashboard.putNumber("ms left velocity", Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, m_frontLeftWheel.getEncoder().getVelocity()));
+    SmartDashboard.putNumber("ms right velocity", Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, m_frontRightWheel.getEncoder().getVelocity()));
+    SmartDashboard.putNumber("left Angle", Math.toDegrees(leftSideAngle));
+    SmartDashboard.putNumber("right Angle", Math.toDegrees(rightSideAngle));
+    SmartDashboard.putNumber("leftSideDistance", m_leftSideDistance);
+    SmartDashboard.putNumber("rightSideDistance", m_rightSideDistance);
+    SmartDashboard.putNumber("test", Math.sqrt(leftSideX * leftSideX  + leftSideY * leftSideY));
+    SmartDashboard.putNumber("test2", Math.sqrt(rightSideX * rightSideX + rightSideY * rightSideX));  
     m_time = System.currentTimeMillis();
-
+  
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -120,11 +130,15 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    CommandScheduler.getInstance().schedule(RobotContainer.m_tankDriveCommand);
+    
   }
-
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+   // b.set(ControlMode.PercentOutput, -0.1);
+
+  }
 
   @Override
   public void testInit() {
@@ -135,9 +149,6 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-
-    RobotContainer.m_tankDriveCommand.execute();
-    
   }
 
   /** This function is called once when the robot is first started up. */

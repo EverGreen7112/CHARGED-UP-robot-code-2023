@@ -1,5 +1,8 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
@@ -10,21 +13,22 @@ public class Chassis extends SubsystemBase{
     private MotorControllerGroup rightMotors;
     private MotorControllerGroup leftMotors;
 
-    private MotorController m_leftFrontEngine, m_leftMiddleEngine, m_leftBackEngine;
-    private MotorController m_rightFrontEngine, m_rightMiddleEngine, m_rightBackEngine;
+    public MotorController m_leftFrontEngine, m_leftMiddleEngine, m_leftBackEngine;
+    public MotorController m_rightFrontEngine, m_rightMiddleEngine, m_rightBackEngine;
 
     private static Chassis m_instance=null;
 
     public Chassis(){
-        m_leftFrontEngine   = new Spark(Constants.Ports.LEFT_FRONT_PORT);
-        m_leftMiddleEngine  = new Spark(Constants.Ports.LEFT_MIDDLE_PORT);
-        m_leftBackEngine    = new Spark(Constants.Ports.LEFT_BACK_PORT);
-        m_rightFrontEngine  = new Spark(Constants.Ports.RIGHT_FRONT_PORT);
-        m_rightMiddleEngine = new Spark(Constants.Ports.RIGHT_MIDDLE_PORT);
-        m_rightBackEngine   = new Spark(Constants.Ports.RIGHT_BACK_PORT);
+        m_leftFrontEngine   = new CANSparkMax(Constants.Ports.LEFT_FRONT_PORT,MotorType.kBrushless);
+        m_leftMiddleEngine  = new CANSparkMax(Constants.Ports.LEFT_MIDDLE_PORT,MotorType.kBrushless);
+        m_leftBackEngine    = new CANSparkMax(Constants.Ports.LEFT_BACK_PORT,MotorType.kBrushless);
+        m_rightFrontEngine  = new CANSparkMax(Constants.Ports.RIGHT_FRONT_PORT,MotorType.kBrushless);
+        m_rightMiddleEngine = new CANSparkMax(Constants.Ports.RIGHT_MIDDLE_PORT,MotorType.kBrushless);
+        m_rightBackEngine   = new CANSparkMax(Constants.Ports.RIGHT_BACK_PORT,MotorType.kBrushless);
         
-        rightMotors = new MotorControllerGroup(m_rightFrontEngine, m_rightMiddleEngine, m_rightBackEngine);
-        leftMotors = new MotorControllerGroup(m_leftFrontEngine, m_leftMiddleEngine, m_leftBackEngine);
+        rightMotors = new MotorControllerGroup( m_rightBackEngine,m_rightFrontEngine,m_rightMiddleEngine);
+        leftMotors  = new MotorControllerGroup( m_leftBackEngine,m_leftFrontEngine, m_leftMiddleEngine);
+        rightMotors.setInverted(true);
     }
 
     
@@ -56,6 +60,12 @@ public class Chassis extends SubsystemBase{
         driveTank(0.0, 0.0);
     }
     
+    public MotorControllerGroup getRightMotorControllerGroup(){
+        return rightMotors;
+    }
+    public MotorControllerGroup getLeftMotorControllerGroup(){
+        return leftMotors;
+    }
     
 }
 

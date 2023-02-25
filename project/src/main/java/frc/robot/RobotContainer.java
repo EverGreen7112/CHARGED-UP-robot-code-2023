@@ -24,7 +24,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private static final Joystick m_leftStick = new Joystick(Constants.JoystickPorts.leftJoystick);
-  public static Command m_tankDriveCommand = new TankDrive(m_leftStick::getX,m_leftStick::getY);
+  private static final Joystick m_rightStick = new Joystick(Constants.JoystickPorts.rightJoystick);
+  public static Command m_tankDriveCommand = new TankDrive(m_leftStick::getY,m_rightStick::getY);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =

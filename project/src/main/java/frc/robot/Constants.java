@@ -45,7 +45,7 @@ public final class Constants {
     public final static double constantSpeed = 0.4;
     public final static double constantPropConst = 0.07;
       public final static Supplier<Double> driveMax = () -> {
-         return SmartDashboard.getNumber("robot speed", 0.8);            
+         return SmartDashboard.getNumber("robot speed", 0.4);            
       };
       public static final double 
       GRIPPER_SPEED = 0.1;
@@ -67,7 +67,7 @@ public static class Conversions {
   public static double rpm2ms(double wheelRadius, double rpm){
     double rps = rpm / 60;
     return wheelRadius * 2 * Math.PI * rps;
-}
+    }
     public static double angleToTicks(double angle){
         return Constants.Values.TICKS_PER_REVOLUTIONS / ((double) 360 / angle);
     }
@@ -76,7 +76,6 @@ public static class Conversions {
         return (ticks * 360.0)/ Constants.Values.TICKS_PER_REVOLUTIONS;
     }
 
-    
     public static double closestAngle(double a, double b) {
       // get direction
       double dir = modulo(b, 360.0) - modulo(a, 360.0);
@@ -102,8 +101,8 @@ public static class MotorPorts{
 public static class Values {
   public static final int TICKS_PER_REVOLUTIONS = 8196;
   public static double 
-  TANKDRIVE_WHEEL_RADIUS = 0.76,
-  DISTANCE_BETWEEN_LEFT_TO_RIGHT = 0.5; //in meters;
+  TANKDRIVE_WHEEL_RADIUS = 0.076,
+  DISTANCE_BETWEEN_LEFT_TO_RIGHT = 0.43; //in meters;
   //swerve constants
   public static final double
   WHEEL_POSITION_PID_TOLERANCE = 0.5
