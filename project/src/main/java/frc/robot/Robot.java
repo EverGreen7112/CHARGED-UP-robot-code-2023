@@ -15,9 +15,12 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Chassis;
 
 /**
- * The VM is configured to automatically run this class, and to call the functions corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the name of this class or
- * the package after creating this project, you must also update the build.gradle file in the
+ * The VM is configured to automatically run this class, and to call the
+ * functions corresponding to
+ * each mode, as described in the TimedRobot documentation. If you change the
+ * name of this class or
+ * the package after creating this project, you must also update the
+ * build.gradle file in the
  * project.
  */
 public class Robot extends TimedRobot {
@@ -26,22 +29,25 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
 
   private long m_time;
-  private double m_deltaTime; 
+  private double m_deltaTime;
+  private double m_lastRightDist;
+  private double m_lastLeftDist;
 
   private AHRS m_navx = new AHRS(SPI.Port.kMXP);
-  private double m_xPos = 0;
-  private double m_yPos = 0;
-  
+  private Vector2D m_pos = new Vector2D(0,0);
+
   private double m_rightSideDistance = 0;
   private double m_leftSideDistance = 0;
 
   /**
-   * This function is run when the robot is first started up and should be used for any
+   * This function is run when the robot is first started up and should be used
+   * for any
    * initialization code.
    */
   @Override
   public void robotInit() {
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+    // Instantiate our RobotContainer. This will perform all our button bindings,
+    // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     m_time = System.currentTimeMillis();
@@ -64,48 +70,54 @@ public class Robot extends TimedRobot {
   
     m_deltaTime = System.currentTimeMillis() / 1000.0 - m_time / 1000.0;
 
-    double leftSideVelocity = Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, Chassis.getInstance().getLeftVelocity() / 10.97);
-    double rightSideVelocity = Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, Chassis.getInstance().getRightVelocity()  / 10.97);
+    double deltaRight = Chassis.getInstance().getRightEncoderDist()-m_lastRightDist;
+    m_lastRightDist = Chassis.getInstance().getRightEncoderDist();
 
-    m_leftSideDistance += leftSideVelocity * m_deltaTime;
-    m_rightSideDistance += rightSideVelocity * m_deltaTime; 
-   
-    double leftSideAngle = m_leftSideDistance / Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT;
-    double rightSideAngle = m_rightSideDistance / Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT;
-    
-    double leftSideX = Math.cos(leftSideAngle) * Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT;
-    double leftSideY = Math.sin(leftSideAngle) * Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT;
-      
-    double rightSideX = Math.cos(rightSideAngle) * Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT;
-    double rightSideY = Math.sin(rightSideAngle) * Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT;
-    
-    m_xPos = (leftSideX + rightSideX) /2;
-    m_yPos = (leftSideY + rightSideY) /2;
+    double deltaLeft = Chassis.getInstance().getRightEncoderDist()-m_lastLeftDist;
+    m_lastLeftDist = Chassis.getInstance().getLeftEncoderDist();
 
-    SmartDashboard.putNumber("x", m_xPos);
-    SmartDashboard.putNumber("y", m_yPos);
-    SmartDashboard.putNumber("RPM left velocity",  Chassis.getInstance().getLeftVelocity() / 10.97);
-    SmartDashboard.putNumber("RPM right velocity", Chassis.getInstance().getRightVelocity() / 10.97);
-    SmartDashboard.putNumber("ms left velocity", Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, Chassis.getInstance().getLeftVelocity()/ 10.97));
-    SmartDashboard.putNumber("ms right velocity", Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, Chassis.getInstance().getRightVelocity()/ 10.97));
-    SmartDashboard.putNumber("left Angle", Math.toDegrees(leftSideAngle));
-    SmartDashboard.putNumber("right Angle", Math.toDegrees(rightSideAngle));
-    SmartDashboard.putNumber("leftSideDistance", m_leftSideDistance);
-    SmartDashboard.putNumber("rightSideDistance", m_rightSideDistance);
-    SmartDashboard.putNumber("test", Math.sqrt(leftSideX * leftSideX  + leftSideY * leftSideY));
-    SmartDashboard.putNumber("test2", Math.sqrt(rightSideX * rightSideX + rightSideY * rightSideX));  
+    double leftSideAngle = deltaLeft / Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT;
+    double rightSideAngle = deltaRight / Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT;
+    
+   Vector2D left = new Vector2D(
+    Math.cos(leftSideAngle) * Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT
+    ,Math.sin(leftSideAngle) * Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT);
+    
+    Vector2D right = new Vector2D(Math.cos(rightSideAngle) * Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT,
+    Math.sin(rightSideAngle) * Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT);
+    
+    Vector2D robotDelta = right.getAdded(left).getDivided(2);
+    Vector2D fieldDelta = Constants.Conversions.rotateZ(robotDelta,-Chassis.getInstance().getRobotAngle());
+    m_pos.add(fieldDelta);
+    SmartDashboard.putNumber("x", m_pos.x);
+    SmartDashboard.putNumber("y", m_pos.y);
+    // SmartDashboard.putNumber("RPM left velocity",  Chassis.getInstance().getLeftVelocity() / 10.97);
+    // SmartDashboard.putNumber("RPM right velocity", Chassis.getInstance().getRightVelocity() / 10.97);
+    // SmartDashboard.putNumber("ms left velocity", Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, Chassis.getInstance().getLeftVelocity()/ 10.97));
+    // SmartDashboard.putNumber("ms right velocity", Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, Chassis.getInstance().getRightVelocity()/ 10.97));
+    // SmartDashboard.putNumber("left Angle", Math.toDegrees(leftSideAngle));
+    // SmartDashboard.putNumber("right Angle", Math.toDegrees(rightSideAngle));
+    // SmartDashboard.putNumber("leftSideDistance", m_leftSideDistance);
+    // SmartDashboard.putNumber("rightSideDistance", m_rightSideDistance);
+    // SmartDashboard.putNumber("test", Math.sqrt(leftSideX * leftSideX  + leftSideY * leftSideY));
+    // SmartDashboard.putNumber("test2", Math.sqrt(rightSideX * rightSideX + rightSideY * rightSideX));  
     m_time = System.currentTimeMillis();
   
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+  }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+  }
 
-  /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
+  /**
+   * This autonomous runs the autonomous command selected by your
+   * {@link RobotContainer} class.
+   */
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
@@ -118,7 +130,8 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+  }
 
   @Override
   public void teleopInit() {
@@ -130,12 +143,13 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     CommandScheduler.getInstance().schedule(RobotContainer.m_tankDriveCommand);
-    
+
   }
+
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-   // b.set(ControlMode.PercentOutput, -0.1);
+    // b.set(ControlMode.PercentOutput, -0.1);
 
   }
 
@@ -152,9 +166,11 @@ public class Robot extends TimedRobot {
 
   /** This function is called once when the robot is first started up. */
   @Override
-  public void simulationInit() {}
+  public void simulationInit() {
+  }
 
   /** This function is called periodically whilst in simulation. */
   @Override
-  public void simulationPeriodic() {}
+  public void simulationPeriodic() {
+  }
 }

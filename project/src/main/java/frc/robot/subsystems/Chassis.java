@@ -3,11 +3,8 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -56,6 +53,8 @@ public class Chassis extends SubsystemBase{
         m_rightFrontEngine.getPIDController().setP(PIDS.velKp,1);
         m_rightFrontEngine.getPIDController().setD(PIDS.velKd,1);
         m_rightFrontEngine.getPIDController().setI(PIDS.velKi,1);
+
+        m_rightFrontEngine.getEncoder().setPositionConversionFactor(Constants.Values.DISTANCE_PER_THICK);
 
     }
 
