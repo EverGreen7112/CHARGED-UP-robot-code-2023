@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
@@ -12,7 +13,7 @@ public class Chassis extends SubsystemBase{
 
     private MotorController m_leftFrontEngine, m_leftMiddleEngine, m_leftBackEngine;
     private MotorController m_rightFrontEngine, m_rightMiddleEngine, m_rightBackEngine;
-
+    
     private static Chassis m_instance=null;
 
     public Chassis(){
@@ -55,6 +56,17 @@ public class Chassis extends SubsystemBase{
     public void stop(){
         driveTank(0.0, 0.0);
     }
+
+    //TODO: implement later
+    public double getRobotAngle() {
+        return -1;
+    }
+
+    //TODO: implement later
+    public double getEncodersDist() {
+        return 0;
+    }
+
     
     
 }
