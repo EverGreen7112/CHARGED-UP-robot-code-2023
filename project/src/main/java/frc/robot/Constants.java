@@ -97,6 +97,17 @@ public final class Constants {
     public static double modulo(double a, double b) {
       return ((a % b) + b) % b;
     }
+    public static Vector2D rotateZ(Vector2D vector,double angle) { // angle in radians
+
+      //normalize(vector); // No  need to normalize, vector is already ok...
+    
+      float x1 = (float)(vector.x * Math.cos(angle) - vector.y * Math.sin(angle));
+    
+      float y1 = (float)(vector.x * Math.sin(angle) + vector.y * Math.cos(angle)) ;
+    
+      return new Vector2D(x1, y1);
+    
+    }
   }
 
   public static class MotorPorts {
@@ -112,7 +123,8 @@ public final class Constants {
         WHEEL_POSITION_PID_KI = 0.00000, WHEEL_POSITION_PID_KD = 0.000001, TURN_SWERVE_WHEEL_PID_KP = 0.02,
         TURN_SWERVE_WHEEL_PID_KI = 0, TURN_SWERVE_WHEEL_PID_KD = 0, DRIVE_SWERVE_WHEEL_PID_KP = 0.02,
         DRIVE_SWERVE_WHEEL_PID_KI = 0, DRIVE_SWERVE_WHEEL_PID_KD = 0, SWERVE_WHEEL_RADIUS = 0, SWERVE_LENGTH = 0,
-        SWERVE_WIDTH = 0, MAX_SWERVE_SPEED = 3 // in m/s
+        SWERVE_WIDTH = 0, MAX_SWERVE_SPEED = 3,
+        DISTANCE_PER_THICK= 2 * Math.PI *TANKDRIVE_WHEEL_RADIUS/10.97;  // TODO: check
     ;
   }
 
