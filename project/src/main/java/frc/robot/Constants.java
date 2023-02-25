@@ -106,10 +106,10 @@ public static class Values {
 }
 public static class PidValues {
   public static final double 
-          FIRST_ARM_KP = 0.0000001
+          FIRST_ARM_KP = 0.03
           ,FIRST_ARM_KI = 0
           ,FIRST_ARM_KD = 0
-          ,SECOND_ARM_KP = 0.00000001
+          ,SECOND_ARM_KP = 0.0001
           ,SECOND_ARM_KI = 0
           ,SECOND_ARM_KD = 0;
           public final static double driveKp = 0.05;

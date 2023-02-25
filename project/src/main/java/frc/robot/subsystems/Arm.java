@@ -43,7 +43,7 @@ public class Arm extends SubsystemBase {
 
     public void turnFirstTo(double angle) {
           double m_firstAngle = Constants.Conversions.ticksToAngle(m_first.getSelectedSensorPosition());
-          double m_firstTarget = Constants.Conversions.angleToTicks(m_firstAngle + Constants.Conversions.closestAngle(m_firstAngle, m_firstAngle));
+          double m_firstTarget = Constants.Conversions.angleToTicks(m_firstAngle + Constants.Conversions.closestAngle(m_firstAngle, angle));
           if (m_firstAngle <= m_firstMaxRange && m_firstAngle >= m_firstMinRange){
             if (Math.abs(m_firstAngle - Math.abs(Constants.Conversions.modulo(Constants.Conversions.ticksToAngle(m_firstTarget), 360))) > m_firstMaxRange + Constants.ArmValues.LIMIT_TOLERANCE || Math.abs(m_firstAngle - Math.abs(Constants.Conversions.modulo(Constants.Conversions.ticksToAngle(m_firstTarget), 360))) < m_firstMinRange - Constants.ArmValues.LIMIT_TOLERANCE){
               m_first.set(TalonFXControlMode.Position, m_firstTarget);
@@ -56,7 +56,7 @@ public class Arm extends SubsystemBase {
 
     public void turnSecondTo(double angle) {
           double m_secondAngle = Constants.Conversions.ticksToAngle(m_second.getSelectedSensorPosition());
-          double m_secondTarget = Constants.Conversions.angleToTicks(m_secondAngle + Constants.Conversions.closestAngle(m_secondAngle, m_secondAngle));
+          double m_secondTarget = Constants.Conversions.angleToTicks(m_secondAngle + Constants.Conversions.closestAngle(m_secondAngle, angle));
           if (m_secondAngle <= m_secondMaxRange && m_secondAngle >= m_secondMinRange){
             if (Math.abs(m_secondAngle - Math.abs(Constants.Conversions.modulo(Constants.Conversions.ticksToAngle(m_secondTarget), 360))) > m_secondMaxRange + Constants.ArmValues.LIMIT_TOLERANCE || Math.abs(m_secondAngle - Math.abs(Constants.Conversions.modulo(Constants.Conversions.ticksToAngle(m_secondTarget), 360))) < m_secondMinRange - Constants.ArmValues.LIMIT_TOLERANCE){
               m_second.set(TalonFXControlMode.Position, m_secondTarget);

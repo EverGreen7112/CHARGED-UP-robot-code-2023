@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    motor.setSelectedSensorPosition(0);
+    // motor.setSelectedSensorPosition(0);
   }
 
   /**
@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("angle thingy", Constants.Conversions.ticksToAngle(motor.getSelectedSensorPosition()));
+    SmartDashboard.putNumber("angle thingy", Constants.Conversions.ticksToAngle(Arm.getInstance().getFirst().getSelectedSensorPosition()));
     SmartDashboard.putNumber("position thingy", Arm.getInstance().getFirst().getSelectedSensorPosition());
   }
 
@@ -96,8 +96,7 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {
-  }
+  public void teleopPeriodic() {}
 
   @Override
   public void testInit() {

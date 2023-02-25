@@ -16,22 +16,28 @@ public class MoveArmBySupllier extends CommandBase {
     Supplier<Double> value1, value2;
     TalonFX m_motor;
     double m_JoystickAngle;
-    int m_mode;
 
     public MoveArmBySupllier(Supplier<Double> a, Supplier<Double> b, int mode) {
-        // addRequirements(Arm.getInstance());
+        addRequirements(Arm.getInstance());
         value1 = a;
         value2 = b;
-        m_mode = mode;
+        if (mode == 1){
+            m_motor = Arm.getInstance().getFirst();
+        } else if (mode == 2){
+            m_motor = Arm.getInstance().getSecond();
+        }
     }
 
     @Override
     public void initialize() {
-        if (m_mode == 1){
-            m_motor = Arm.getInstance().getFirst();
-        } else if (m_mode == 2){
-            m_motor = Arm.getInstance().getSecond();
-        }
+        // m_motor = new TalonFX(Constants.Ports.FIRST_ARM_PORT);
+        // m_motor.configFactoryDefault();
+        // m_motor.selectProfileSlot(0, 0);
+        // m_motor.config_kP(0, 0.03);
+        // m_motor.config_kI(0, 0);
+        // m_motor.config_kD(0, 0);
+        // m_motor.setSensorPhase(true);
+        // m_motor.setSelectedSensorPosition(0);
         m_JoystickAngle = 0;
     }
 
@@ -43,7 +49,6 @@ public class MoveArmBySupllier extends CommandBase {
         m_JoystickAngle = Math.toDegrees(Math.atan2(value1.get(), value2.get()));
         if (m_JoystickAngle <= 0)
             m_JoystickAngle += 360;
-        
         double m_armAngle = Constants.Conversions.ticksToAngle(m_motor.getSelectedSensorPosition());
         double m_armTarget = Constants.Conversions.angleToTicks(m_armAngle + Constants.Conversions.closestAngle(m_armAngle, m_JoystickAngle));
         // if (m_JoystickAngle <= Constants.ArmValues.FIRST_ARM_MAX && m_JoystickAngle >= Constants.ArmValues.FIRST_ARM_MIN) {
@@ -51,7 +56,7 @@ public class MoveArmBySupllier extends CommandBase {
                 // motor.set(TalonSRXControlMode.Position, m_armTarget);
             // } 
             // else {
-                m_motor.set(TalonFXControlMode.Position, m_armTarget);
+        m_motor.set(TalonFXControlMode.Position, m_armTarget);
             // }
         // }
         SmartDashboard.putNumber("joystick angle", m_JoystickAngle);
