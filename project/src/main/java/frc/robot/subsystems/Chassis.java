@@ -18,8 +18,6 @@ public class Chassis extends SubsystemBase{
     private MotorControllerGroup rightMotors;
     private MotorControllerGroup leftMotors;
 
-    public MotorController m_leftFrontEngine, m_leftMiddleEngine, m_leftBackEngine;
-    public MotorController m_rightFrontEngine, m_rightMiddleEngine, m_rightBackEngine;
     
     //front are leaders
     private CANSparkMax m_leftFrontEngine, m_leftMiddleEngine, m_leftBackEngine;
@@ -36,8 +34,7 @@ public class Chassis extends SubsystemBase{
         m_rightMiddleEngine = new CANSparkMax(Constants.Ports.RIGHT_MIDDLE_PORT,MotorType.kBrushless);
         m_rightBackEngine   = new CANSparkMax(Constants.Ports.RIGHT_BACK_PORT,MotorType.kBrushless);
         
-        rightMotors = new MotorControllerGroup( m_rightBackEngine,m_rightFrontEngine,m_rightMiddleEngine);
-        leftMotors  = new MotorControllerGroup( m_leftBackEngine,m_leftFrontEngine, m_leftMiddleEngine);
+     
         rightMotors.setInverted(true);
 
 
@@ -95,10 +92,22 @@ public class Chassis extends SubsystemBase{
         return -1;
     }
     public double getEncodersDist(){
+        return (getRightEncoderDist()+getLeftEncoderDist())/2;
+    }
+    public double getRightEncoderDist(){
         return m_rightFrontEngine.getEncoder().getPosition();
     }
+    public double getLeftEncoderDist(){
+        return m_leftFrontEngine.getEncoder().getPosition();
+    }
     public double getVelocity(){
+         return (getRightVelocity()+getLeftVelocity())/2;
+    }
+    public double getRightVelocity(){
         return m_rightFrontEngine.getEncoder().getVelocity();
+    }
+    public double getLeftVelocity(){
+        return m_leftFrontEngine.getEncoder().getVelocity();
     }
     
     public SparkMaxPIDController getRightPID(){

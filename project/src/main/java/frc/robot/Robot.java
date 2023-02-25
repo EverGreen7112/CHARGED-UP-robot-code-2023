@@ -27,8 +27,7 @@ public class Robot extends TimedRobot {
 
   private long m_time;
   private double m_deltaTime; 
-  private CANSparkMax m_frontRightWheel = (CANSparkMax) Chassis.getInstance().m_rightBackEngine;
-  private CANSparkMax m_frontLeftWheel  = (CANSparkMax) Chassis.getInstance().m_leftBackEngine;
+
   private AHRS m_navx = new AHRS(SPI.Port.kMXP);
   private double m_xPos = 0;
   private double m_yPos = 0;
@@ -65,8 +64,8 @@ public class Robot extends TimedRobot {
   
     m_deltaTime = System.currentTimeMillis() / 1000.0 - m_time / 1000.0;
 
-    double leftSideVelocity = Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, m_frontLeftWheel.getEncoder().getVelocity() / 10.97);
-    double rightSideVelocity = Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, m_frontRightWheel.getEncoder().getVelocity() / 10.97);
+    double leftSideVelocity = Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, Chassis.getInstance().getLeftVelocity() / 10.97);
+    double rightSideVelocity = Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, Chassis.getInstance().getRightVelocity()  / 10.97);
 
     m_leftSideDistance += leftSideVelocity * m_deltaTime;
     m_rightSideDistance += rightSideVelocity * m_deltaTime; 
@@ -85,10 +84,10 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putNumber("x", m_xPos);
     SmartDashboard.putNumber("y", m_yPos);
-    SmartDashboard.putNumber("RPM left velocity",  m_frontLeftWheel.getEncoder().getVelocity() / 10.97);
-    SmartDashboard.putNumber("RPM right velocity", m_frontRightWheel.getEncoder().getVelocity() / 10.97);
-    SmartDashboard.putNumber("ms left velocity", Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, m_frontLeftWheel.getEncoder().getVelocity()));
-    SmartDashboard.putNumber("ms right velocity", Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, m_frontRightWheel.getEncoder().getVelocity()));
+    SmartDashboard.putNumber("RPM left velocity",  Chassis.getInstance().getLeftVelocity() / 10.97);
+    SmartDashboard.putNumber("RPM right velocity", Chassis.getInstance().getRightVelocity() / 10.97);
+    SmartDashboard.putNumber("ms left velocity", Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, Chassis.getInstance().getLeftVelocity()/ 10.97));
+    SmartDashboard.putNumber("ms right velocity", Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, Chassis.getInstance().getRightVelocity()/ 10.97));
     SmartDashboard.putNumber("left Angle", Math.toDegrees(leftSideAngle));
     SmartDashboard.putNumber("right Angle", Math.toDegrees(rightSideAngle));
     SmartDashboard.putNumber("leftSideDistance", m_leftSideDistance);
