@@ -86,8 +86,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("y", m_yPos);
     SmartDashboard.putNumber("RPM left velocity",  Chassis.getInstance().getLeftVelocity() / 10.97);
     SmartDashboard.putNumber("RPM right velocity", Chassis.getInstance().getRightVelocity() / 10.97);
-    SmartDashboard.putNumber("ms left velocity", Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, Chassis.getInstance().getLeftVelocity()));
-    SmartDashboard.putNumber("ms right velocity", Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, Chassis.getInstance().getRightVelocity()));
+    SmartDashboard.putNumber("ms left velocity", Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, Chassis.getInstance().getLeftVelocity()/ 10.97));
+    SmartDashboard.putNumber("ms right velocity", Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS, Chassis.getInstance().getRightVelocity()/ 10.97));
     SmartDashboard.putNumber("left Angle", Math.toDegrees(leftSideAngle));
     SmartDashboard.putNumber("right Angle", Math.toDegrees(rightSideAngle));
     SmartDashboard.putNumber("leftSideDistance", m_leftSideDistance);
