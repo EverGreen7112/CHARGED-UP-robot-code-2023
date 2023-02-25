@@ -32,7 +32,7 @@ public class TankDrive extends CommandBase{
         }
         lSpeed=v.x;
         rSpeed=v.y;
-        Chassis.getInstance().driveTank(lSpeed, rSpeed);
+        Chassis.getInstance().driveTank(lSpeed * Constants.Speeds.constantSpeed, rSpeed * Constants.Speeds.constantSpeed);
         
     }
 

@@ -48,28 +48,33 @@ public final class Constants {
   public final static class Speeds {
     public final static double constantSpeed = 0.4;
     public final static double constantPropConst = 0.07;
-    public final static Supplier<Double> driveMax = () -> {
-      return SmartDashboard.getNumber("robot speed", 0.8);
-    };
-    public static final double GRIPPER_SPEED = 0.1;
+      public final static Supplier<Double> driveMax = () -> {
+         return SmartDashboard.getNumber("robot speed", 0.4);            
+      };
+      public static final double 
+      GRIPPER_SPEED = 0.1;
   }
 
   public static class ButtonPorts {
-    public static final int GRAB = 0,
-        OPEN_GRIPPER = 2,
-        CLOSE_GRIPPER = 3;
-  }
+    public static final int
+            GRAB = 0,
+            OPEN_GRIPPER = 2,
+            CLOSE_GRIPPER = 3;
+}
+public static class JoystickPorts {
+  public static final int 
+          rightJoystick = 0,
+          leftJoystick = 1,
+          operator = 2;
+}
+public static class Conversions {
+  public static double rpm2ms(double wheelRadius, double rpm){
+    double rps = rpm / 60;
+    return wheelRadius * 2 * Math.PI * rps;
+    }
+    public static double angleToTicks(double angle){
+        return Constants.Values.TICKS_PER_REVOLUTIONS / ((double) 360 / angle);
 
-  public static class JoystickPorts {
-    public static final int rightJoystick = 0,
-        leftJoystick = 1,
-        operator = 2;
-  }
-
-  public static class Conversions {
-    public static double rpm2ms(double wheelRadius, double rpm) {
-      double rps = rpm / 60;
-      return wheelRadius * 2 * Math.PI * rps;
     }
 
     public static double angleToTicks(double angle) {
@@ -134,4 +139,5 @@ public final class Constants {
     public final static double velPTolerance = 2;
     public final static double velVTolerance = 10;
   }
+
 }
