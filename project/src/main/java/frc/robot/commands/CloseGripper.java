@@ -18,7 +18,7 @@ public class CloseGripper extends CommandBase{
     public void initialize() {
         gripper = Gripper.getInstance();
         //not sure if this port is the correct one.
-        limitSwitch = new DigitalInput(Constants.Ports.THIRD_LIMIT_SWITCH);
+        limitSwitch = new DigitalInput(Constants.Ports.CLOSED_LIMIT_SWITCH);
     }
 
     @Override

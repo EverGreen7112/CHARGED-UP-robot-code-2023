@@ -18,7 +18,7 @@ public class GripCube extends CommandBase {
     public void initialize() {
         gripper = Gripper.getInstance();
         //not sure if this port is the correct one.
-        limitSwitch = new DigitalInput(Constants.Ports.SECOND_LIMIT_SWITCH);
+        limitSwitch = new DigitalInput(Constants.Ports.CUBE_LIMIT_SWITCH);
     }
 
     @Override

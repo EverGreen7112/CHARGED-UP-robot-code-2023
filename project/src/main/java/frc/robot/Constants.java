@@ -49,17 +49,17 @@ public final class Constants {
     SECOND_ARM_PORT = 3,
     GRIPPER_PORT = 1,
     //limit switch ports
-    FIRST_LIMIT_SWITCH = 0,
-    SECOND_LIMIT_SWITCH = 1,
-    THIRD_LIMIT_SWITCH = 2;
+    CLOSED_LIMIT_SWITCH = 9,
+    OPENED_LIMIT_SWITCH = 7,
+    CUBE_LIMIT_SWITCH = 8;
   }
 
 
   public static class ArmValues {
 
     public static final double 
-            FIRST_ARM_LENGTH = 0
-            ,SECOND_ARM_LENGTH = 0
+            FIRST_ARM_LENGTH = 0.9 //IN METERS
+            ,SECOND_ARM_LENGTH = 0.45
             ,FIRST_ARM_MIN = 0
             ,FIRST_ARM_MAX = 360
             ,SECOND_ARM_MIN = 0

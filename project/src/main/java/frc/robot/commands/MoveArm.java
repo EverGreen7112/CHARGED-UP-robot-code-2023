@@ -42,25 +42,14 @@ public class MoveArm extends CommandBase {
 
         pointsVecLength = Math.sqrt(height * height + width * width);
 
-        double tempAngle = Math.toDegrees(Math.atan(height / width));
-        double tempAngle2 = CalcAngleLawOfCosines(arm2Length, arm1Length, pointsVecLength);
-        arm1Angle = tempAngle + tempAngle2;
-        // CalcAngleLawOfCosines(pointsVecLength,arm1Length,arm2Length);for the full
-        // angle
-        arm2Angle = Math.toDegrees(Math.asin(Math.abs(CalcArmVector(startPos, arm1Angle, arm1Length).y - destination.y) / arm2Length));
+        arm1Angle = Math.toDegrees(Math.atan(height / width)) + CalcAngleLawOfCosines(arm2Length, arm1Length, pointsVecLength);
+        arm2Angle = CalcAngleLawOfCosines(pointsVecLength,arm1Length,arm2Length);
     }
 
     // returns the angle var in the law of cosines (x) : a^2 = b^2 + c^2 - 2 * b * c
     // * cos(x)
     private double CalcAngleLawOfCosines(double a, double b, double c) {
         return Math.toDegrees(Math.acos((a * a - b * b - c * c) / (-2 * b * c)));
-    }
-
-    // calcs the vector of one of the arms
-    private Vector2D CalcArmVector(Vector2D start, double armAngle, double armLength) {
-        double y = Math.sin(armAngle) * armLength;
-        double x = Math.cos(armAngle) * armLength;
-        return new Vector2D(x + start.x, y + start.y);
     }
 
     // is it possible to move the arm to destination
