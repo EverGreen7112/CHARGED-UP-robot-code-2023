@@ -20,6 +20,9 @@ public class TankDrive extends CommandBase{
     
     @Override
     public void execute() {
+        if (Math.abs(m_leftSupllier.get()) < 0.3 && Math.abs(m_rightSupllier.get()) < 0.3) {
+            return;
+        }
         double rSpeed=-m_rightSupllier.get();
         double lSpeed=-m_leftSupllier.get();
         Vector2D v=new Vector2D(lSpeed, rSpeed);

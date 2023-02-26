@@ -7,10 +7,14 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.CloseGripper;
+import frc.robot.commands.GripCube;
 import frc.robot.commands.MoveArmBySupllier;
+import frc.robot.commands.OpenGripper;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Gripper;
 
@@ -62,9 +66,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("first position", Arm.getInstance().getFirst().getSelectedSensorPosition());
     SmartDashboard.putNumber("second angle", Constants.Conversions.ticksToAngle(Arm.getInstance().getSecond().getSelectedSensorPosition(), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
     SmartDashboard.putNumber("second position", Arm.getInstance().getSecond().getSelectedSensorPosition());
-    SmartDashboard.putBoolean("opened limit switch", new DigitalInput(Constants.Ports.OPENED_LIMIT_SWITCH).get());
-    SmartDashboard.putBoolean("closed limit switch", new DigitalInput(Constants.Ports.CLOSED_LIMIT_SWITCH).get());
-    SmartDashboard.putBoolean("cube limit switch", new DigitalInput(Constants.Ports.CUBE_LIMIT_SWITCH).get());
+    SmartDashboard.putBoolean("opened", !Gripper.getInstance().getOpened().get());
+    SmartDashboard.putBoolean("closed", !Gripper.getInstance().getClosed().get());
+    SmartDashboard.putBoolean("cube", !Gripper.getInstance().getCube().get());
+    SmartDashboard.putNumber("anglelu", Math.toDegrees(Math.atan2(operator.getLeftX(), operator.getLeftY())));
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -97,6 +102,7 @@ public class Robot extends TimedRobot {
 
   Joystick rightStick = new Joystick(Constants.JoystickPorts.rightJoystick);
   Joystick leftStick = new Joystick(Constants.JoystickPorts.leftJoystick);
+  XboxController operator = new XboxController(Constants.JoystickPorts.operator);
   
   @Override
   public void teleopInit() {
@@ -107,17 +113,16 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    CommandScheduler.getInstance().schedule(new MoveArmBySupllier(rightStick::getX, rightStick::getY, 2));
+    //CommandScheduler.getInstance().schedule(new MoveArmBySupllier(rightStick::getX, rightStick::getY, 2));
     // CommandScheduler.getInstance().schedule(new MoveArmBySupllier(leftStick::getX, leftStick::getY, 2));
-    CommandScheduler.getInstance().schedule(RobotContainer.m_tankDriveCommand);
-
+    // CommandScheduler.getInstance().schedule(RobotContainer.m_tankDriveCommand);
+    // CommandScheduler.getInstance().schedule(new MoveArmBySupllier(operator::getLeftX,operator::getLeftY , 1));
+    CommandScheduler.getInstance().schedule(new MoveArmBySupllier(operator::getRightX, operator::getRightY, 2));
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    // b.set(ControlMode.PercentOutput, -0.1);
-
   }
 
   @Override

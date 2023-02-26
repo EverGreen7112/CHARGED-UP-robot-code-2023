@@ -49,8 +49,8 @@ public final class Constants {
     SECOND_ARM_PORT = 3,
     GRIPPER_PORT = 1,
     //limit switch ports
-    CLOSED_LIMIT_SWITCH = 9,
-    OPENED_LIMIT_SWITCH = 7,
+    CLOSED_LIMIT_SWITCH = 7,
+    OPENED_LIMIT_SWITCH = 9,
     CUBE_LIMIT_SWITCH = 8;
   }
 
@@ -72,7 +72,7 @@ public final class Constants {
     public final static double constantSpeed = 0.4;
     public final static double constantPropConst = 0.07;
     public final static Supplier<Double> driveMax = () -> {
-      return SmartDashboard.getNumber("robot speed", 0.4);
+      return SmartDashboard.getNumber("robot speed", 0.2);
     };
     public static final double GRIPPER_SPEED = 0.1;
   }
@@ -81,6 +81,22 @@ public final class Constants {
     public static final int rightJoystick = 0,
         leftJoystick = 1,
         operator = 2;
+  }
+//custom button ports according to the operator
+  public static class ButtonPorts {
+    public static final int
+        X = 1,
+        A = 2,
+        B = 3,
+        Y = 4,
+        LB = 5,
+        RB = 6,
+        LT = 7,
+        RT = 8,
+        BACK = 9,
+        START = 10,
+        LEFT_JOYSTICK = 11,
+        RIGHT_JOYSTICK = 12;
   }
 
   public static class MotorPorts {
@@ -139,7 +155,7 @@ public final class Values {
 
 public static class PidValues {
   public static final double 
-          FIRST_ARM_KP = 0.04
+          FIRST_ARM_KP = 0.03
           ,FIRST_ARM_KI = 0
           ,FIRST_ARM_KD = 0
           ,SECOND_ARM_KP = 0.015

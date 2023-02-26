@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Gripper;
@@ -12,13 +13,12 @@ public class CloseGripper extends CommandBase{
 
     public CloseGripper() {
         addRequirements(Gripper.getInstance());
+        limitSwitch = Gripper.getInstance().getClosed();
     }
 
     @Override
     public void initialize() {
         gripper = Gripper.getInstance();
-        //not sure if this port is the correct one.
-        limitSwitch = new DigitalInput(Constants.Ports.CLOSED_LIMIT_SWITCH);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class CloseGripper extends CommandBase{
 
     @Override
     public boolean isFinished() {
-        return limitSwitch.get();
+        return !limitSwitch.get();
     }
 
     @Override

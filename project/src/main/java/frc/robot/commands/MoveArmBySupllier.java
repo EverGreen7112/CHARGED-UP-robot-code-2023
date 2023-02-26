@@ -20,11 +20,10 @@ public class MoveArmBySupllier extends CommandBase {
     TalonFX m_motor;
     double m_JoystickAngle, m_armAngle, m_armTarget;
     int m_mode;
-    DigitalInput a = new DigitalInput(53);
 
     //mode controls which arm the command moves, 1 moves the first arm, 2 moves the second arm.
     public MoveArmBySupllier(Supplier<Double> x, Supplier<Double> y, int mode) {
-        addRequirements(Arm.getInstance());
+        // addRequirements(Arm.getInstance());
         value1 = x;
         value2 = y;
         m_mode = mode;

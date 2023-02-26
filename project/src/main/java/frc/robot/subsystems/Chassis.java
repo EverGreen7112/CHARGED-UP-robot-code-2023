@@ -94,7 +94,7 @@ public class Chassis extends SubsystemBase {
 
         Vector2D robotDelta = right.getAdded(left).getDivided(2);
         Vector2D fieldDelta = Constants.Conversions.rotateZ(robotDelta, -Chassis.getInstance().getRobotAngle());
-        m_pos.add(fieldDelta);
+        m_pos.add(robotDelta);
         SmartDashboard.putNumber("x", m_pos.x);
         SmartDashboard.putNumber("y", m_pos.y);
         SmartDashboard.putNumber("RPM left velocity",
