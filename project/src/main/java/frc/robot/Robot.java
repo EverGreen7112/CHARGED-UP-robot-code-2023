@@ -1,10 +1,16 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.MoveArmBySupllier;
+import frc.robot.subsystems.Arm;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -35,7 +41,6 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-
   }
 
   /**
@@ -51,7 +56,10 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    
+    SmartDashboard.putNumber("first angle", Constants.Conversions.ticksToAngle(Arm.getInstance().getFirst().getSelectedSensorPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION));
+    SmartDashboard.putNumber("first position", Arm.getInstance().getFirst().getSelectedSensorPosition());
+    SmartDashboard.putNumber("second angle", Constants.Conversions.ticksToAngle(Arm.getInstance().getSecond().getSelectedSensorPosition(), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
+    SmartDashboard.putNumber("second position", Arm.getInstance().getSecond().getSelectedSensorPosition());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -82,6 +90,9 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
   }
 
+  Joystick rightStick = new Joystick(Constants.JoystickPorts.rightJoystick);
+  Joystick leftStick = new Joystick(Constants.JoystickPorts.leftJoystick);
+  
   @Override
   public void teleopInit() {
     // This makes sure that the autonomous stops running when
@@ -91,6 +102,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    CommandScheduler.getInstance().schedule(new MoveArmBySupllier(rightStick::getX, rightStick::getY, 2));
+    // CommandScheduler.getInstance().schedule(new MoveArmBySupllier(leftStick::getX, leftStick::getY, 2));
     CommandScheduler.getInstance().schedule(RobotContainer.m_tankDriveCommand);
 
   }
