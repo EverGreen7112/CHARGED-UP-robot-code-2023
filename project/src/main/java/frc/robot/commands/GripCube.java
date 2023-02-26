@@ -5,12 +5,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Gripper;
 
-public class CloseGripper extends CommandBase{
-
+public class GripCube extends CommandBase {
+    
     private Gripper gripper;
     private DigitalInput limitSwitch;
 
-    public CloseGripper() {
+    public GripCube() {
         addRequirements(Gripper.getInstance());
     }
 
@@ -18,7 +18,7 @@ public class CloseGripper extends CommandBase{
     public void initialize() {
         gripper = Gripper.getInstance();
         //not sure if this port is the correct one.
-        limitSwitch = new DigitalInput(Constants.Ports.THIRD_LIMIT_SWITCH);
+        limitSwitch = new DigitalInput(Constants.Ports.SECOND_LIMIT_SWITCH);
     }
 
     @Override
@@ -35,5 +35,4 @@ public class CloseGripper extends CommandBase{
     public void end(boolean interrupted) {
         gripper.stop();
     }
-    
 }

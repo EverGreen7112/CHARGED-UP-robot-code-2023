@@ -42,7 +42,11 @@ public final class Constants {
     //arm ports
     FIRST_ARM_PORT = 13,
     SECOND_ARM_PORT = 3,
-    GRIPPER_PORT = 1;
+    GRIPPER_PORT = 1,
+    //limit switch ports
+    FIRST_LIMIT_SWITCH = 0,
+    SECOND_LIMIT_SWITCH = 1,
+    THIRD_LIMIT_SWITCH = 2;
   }
 
   public static class ArmValues {
@@ -53,7 +57,7 @@ public final class Constants {
             ,FIRST_ARM_MIN = 0
             ,FIRST_ARM_MAX = 360
             ,SECOND_ARM_MIN = 0
-            ,SECOND_ARM_MAX = 360
+            ,SECOND_ARM_MAX = 180
             ,JOYSTICK_TOLERANCE = 0.5
             ,LIMIT_TOLERANCE = 5;
 }
@@ -82,7 +86,9 @@ public static class JoystickPorts {
 }
 
 public static class Values {
-  public static final int TICKS_PER_REVOLUTIONS = 34816;
+  public static final double 
+      FIRST_ARM_TICKS_PER_REVOLUTION = 2048*16.9142857,
+      SECOND_ARM_TICKS_PER_REVOLUTION = 2048*10.8;
   public static double 
   TANKDRIVE_WHEEL_RADIUS = 0.76,
   DISTANCE_BETWEEN_LEFT_TO_RIGHT = 0.5; //in meters;
@@ -106,10 +112,10 @@ public static class Values {
 }
 public static class PidValues {
   public static final double 
-          FIRST_ARM_KP = 0.03
+          FIRST_ARM_KP = 0.04
           ,FIRST_ARM_KI = 0
           ,FIRST_ARM_KD = 0
-          ,SECOND_ARM_KP = 0.0001
+          ,SECOND_ARM_KP = 0.015
           ,SECOND_ARM_KI = 0
           ,SECOND_ARM_KD = 0;
           public final static double driveKp = 0.05;
@@ -121,12 +127,13 @@ public static class Conversions {
     double rps = rpm / 60;
     return wheelRadius * 2 * Math.PI * rps;
 }
-    public static double angleToTicks(double angle){
-        return Constants.Values.TICKS_PER_REVOLUTIONS / ((double) 360 / angle);
+    //TPR is ticks per revolution
+    public static double angleToTicks(double angle, double TPR){
+        return TPR / ((double) 360 / angle);
     }
-
-    public static double ticksToAngle(double ticks){
-        return (ticks * 360.0)/ Constants.Values.TICKS_PER_REVOLUTIONS;
+    //TPR is ticks per revolution
+    public static double ticksToAngle(double ticks, double TPR){
+        return (ticks * 360.0)/ TPR;
     }
 
     

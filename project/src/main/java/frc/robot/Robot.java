@@ -53,8 +53,10 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("angle thingy", Constants.Conversions.ticksToAngle(Arm.getInstance().getFirst().getSelectedSensorPosition()));
-    SmartDashboard.putNumber("position thingy", Arm.getInstance().getFirst().getSelectedSensorPosition());
+    SmartDashboard.putNumber("first angle", Constants.Conversions.ticksToAngle(Arm.getInstance().getFirst().getSelectedSensorPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION));
+    SmartDashboard.putNumber("first position", Arm.getInstance().getFirst().getSelectedSensorPosition());
+    SmartDashboard.putNumber("second angle", Constants.Conversions.ticksToAngle(Arm.getInstance().getSecond().getSelectedSensorPosition(), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
+    SmartDashboard.putNumber("second position", Arm.getInstance().getSecond().getSelectedSensorPosition());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -79,8 +81,8 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {}
 
-  Joystick stick = new Joystick(Constants.JoystickPorts.rightJoystick);
-  TalonFX motor  = new TalonFX(Constants.Ports.FIRST_ARM_PORT);
+  Joystick rightStick = new Joystick(Constants.JoystickPorts.rightJoystick);
+  Joystick leftStick = new Joystick(Constants.JoystickPorts.leftJoystick);
   
   @Override
   public void teleopInit() {
@@ -91,7 +93,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    CommandScheduler.getInstance().schedule(new MoveArmBySupllier(stick::getX, stick::getY, 1));
+    CommandScheduler.getInstance().schedule(new MoveArmBySupllier(rightStick::getX, rightStick::getY, 2));
+    // CommandScheduler.getInstance().schedule(new MoveArmBySupllier(leftStick::getX, leftStick::getY, 2));
   }
 
   /** This function is called periodically during operator control. */
