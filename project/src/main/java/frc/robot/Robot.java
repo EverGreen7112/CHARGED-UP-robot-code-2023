@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.MoveArmByAngle;
+import frc.robot.commands.SetArmAngleToStartPos;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Gripper;
 
@@ -57,13 +58,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("first angle", Constants.Conversions.ticksToAngle(Arm.getInstance().getFirst().getSelectedSensorPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION));
-    SmartDashboard.putNumber("first position", Arm.getInstance().getFirst().getSelectedSensorPosition());
-    SmartDashboard.putNumber("second angle", Constants.Conversions.ticksToAngle(Arm.getInstance().getSecond().getSelectedSensorPosition(), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
-    SmartDashboard.putNumber("second position", Arm.getInstance().getSecond().getSelectedSensorPosition());
-    SmartDashboard.putBoolean("opened", !Gripper.getInstance().getOpened().get());
-    SmartDashboard.putBoolean("closed", !Gripper.getInstance().getClosed().get());
-    SmartDashboard.putBoolean("cube", !Gripper.getInstance().getCube().get());
+   
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -104,8 +99,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    //CommandScheduler.getInstance().schedule(RobotContainer.m_tankDriveCommand);
-    CommandScheduler.getInstance().schedule(new MoveArmByAngle(Constants.ArmValues.FIRST_PICKUP_TOP_ANGLE, -55));
+    CommandScheduler.getInstance().schedule(new SetArmAngleToStartPos());
+    
    
 
 }

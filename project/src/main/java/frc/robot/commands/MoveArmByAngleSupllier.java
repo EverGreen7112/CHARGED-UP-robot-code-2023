@@ -61,11 +61,7 @@ public class MoveArmByAngleSupllier extends CommandBase {
         m_motor.set(TalonFXControlMode.Position, m_armTarget);
             // }
         // }
-        SmartDashboard.putNumber("joystick angle", m_JoystickAngle);
-        SmartDashboard.putNumber("curr angle", m_armAngle);
-        SmartDashboard.putNumber("target", m_armTarget);
-        SmartDashboard.putNumber("position", m_motor.getSelectedSensorPosition());
-        SmartDashboard.putNumber("output", m_motor.getMotorOutputPercent());
+  
     }
 
     @Override

@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -32,6 +33,13 @@ public class Arm extends SubsystemBase {
         second.config_kI(0, Constants.PidValues.SECOND_ARM_KI);
         second.config_kD(0, Constants.PidValues.SECOND_ARM_KD);
         // second.setSelectedSensorPosition(0);
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("First Angle", Constants.Conversions.ticksToAngle(m_first.getSelectedSensorPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION));
+        SmartDashboard.putNumber("Second Angle", Constants.Conversions.ticksToAngle(m_second.getSelectedSensorPosition(), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
+        SmartDashboard.putNumber("motor output", m_first.getMotorOutputPercent());
     }
 
     public static Arm getInstance(){
