@@ -3,6 +3,8 @@ package frc.robot;
 
 import java.util.function.Supplier;
 
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
@@ -65,7 +67,7 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-        
+        CommandScheduler.getInstance().cancelAll();
   }
 
   @Override
@@ -100,10 +102,11 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    CommandScheduler.getInstance().schedule(new SetArmAngleToStartPos());
+    CommandScheduler.getInstance().cancelAll();
+    Arm.getInstance().getFirst().set(TalonFXControlMode.PercentOutput , 0);
+    Arm.getInstance().getSecond().set(TalonFXControlMode.PercentOutput , 0);
     
-   
-
+    // CommandScheduler.getInstance().schedule(new SetArmAngleToStartPos());
 }
 
   /** This function is called periodically during operator control. */
