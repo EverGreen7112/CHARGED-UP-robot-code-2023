@@ -83,7 +83,7 @@ public final class Constants {
     public final static Supplier<Double> driveMax = () -> {
       return SmartDashboard.getNumber("robot speed", 0.2);
     };
-    public static final double GRIPPER_SPEED = 0.1;
+    public static final double GRIPPER_SPEED = 0.15;
   }
 
   public static class JoystickPorts {
