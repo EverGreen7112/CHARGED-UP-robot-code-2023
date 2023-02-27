@@ -103,7 +103,11 @@ public final class Constants {
         BACK = 9,
         START = 10,
         LEFT_JOYSTICK = 11,
-        RIGHT_JOYSTICK = 12;
+        RIGHT_JOYSTICK = 12,
+        OPERATOR_LEFT_JOYSTICK_X = 0,
+        OPERATOR_LEFT_JOYSTICK_Y = 1,
+        OPERATOR_RIGHT_JOYSTICK_X = 2,
+        OPERATOR_RIGHT_JOYSTICK_Y = 3;
   }
 
   public static class MotorPorts {

@@ -64,8 +64,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("opened", !Gripper.getInstance().getOpened().get());
     SmartDashboard.putBoolean("closed", !Gripper.getInstance().getClosed().get());
     SmartDashboard.putBoolean("cube", !Gripper.getInstance().getCube().get());
-    SmartDashboard.putNumber("anglelu", Math.toDegrees(Math.atan2(operator.getLeftX(), operator.getLeftY())));
-    SmartDashboard.putNumber("anglelu2", Math.toDegrees(Math.atan2(operator.getRightX(), operator.getRightY())));
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -96,10 +94,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
   }
-
-  Joystick rightStick = new Joystick(Constants.JoystickPorts.rightJoystick);
-  Joystick leftStick = new Joystick(Constants.JoystickPorts.leftJoystick);
-  XboxController operator = new XboxController(Constants.JoystickPorts.operator);
   
   @Override
   public void teleopInit() {
@@ -110,11 +104,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    //CommandScheduler.getInstance().schedule(new MoveArmBySupllier(rightStick::getX, rightStick::getY, 2));
-    // CommandScheduler.getInstance().schedule(new MoveArmBySupllier(leftStick::getX, leftStick::getY, 2));
-    // CommandScheduler.getInstance().schedule(RobotContainer.m_tankDriveCommand);
-    //CommandScheduler.getInstance().schedule(new MoveArmBySupllier(operator::getLeftX,operator::getLeftY , 2));
-  //CommandScheduler.getInstance().schedule(new MoveArmBySupllier(operator::getRightX, operator::getRightY, 2));
+    //CommandScheduler.getInstance().schedule(RobotContainer.m_tankDriveCommand);
     CommandScheduler.getInstance().schedule(new MoveArmByAngle(Constants.ArmValues.FIRST_PICKUP_TOP_ANGLE, -55));
    
 

@@ -41,8 +41,7 @@ public class MoveArmByAngle extends CommandBase{
 
     @Override
     public boolean isFinished() {
-//        return m_secondArmAngle < 4 +  m_secondArmTarget && m_secondArmAngle > m_secondArmTarget - 4;
-        return false;
+        return m_secondArmAngle < 4 +  m_secondArmTarget && m_secondArmAngle > m_secondArmTarget - 4;
     }
 
 }

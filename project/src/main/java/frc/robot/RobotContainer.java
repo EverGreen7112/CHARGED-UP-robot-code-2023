@@ -28,13 +28,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private static final Joystick m_leftStick = new Joystick(Constants.JoystickPorts.leftJoystick);
-  private static final Joystick m_rightStick = new Joystick(Constants.JoystickPorts.rightJoystick);
-  public static Command m_tankDriveCommand = new TankDrive(m_leftStick::getY,m_rightStick::getY);
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  public static final Joystick m_leftStick = new Joystick(Constants.JoystickPorts.leftJoystick);
+  public static final Joystick m_rightStick = new Joystick(Constants.JoystickPorts.rightJoystick);
+  public static final Joystick m_operator = new Joystick(Constants.JoystickPorts.operator);
+  public static Command m_tankDriveCommand = new TankDrive(m_leftStick::getY,m_rightStick::getY);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -51,11 +49,10 @@ public class RobotContainer {
    * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
-  XboxController operator = new XboxController(Constants.JoystickPorts.operator);
   private void configureBindings() {
-    Trigger yButton = new JoystickButton(operator, Constants.ButtonPorts.Y).onTrue(new CloseGripper());
-    Trigger bButton = new JoystickButton(operator, Constants.ButtonPorts.B).onTrue(new OpenGripper());
-    Trigger xButton = new JoystickButton(operator, Constants.ButtonPorts.X).onTrue(new GripCube());
+    Trigger yButton = new JoystickButton(m_operator, Constants.ButtonPorts.Y).onTrue(new CloseGripper());
+    Trigger bButton = new JoystickButton(m_operator, Constants.ButtonPorts.B).onTrue(new OpenGripper());
+    Trigger xButton = new JoystickButton(m_operator, Constants.ButtonPorts.X).onTrue(new GripCube());
   }
 
   /**
