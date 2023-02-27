@@ -61,7 +61,9 @@ public final class Constants {
             FIRST_ARM_LENGTH = 0.9 //IN METERS
             ,SECOND_ARM_LENGTH = 0.45
             ,FIRST_ARM_MIN = 0
-            ,FIRST_ARM_MAX = 360
+            ,FIRST_ARM_MAX = 360,
+            FIRST_ARM_R_MAX = 127,
+            FIRST_ARM_L_MIN =-130
             ,SECOND_ARM_MIN = 0
             ,SECOND_ARM_MAX = 180
             ,JOYSTICK_TOLERANCE = 0.5
@@ -115,8 +117,7 @@ public final class Constants {
   }
 
   public static class PIDS {
-    public static final double FIRST_ARM_KP = 0.0000001, FIRST_ARM_KI = 0, FIRST_ARM_KD = 0.000001,
-        SECOND_ARM_KP = 0.00001, SECOND_ARM_KI = 0, SECOND_ARM_KD = 0;
+
     public final static double driveKp = 0.05;
     public final static double driveKi = 0.007;
     public final static double driveKd = 0.007;
@@ -166,7 +167,9 @@ public final class Values {
 
 public static class PidValues {
   public static final double 
-          FIRST_ARM_KP = 0.03
+          FIRST_ARM_KP = 0.03,
+          FIRST_ARM_ANTI_KP = 0.001,
+          FIRST_ARM_ANTI_KF = 0.2
           ,FIRST_ARM_KI = 0
           ,FIRST_ARM_KD = 0
           ,SECOND_ARM_KP = 0.14

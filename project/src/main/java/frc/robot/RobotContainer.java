@@ -8,8 +8,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.CloseGripper;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.GripCube;
-import frc.robot.commands.OpenGripper;
+import frc.robot.commands.MoveArmByPos;
 import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
@@ -53,6 +52,7 @@ public class RobotContainer {
     Trigger yButton = new JoystickButton(m_operator, Constants.ButtonPorts.Y).onTrue(new CloseGripper());
     Trigger bButton = new JoystickButton(m_operator, Constants.ButtonPorts.B).onTrue(new OpenGripper());
     Trigger xButton = new JoystickButton(m_operator, Constants.ButtonPorts.X).onTrue(new GripCube());
+    Trigger rtButton = new JoystickButton(m_operator, Constants.ButtonPorts.RT).onTrue(new MoveArmByAngle(0, 0));
   }
 
   /**

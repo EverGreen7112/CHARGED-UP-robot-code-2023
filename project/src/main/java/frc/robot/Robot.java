@@ -58,7 +58,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-   
+   Arm.getInstance().periodic();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -99,7 +99,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    CommandScheduler.getInstance().schedule(new SetArmAngleToStartPos());
+    // CommandScheduler.getInstance().schedule(new SetArmAngleToStartPos());
     
    
 
