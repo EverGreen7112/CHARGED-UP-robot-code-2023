@@ -5,7 +5,7 @@ import frc.robot.Constants;
 import frc.robot.Vector2D;
 import frc.robot.subsystems.Arm;
 
-public class MoveArm extends CommandBase {
+public class MoveArmByPos extends CommandBase {
 
     private Vector2D destination; // where the arm needs to go
     private Vector2D startPos = new Vector2D(0, 0); // where the hand begins
@@ -17,7 +17,7 @@ public class MoveArm extends CommandBase {
     private double arm2Angle; // the angle the second arm in degrees
     private double pointsVecLength; // the length of the vector of the points
 
-    public MoveArm(double x, double y){
+    public MoveArmByPos(double x, double y){
         destination = new Vector2D(x, y);
     }
 

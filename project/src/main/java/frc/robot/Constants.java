@@ -65,7 +65,14 @@ public final class Constants {
             ,SECOND_ARM_MIN = 0
             ,SECOND_ARM_MAX = 180
             ,JOYSTICK_TOLERANCE = 0.5
-            ,LIMIT_TOLERANCE = 5;
+            ,LIMIT_TOLERANCE = 8
+            //angles for the arms
+            ,FIRST_PICKUP_TOP_ANGLE = 120
+            ,SECOND_PICKUP_TOP_ANGLE = 10
+            ,FIRST_PICKUP_DOWN_ANGLE = 0
+            ,SECOND_PICKUP_DONW_ANGLE = 0
+            
+            ;
   }
   
   public final static  class Speeds{
@@ -105,7 +112,7 @@ public final class Constants {
 
   public static class PIDS {
     public static final double FIRST_ARM_KP = 0.0000001, FIRST_ARM_KI = 0, FIRST_ARM_KD = 0.000001,
-        SECOND_ARM_KP = 0.00000001, SECOND_ARM_KI = 0, SECOND_ARM_KD = 0;
+        SECOND_ARM_KP = 0.00001, SECOND_ARM_KI = 0, SECOND_ARM_KD = 0;
     public final static double driveKp = 0.05;
     public final static double driveKi = 0.007;
     public final static double driveKd = 0.007;
@@ -158,7 +165,7 @@ public static class PidValues {
           FIRST_ARM_KP = 0.03
           ,FIRST_ARM_KI = 0
           ,FIRST_ARM_KD = 0
-          ,SECOND_ARM_KP = 0.015
+          ,SECOND_ARM_KP = 0.14
           ,SECOND_ARM_KI = 0
           ,SECOND_ARM_KD = 0;
           public final static double driveKp = 0.05;

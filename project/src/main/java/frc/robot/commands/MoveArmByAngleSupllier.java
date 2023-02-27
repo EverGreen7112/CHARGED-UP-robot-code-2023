@@ -2,19 +2,15 @@ package frc.robot.commands;
 
 import java.util.function.Supplier;
 
-import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
-import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
 
-public class MoveArmBySupllier extends CommandBase {
+public class MoveArmByAngleSupllier extends CommandBase {
 
     Supplier<Double> value1, value2;
     TalonFX m_motor;
@@ -22,8 +18,8 @@ public class MoveArmBySupllier extends CommandBase {
     int m_mode;
 
     //mode controls which arm the command moves, 1 moves the first arm, 2 moves the second arm.
-    public MoveArmBySupllier(Supplier<Double> x, Supplier<Double> y, int mode) {
-        // addRequirements(Arm.getInstance());
+    public MoveArmByAngleSupllier(Supplier<Double> x, Supplier<Double> y, int mode) {
+         addRequirements(Arm.getInstance());
         value1 = x;
         value2 = y;
         m_mode = mode;
