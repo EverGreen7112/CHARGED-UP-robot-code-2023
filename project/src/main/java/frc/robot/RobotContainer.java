@@ -9,10 +9,13 @@ import frc.robot.commands.CloseGripper;
 import frc.robot.commands.GripCube;
 import frc.robot.commands.MoveArmByAngle;
 import frc.robot.commands.OpenGripper;
+import frc.robot.commands.SetArmAngleToStartPos;
 import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Gripper;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -57,7 +60,8 @@ public class RobotContainer {
     Trigger collectCone = new JoystickButton(m_operator, Constants.ButtonPorts.START).onTrue(new MoveArmByAngle(120, -55)); //isuf mahmadaf
     Trigger collectCube = new JoystickButton(m_operator, Constants.ButtonPorts.BACK).onTrue(new MoveArmByAngle(105.49851545607983, -61.848)); //isuf mahmadaf
     Trigger cubeButton = new JoystickButton(m_operator, Constants.ButtonPorts.X).onTrue(new GripCube());
-
+    Trigger switchModes = new JoystickButton(m_operator, Constants.ButtonPorts.LT).onTrue(new InstantCommand(()-> Gripper.getInstance().switchModes()));
+    Trigger zeroPos = new JoystickButton(m_operator, Constants.ButtonPorts.LB).onTrue(new SetArmAngleToStartPos());
 
     // Trigger rightButton = new JoystickButton(m_operator, Constants.ButtonPorts.).onTrue(new MoveArmByAngle(-125, -288+360)); //mid
     // Trigger downButton = new JoystickButton(m_operator, Constants.ButtonPorts.A).onTrue(new MoveArmByAngle(144, -45)); //isuf mahmadaf

@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Gripper;
-import frc.robot.subsystems.Gripper.GamePiece;
 
 public class OpenGripper extends CommandBase {
 
@@ -36,8 +35,6 @@ public class OpenGripper extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         gripper.stop();
-        Gripper.getInstance().setCurPiece(GamePiece.NONE);
-
     }
     
 }

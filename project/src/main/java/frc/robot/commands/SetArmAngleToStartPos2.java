@@ -10,13 +10,13 @@ import frc.robot.Constants;
 import frc.robot.Constants.PidValues;
 import frc.robot.subsystems.Arm;
 
-public class SetArmAngleToStartPos extends CommandBase {
+public class SetArmAngleToStartPos2 extends CommandBase {
     TalonFX m_first;
     TalonFX m_second;
     double m_firstArmAngle;
     double m_secondArmAngle;
 
-    public SetArmAngleToStartPos() {
+    public SetArmAngleToStartPos2() {
         addRequirements(Arm.getInstance());
         m_first = Arm.getInstance().getFirst();
         m_second = Arm.getInstance().getSecond();
@@ -39,24 +39,26 @@ public class SetArmAngleToStartPos extends CommandBase {
 
         SmartDashboard.putBoolean("enterIf", m_secondArmAngle < Constants.ArmValues.LIMIT_TOLERANCE + 0
                 && m_secondArmAngle > 0 - Constants.ArmValues.LIMIT_TOLERANCE);
-        if (m_secondArmAngle < Constants.ArmValues.LIMIT_TOLERANCE + 0 && m_secondArmAngle > 0 - Constants.ArmValues.LIMIT_TOLERANCE) {
-            m_first.set(TalonFXControlMode.Position, Constants.Conversions.angleToTicks(-1, Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION));
-        }
+        // if(m_secondArmAngle < Constants.ArmValues.LIMIT_TOLERANCE + 0 &&
+        // m_secondArmAngle > 0 - Constants.ArmValues.LIMIT_TOLERANCE){
+        // m_first.set(TalonFXControlMode.Position,
+        // Constants.Conversions.angleToTicks(-1,
+        // Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION));
+        
+        // if (m_firstArmAngle < 15 && m_firstArmAngle > -15) {
+        //     if (m_firstArmAngle > 0) {
+        //         m_first.set(TalonFXControlMode.PercentOutput, -PidValues.FIRST_ARM_ANTI_KF);
+        //     } else {
+        //         m_first.set(TalonFXControlMode.PercentOutput, PidValues.FIRST_ARM_ANTI_KF);
 
-        if (m_firstArmAngle < 15 && m_firstArmAngle > -15) {
-            if (m_firstArmAngle > 0) {
-                m_first.set(TalonFXControlMode.PercentOutput, -PidValues.FIRST_ARM_ANTI_KF);
-            } else {
-                m_first.set(TalonFXControlMode.PercentOutput, PidValues.FIRST_ARM_ANTI_KF);
-
-            }
-        }
+        //     }
+        // }
         if (m_firstArmAngle > 0) {
-            m_first.set(TalonFXControlMode.PercentOutput,-PidValues.FIRST_ARM_ANTI_KF+
-            -1*Constants.PidValues.FIRST_ARM_ANTI_KP*(Constants.ArmValues.FIRST_ARM_R_MAX-m_firstArmAngle));
+            // m_first.set(TalonFXControlMode.PercentOutput,-PidValues.FIRST_ARM_ANTI_KF+
+            // -1*Constants.PidValues.FIRST_ARM_ANTI_KP*(Constants.ArmValues.FIRST_ARM_R_MAX-m_firstArmAngle));
             // m_first.set(TalonFXControlMode.PercentOutput,-PidValues.FIRST_ARM_ANTI_KF);
-            // m_first.set(TalonFXControlMode.PercentOutput, -1 * Constants.PidValues.FIRST_ARM_ANTI_KP
-            //         * (Constants.ArmValues.FIRST_ARM_R_MAX - m_firstArmAngle));
+            m_first.set(TalonFXControlMode.PercentOutput, -1 * Constants.PidValues.FIRST_ARM_ANTI_KP
+                    * (Constants.ArmValues.FIRST_ARM_R_MAX - m_firstArmAngle));
         } else {
             m_first.set(TalonFXControlMode.PercentOutput, PidValues.FIRST_ARM_ANTI_KF + -1
                     * Constants.PidValues.FIRST_ARM_ANTI_KP * (Constants.ArmValues.FIRST_ARM_L_MIN - m_firstArmAngle));
