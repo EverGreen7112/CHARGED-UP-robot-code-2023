@@ -62,7 +62,7 @@ public class Chassis extends SubsystemBase {
         m_rightFrontEngine.getPIDController().setD(PIDS.velKd, 1);
         m_rightFrontEngine.getPIDController().setI(PIDS.velKi, 1);
 
-        m_rightFrontEngine.getEncoder().setPositionConversionFactor(Constants.Values.DISTANCE_PER_THICK);
+        m_rightFrontEngine.getEncoder().setPositionConversionFactor(Constants.Values.DISTANCE_PER_TICK);
         m_time = System.currentTimeMillis();
         m_lastRightDist = m_rightFrontEngine.getEncoder().getPosition();
         m_lastLeftDist = m_leftFrontEngine.getEncoder().getPosition();

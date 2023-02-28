@@ -4,8 +4,13 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.commands.CloseGripper;
+import frc.robot.subsystems.Arm.ARMCONF;
 
 public class Gripper extends SubsystemBase{
     
@@ -26,17 +31,34 @@ public class Gripper extends SubsystemBase{
         }
         return m_instance;
     }
-
+    private Command lastCom = null;
+    @Override
+    public void periodic() {
+        lastCom = Gripper.getInstance().getCurrentCommand() == null?lastCom :Gripper.getInstance().getCurrentCommand();
+        SmartDashboard.putString("curCom", Gripper.getInstance().getCurrentCommand() == null?"null":Gripper.getInstance().getCurrentCommand().getClass().toString());
+        if(lastCom!=null &&lastCom.getClass().toString().equals(CloseGripper.class.toString()) && Arm.getInstance().getConf() !=ARMCONF.MID){
+            defualtCloseGripper();
+        }else if(Gripper.getInstance().getCurrentCommand() == null) {
+            stop();
+        }
+    }
     public void moveGripper(double speed){
         m_motor.set(ControlMode.PercentOutput, speed);
     }
+    
 
     public void closeGripper(){
-        moveGripper(-Constants.Speeds.GRIPPER_SPEED);
+        moveGripper(Constants.Speeds.GRIPPER_CLOSE_SPEED);
+    }
+    public void defualtCloseGripper(){
+        moveGripper(Constants.Speeds.GRIPPER_DEFUALT_CLOSE);
+    }
+    public void closeGripperCube(){
+        moveGripper(Constants.Speeds.GRIPPER_CLOSE_CUBE);
     }
 
     public void openGripper(){
-        moveGripper(Constants.Speeds.GRIPPER_SPEED);
+        moveGripper(Constants.Speeds.GRIPPER_OPEN_SPEED);
     }
 
     public void stop(){

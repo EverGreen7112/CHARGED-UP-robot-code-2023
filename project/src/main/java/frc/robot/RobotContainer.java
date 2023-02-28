@@ -4,19 +4,14 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.CloseGripper;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.GripCube;
 import frc.robot.commands.MoveArmByAngle;
-import frc.robot.commands.MoveArmByPos;
 import frc.robot.commands.OpenGripper;
-import frc.robot.commands.SetArmAngleToStartPos;
 import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -53,13 +48,20 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    Trigger yButton = new JoystickButton(m_operator, Constants.ButtonPorts.Y).onTrue(new CloseGripper());
-    Trigger bButton = new JoystickButton(m_operator, Constants.ButtonPorts.B).onTrue(new OpenGripper());
-    Trigger xButton = new JoystickButton(m_operator, Constants.ButtonPorts.X).onTrue(new GripCube());
-    Trigger rtButton = new JoystickButton(m_operator, Constants.ButtonPorts.RT).onTrue(new SetArmAngleToStartPos());
-    Trigger rbButton = new JoystickButton(m_operator, Constants.ButtonPorts.RB).onTrue(new MoveArmByAngle(120,-90)); //gadol
-    Trigger ltButton = new JoystickButton(m_operator, Constants.ButtonPorts.LT).onTrue(new MoveArmByAngle(-125, -288+360)); //mid
-    Trigger lbButton = new JoystickButton(m_operator, Constants.ButtonPorts.LB).onTrue(new MoveArmByAngle(144, -45)); //madaf
+    Trigger closeButton = new JoystickButton(m_operator, Constants.ButtonPorts.Y).onTrue(new CloseGripper());
+    Trigger openGrip = new JoystickButton(m_operator, Constants.ButtonPorts.B).onTrue(new OpenGripper());
+
+    // Trigger rtButton = new JoystickButton(m_operator, Constants.ButtonPorts.RT).onTrue(new SetArmAngleToStartPos());
+    Trigger upperButton = new JoystickButton(m_operator, Constants.ButtonPorts.RB).onTrue(new MoveArmByAngle(-128,160)); // big
+    Trigger midButton = new JoystickButton(m_operator, Constants.ButtonPorts.RT).onTrue(new MoveArmByAngle(-125, -288+360)); //mid
+    Trigger collectCone = new JoystickButton(m_operator, Constants.ButtonPorts.START).onTrue(new MoveArmByAngle(144, -45)); //isuf mahmadaf
+    Trigger collectCube = new JoystickButton(m_operator, Constants.ButtonPorts.BACK).onTrue(new MoveArmByAngle(105.49851545607983, -61.848)); //isuf mahmadaf
+    Trigger cubeButton = new JoystickButton(m_operator, Constants.ButtonPorts.X).onTrue(new GripCube());
+
+
+    // Trigger rightButton = new JoystickButton(m_operator, Constants.ButtonPorts.).onTrue(new MoveArmByAngle(-125, -288+360)); //mid
+    // Trigger downButton = new JoystickButton(m_operator, Constants.ButtonPorts.A).onTrue(new MoveArmByAngle(144, -45)); //isuf mahmadaf
+
 
   }
 

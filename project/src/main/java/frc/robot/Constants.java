@@ -83,7 +83,13 @@ public final class Constants {
     public final static Supplier<Double> driveMax = () -> {
       return SmartDashboard.getNumber("robot speed", 0.2);
     };
-    public static final double GRIPPER_SPEED = 0.15;
+    public static final double GRIPPER_OPEN_SPEED = 0.15;
+    public static final double GRIPPER_CLOSE_SPEED = -0.25;
+    public static final double GRIPPER_DEFUALT_CLOSE = -0.15;
+
+    public static final double GRIPPER_CLOSE_CUBE = -0.14;
+
+
   }
 
   public static class JoystickPorts {
@@ -160,7 +166,7 @@ public final class Values {
   ,SWERVE_LENGTH = 0
   ,SWERVE_WIDTH = 0
   ,MAX_SWERVE_SPEED = 3 //in m/s
-  ,DISTANCE_PER_THICK= 2 * Math.PI *TANKDRIVE_WHEEL_RADIUS/10.97;  // TODO: check
+  ,DISTANCE_PER_TICK= 2 * Math.PI *TANKDRIVE_WHEEL_RADIUS/10.97;  // TODO: check
   ;
   
 }
@@ -174,12 +180,10 @@ public static class PidValues {
           ,SECOND_ARM_KI = 0
           ,SECOND_ARM_KD = 0
           ,SECOND_ARM_KF = 0.02,
-          SECOND_ARM_STALL_SPEED = 0.05,
+          SECOND_ARM_STALL_SPEED = 0.06,
           FIRST_ARM_ANTI_KP = 0.001,
           FIRST_ARM_ANTI_KF = 0.2;
-
-
-          public final static double driveKp = 0.05;
+         public final static double driveKp = 0.05;
           public final static double driveKi = 0.007;
           public final static double driveKd = 0.007;
 }

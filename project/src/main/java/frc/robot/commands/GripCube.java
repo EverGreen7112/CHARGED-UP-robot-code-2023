@@ -23,7 +23,7 @@ public class GripCube extends CommandBase {
 
     @Override
     public void execute() {
-        gripper.closeGripper();
+        gripper.closeGripperCube();
     }
 
     @Override

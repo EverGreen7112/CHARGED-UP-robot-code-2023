@@ -13,7 +13,10 @@ public class Arm extends SubsystemBase {
     private TalonFX m_first, m_second;
     private double m_firstMinRange, m_firstMaxRange, m_secondMinRange, m_secondMaxRange;
     private static Arm m_instance;
-
+    public static enum ARMCONF{
+      FORWARD,MID,BACK;
+    }
+    private static ARMCONF m_currentconf = ARMCONF.MID;
     public Arm(TalonFX first, TalonFX second) {
         m_first = first;
         m_firstMinRange = Constants.ArmValues.FIRST_ARM_MIN;
@@ -39,11 +42,21 @@ public class Arm extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("First Angle", Constants.Conversions.ticksToAngle(m_first.getSelectedSensorPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION));
+        double firstAng = Constants.Conversions.ticksToAngle(m_first.getSelectedSensorPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);
+        SmartDashboard.putNumber("First Angle", firstAng);
         SmartDashboard.putNumber("Second Angle", Constants.Conversions.ticksToAngle(m_second.getSelectedSensorPosition(), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
         SmartDashboard.putNumber("motor1 output", m_first.getMotorOutputPercent());
         SmartDashboard.putNumber("motor2 output", m_second.getMotorOutputPercent());
-
+        if(firstAng <15 && firstAng >-15){
+          m_currentconf = ARMCONF.MID;
+        }else if(firstAng <15){
+          m_currentconf = ARMCONF.FORWARD;
+        }else{
+          m_currentconf = ARMCONF.BACK;
+        }
+    }
+    public ARMCONF getConf(){
+      return m_currentconf;
     }
 
     public static Arm getInstance(){
