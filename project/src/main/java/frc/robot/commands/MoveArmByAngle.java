@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Constants.PidValues;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Gripper;
 
 public class MoveArmByAngle extends CommandBase{
 
@@ -28,6 +29,7 @@ public class MoveArmByAngle extends CommandBase{
     public void initialize() {
         stage=0;
         m_finished = false;
+        Arm.getInstance().setSecondFPID(Gripper.getInstance().getCurGamePiece().getKf1(), Gripper.getInstance().getCurGamePiece().getKp1(), Gripper.getInstance().getCurGamePiece().getKi1(), Gripper.getInstance().getCurGamePiece().getKd1());
     }
     private int stage=0;
     @Override
@@ -55,13 +57,13 @@ public class MoveArmByAngle extends CommandBase{
         }
         if(stage ==2){
             m_second.set(TalonFXControlMode.PercentOutput, -0.17);
-            if(m_secondArmAngle < 4 +  m_secondArmTarget && m_secondArmAngle > m_secondArmTarget - 4){
-                stage =3;  
-            }
+            // if(m_secondArmAngle < 4 +  m_secondArmTarget && m_secondArmAngle > m_secondArmTarget - 4){
+            //     stage =3;  
+            // }
         }
-        if(stage ==3){
-            m_second.set(TalonFXControlMode.PercentOutput,m_firstArmTarget <0 ? PidValues.SECOND_ARM_STALL_SPEED: -1*PidValues.SECOND_ARM_STALL_SPEED);//check whether positive power or negative
-        }
+        // if(stage ==3){
+        //     m_second.set(TalonFXControlMode.PercentOutput,m_firstArmTarget <0 ? PidValues.SECOND_ARM_STALL_SPEED: -1*PidValues.SECOND_ARM_STALL_SPEED);//check whether positive power or negative
+        // }
            
        
     }
@@ -75,7 +77,7 @@ public class MoveArmByAngle extends CommandBase{
     @Override
     public void end(boolean interrupted) {
         m_second.config_kF(0, 0);
-        m_second.set(TalonFXControlMode.PercentOutput,m_firstArmTarget <0 ? PidValues.SECOND_ARM_STALL_SPEED: -1*PidValues.SECOND_ARM_STALL_SPEED);//check whether positive power or negative
+        m_second.set(TalonFXControlMode.PercentOutput,m_firstArmTarget <0 ? Gripper.getInstance().getCurGamePiece().getKstall(): -1*Gripper.getInstance().getCurGamePiece().getKstall());//check whether positive power or negative
         m_finished = true;       
         SmartDashboard.putBoolean("finished", m_finished);
 

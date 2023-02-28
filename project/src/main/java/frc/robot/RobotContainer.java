@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
+ * "declarative" paradigm, very lit\tle robot logic should actually be handled in the {@link Robot}
  * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
  * subsystems, commands, and trigger mappings) should be declared here.
  */
@@ -54,7 +54,7 @@ public class RobotContainer {
     // Trigger rtButton = new JoystickButton(m_operator, Constants.ButtonPorts.RT).onTrue(new SetArmAngleToStartPos());
     Trigger upperButton = new JoystickButton(m_operator, Constants.ButtonPorts.RB).onTrue(new MoveArmByAngle(-128,160)); // big
     Trigger midButton = new JoystickButton(m_operator, Constants.ButtonPorts.RT).onTrue(new MoveArmByAngle(-125, -288+360)); //mid
-    Trigger collectCone = new JoystickButton(m_operator, Constants.ButtonPorts.START).onTrue(new MoveArmByAngle(144, -45)); //isuf mahmadaf
+    Trigger collectCone = new JoystickButton(m_operator, Constants.ButtonPorts.START).onTrue(new MoveArmByAngle(120, -55)); //isuf mahmadaf
     Trigger collectCube = new JoystickButton(m_operator, Constants.ButtonPorts.BACK).onTrue(new MoveArmByAngle(105.49851545607983, -61.848)); //isuf mahmadaf
     Trigger cubeButton = new JoystickButton(m_operator, Constants.ButtonPorts.X).onTrue(new GripCube());
 

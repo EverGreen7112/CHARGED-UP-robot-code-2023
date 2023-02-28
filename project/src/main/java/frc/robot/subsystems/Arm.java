@@ -78,7 +78,12 @@ public class Arm extends SubsystemBase {
             }
           }
     }
-
+    public void setSecondFPID(double kf1,double kp1,double ki1, double kd1){
+      m_second.config_kF(0, kf1);
+      m_second.config_kP(0, kp1);
+      m_second.config_kI(0, ki1);
+      m_second.config_kD(0, kd1);
+    }
     public void turnSecondTo(double angle) {
           double m_secondAngle = Constants.Conversions.ticksToAngle(m_second.getSelectedSensorPosition(), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION);
           double m_secondTarget = Constants.Conversions.angleToTicks(m_secondAngle + Constants.Conversions.closestAngle(m_secondAngle, angle), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION);
