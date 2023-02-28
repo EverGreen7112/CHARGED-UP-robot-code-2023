@@ -19,7 +19,7 @@ public class MoveArmByAngleSupllier extends CommandBase {
 
     //mode controls which arm the command moves, 1 moves the first arm, 2 moves the second arm.
     public MoveArmByAngleSupllier(Supplier<Double> x, Supplier<Double> y, int mode) {
-         addRequirements(Arm.getInstance());
+        addRequirements(Arm.getInstance());
         value1 = x;
         value2 = y;
         m_mode = mode; 

@@ -8,6 +8,7 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.CloseGripper;
 import frc.robot.commands.GripCube;
 import frc.robot.commands.MoveArmByAngle;
+import frc.robot.commands.MoveArmByAngleSupllier;
 import frc.robot.commands.MoveSecStart;
 import frc.robot.commands.OpenGripper;
 import frc.robot.commands.SetArmAngleToStartPos;
@@ -22,6 +23,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -87,22 +89,43 @@ private CommandBase lowerSmall = new RunCommand(()->Arm.getInstance().getSecond(
    * joysticks}.
    */
   private void configureBindings() {
-    Trigger closeButton = new JoystickButton(m_operator, Constants.ButtonPorts.Y).onTrue(new CloseGripper());
-    Trigger openGrip = new JoystickButton(m_operator, Constants.ButtonPorts.B).onTrue(new OpenGripper());
+    // Trigger closeButton = new JoystickButton(m_operator, Constants.ButtonPorts.Y).onTrue(new CloseGripper());
+    // Trigger openGrip = new JoystickButton(m_operator, Constants.ButtonPorts.B).onTrue(new OpenGripper());
 
-    // Trigger rtButton = new JoystickButton(m_operator, Constants.ButtonPorts.RT).onTrue(new SetArmAngleToStartPos());
-    Trigger upperButton = new JoystickButton(m_operator, Constants.ButtonPorts.RB).onTrue(new MoveArmByAngle(-128,160)); // big
-    Trigger midButton = new JoystickButton(m_operator, Constants.ButtonPorts.RT).onTrue(new MoveArmByAngle(-125, -288+360)); //mid
-    Trigger collectCone = new JoystickButton(m_operator, Constants.ButtonPorts.START).onTrue(new MoveArmByAngle(120, -55)); //isuf mahmadaf
-    Trigger collectCube = new JoystickButton(m_operator, Constants.ButtonPorts.BACK).onTrue(new MoveArmByAngle(105.49851545607983, -61.848)); //isuf mahmadaf
-    Trigger cubeButton = new JoystickButton(m_operator, Constants.ButtonPorts.X).onTrue(new GripCube());
-    Trigger switchModes = new JoystickButton(m_operator, Constants.ButtonPorts.LT).onTrue(new InstantCommand(()-> Gripper.getInstance().switchModes()));
-    Trigger zeroPos = new JoystickButton(m_operator, Constants.ButtonPorts.LB).onTrue(new SetArmAngleToStartPos());
-    RobotContainer.up.whileTrue(upperBig);
-    RobotContainer.down.whileTrue(lowerBig);
+    // // Trigger rtButton = new JoystickButton(m_operator, Constants.ButtonPorts.RT).onTrue(new SetArmAngleToStartPos());
+    // // Trigger upperButton = new JoystickButton(m_operator, Constants.ButtonPorts.RB).onTrue(new MoveArmByAngle(-128,160)); // big
+    // Trigger midButton = new JoystickButton(m_operator, Constants.ButtonPorts.RT).onTrue(new MoveArmByAngle(-125, -288+360)); //mid
+    // Trigger collectCone = new JoystickButton(m_operator, Constants.ButtonPorts.START).onTrue(new MoveArmByAngle(120, -55)); //isuf mahmadaf
+    // Trigger collectCube = new JoystickButton(m_operator, Constants.ButtonPorts.BACK).onTrue(new MoveArmByAngle(105.49851545607983, -61.848)); //isuf mahmadaf
+    // Trigger cubeButton = new JoystickButton(m_operator, Constants.ButtonPorts.X).onTrue(new GripCube());
+    // Trigger switchModes = new JoystickButton(m_operator, Constants.ButtonPorts.LT).onTrue(new InstantCommand(()-> Gripper.getInstance().switchModes()));
+    // Trigger zeroPos = new JoystickButton(m_operator, Constants.ButtonPorts.LB).onTrue(new SetArmAngleToStartPos());
+    // Trigger moveFirstArm = new JoystickButton(m_operator, Constants.ButtonPorts.LEFT_JOYSTICK).onTrue(new MoveArmByAngleSupllier(m_operator::getX, m_operator::getY, 1));
+    // Trigger moveSecondArm = new JoystickButton(m_operator, Constants.ButtonPorts.LEFT_JOYSTICK).onTrue(new MoveArmByAngleSupllier(m_operator::getZ, m_operator::getTwist, 2));
+    // // Trigger upperButton = new POVButton(m_operator, 0).onTrue(new MoveArmByAngle(-128,160));
+    // // RobotContainer.up.whileTrue(upperBig);
+    // RobotContainer.up.onTrue(new MoveArmByAngle(-128,160));
+    Trigger closeGripper = new JoystickButton(m_operator, Constants.ButtonPorts.Y).onTrue(new CloseGripper());
+    Trigger openGripper = new JoystickButton(m_operator, Constants.ButtonPorts.B).onTrue(new OpenGripper());
+    Trigger closeToCube = new JoystickButton(m_operator, Constants.ButtonPorts.X).onTrue(new GripCube());
+
+    Trigger openArmToCollectCone = new JoystickButton(m_operator, Constants.ButtonPorts.START).onTrue(new MoveArmByAngle(120, -55));
+    Trigger openArmToCollectCube = new JoystickButton(m_operator, Constants.ButtonPorts.BACK).onTrue(new MoveArmByAngle(105.49851545607983, -61.848));
+
+    Trigger smallArmPlus = new JoystickButton(m_operator, Constants.ButtonPorts.RB).whileTrue(upperSmall);
+    Trigger smallArmMinus = new JoystickButton(m_operator, Constants.ButtonPorts.RT).whileTrue(lowerSmall);
+
+    
+    Trigger bigArmPlus = new JoystickButton(m_operator, Constants.ButtonPorts.LB).whileTrue(upperBig);
+    Trigger bigArmMinus = new JoystickButton(m_operator, Constants.ButtonPorts.LT).whileTrue(lowerBig);
+
+    RobotContainer.up.onTrue(new MoveArmByAngle(-128,160));
+    RobotContainer.down.onTrue(new MoveArmByAngle(-125, -288+360));
+
+    // RobotContainer.down.whileTrue(lowerBig);
     // RobotContainer.lefter.onTrue(new MoveSecStart());
-    RobotContainer.lefter.whileTrue(lowerSmall);
-    RobotContainer.righter.whileTrue(upperSmall);
+    // RobotContainer.lefter.whileTrue(lowerSmall);
+    // RobotContainer.righter.whileTrue(upperSmall);
     
     // Trigger rightButton = new JoystickButton(m_operator, Constants.ButtonPorts.).onTrue(new MoveArmByAngle(-125, -288+360)); //mid
     // Trigger downButton = new JoystickButton(m_operator, Constants.ButtonPorts.A).onTrue(new MoveArmByAngle(144, -45)); //isuf mahmadaf

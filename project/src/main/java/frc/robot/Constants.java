@@ -72,8 +72,7 @@ public final class Constants {
             ,FIRST_PICKUP_TOP_ANGLE = 120
             ,SECOND_PICKUP_TOP_ANGLE = 10
             ,FIRST_PICKUP_DOWN_ANGLE = 0
-            ,SECOND_PICKUP_DONW_ANGLE = 0;
-            
+            ,SECOND_PICKUP_DONW_ANGLE = 0
             ;
   }
   
@@ -212,6 +211,9 @@ public final static class Conversions {
         return (ticks * 360.0)/ TPR;
     }
 
+    public static double ticksToMeters(double ticks, double TPR) {
+      return Math.PI * 0.1524 * (ticks / TPR); // 0.1524 is the wheel diameter in meters
+    }
     
     public static double closestAngle(double a, double b) {
       // get direction
