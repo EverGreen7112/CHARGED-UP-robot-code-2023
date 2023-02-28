@@ -31,8 +31,8 @@ public class TurnUntilWithInRange extends CommandBase {
         if (!inRange()) {
             double rTurnAngDist = calcAng(curAngle - m_maxAng);
             double lTurnAngDist = calcAng(curAngle - m_minAng);
-            double finalSpeed = Constants.Speeds.constantSpeed
-                    + Constants.Speeds.constantSpeed * Math.min(rTurnAngDist, lTurnAngDist);
+            double finalSpeed = Constants.Speeds.constantSpeed.get()
+                    + Constants.Speeds.constantSpeed.get() * Math.min(rTurnAngDist, lTurnAngDist);
             if (rTurnAngDist < lTurnAngDist) {
                 Chassis.getInstance().turnRight(finalSpeed);
             } else {

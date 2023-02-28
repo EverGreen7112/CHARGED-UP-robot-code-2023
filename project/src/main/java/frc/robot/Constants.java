@@ -78,7 +78,7 @@ public final class Constants {
   }
   
   public final static  class Speeds{
-    public final static double constantSpeed = 0.4;
+    public final static Supplier<Double> constantSpeed = ()->SmartDashboard.getNumber("changeDriveSpeed",0.7);
     public final static double constantPropConst = 0.07;
     public final static Supplier<Double> driveMax = () -> {
       return SmartDashboard.getNumber("robot speed", 0.2);
@@ -186,12 +186,14 @@ public static class PidValues {
           ,_SECOND_ARM_KD = 0
           ,_SECOND_ARM_KF = 0.02,
           _SECOND_ARM_STALL_SPEED = 0.06,
+          //anti
           FIRST_ARM_ANTI_KP = 0.001,
-          FIRST_ARM_ANTI_KF = 0.3,
-          FIRST_ARM_BACK_KP = 0.00,
-          FIRST_ARM_BACK_KI = 0.00006,
-          FIRST_ARM_BACK_KD = 0.000000;
-         public final static double driveKp = 0.05;
+          FIRST_ARM_ANTI_KF = 0.25,
+          //bacl
+          FIRST_ARM_BACK_KP = 0.002,
+          FIRST_ARM_BACK_KI = 0.00000,
+          FIRST_ARM_BACK_KD = 0.000;
+         public final static double driveKp = 0.0465;
           public final static double driveKi = 0.007;
           public final static double driveKd = 0.007;
 }

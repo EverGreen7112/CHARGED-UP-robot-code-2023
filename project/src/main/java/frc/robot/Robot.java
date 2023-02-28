@@ -45,6 +45,7 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    SmartDashboard.putNumber("changeDriveSpeed",0.7);
   }
 
   /**
@@ -62,6 +63,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     SmartDashboard.putNumber("First Angle", Constants.Conversions.ticksToAngle(Arm.getInstance().getFirst().getSelectedSensorPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION));
     SmartDashboard.putNumber("Second Angle", Constants.Conversions.ticksToAngle(Arm.getInstance().getSecond().getSelectedSensorPosition(), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
+    RobotContainer.m_tankDriveCommand.schedule();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -108,6 +110,7 @@ public class Robot extends TimedRobot {
     
     // CommandScheduler.getInstance().schedule(new SetArmAngleToStartPos());
 }
+
 
   /** This function is called periodically during operator control. */
   @Override

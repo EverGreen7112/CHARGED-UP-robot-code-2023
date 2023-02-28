@@ -22,7 +22,7 @@ public class MoveArmByAngleSupllier extends CommandBase {
          addRequirements(Arm.getInstance());
         value1 = x;
         value2 = y;
-        m_mode = mode;
+        m_mode = mode; 
         if (mode == 1){
             m_motor = Arm.getInstance().getFirst();
         } else if (mode == 2){

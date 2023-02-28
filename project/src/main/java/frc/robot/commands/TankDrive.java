@@ -20,22 +20,23 @@ public class TankDrive extends CommandBase{
     
     @Override
     public void execute() {
-        if (Math.abs(m_leftSupllier.get()) < 0.3 && Math.abs(m_rightSupllier.get()) < 0.3) {
+        if (Math.abs(m_leftSupllier.get()) < 0.2 && Math.abs(m_rightSupllier.get()) < 0.2) {
+            Chassis.getInstance().stop();
             return;
         }
         double rSpeed=-m_rightSupllier.get();
         double lSpeed=-m_leftSupllier.get();
-        Vector2D v=new Vector2D(lSpeed, rSpeed);
-        if(v.getLength()>Constants.Speeds.driveMax.get()){
-            //normalizing the vector.
-            v.x/=(v.getLength());
-            v.y/=(v.getLength());
-            v.x*=Constants.Speeds.driveMax.get();
-            v.y*=Constants.Speeds.driveMax.get();
-        }
-        lSpeed=v.x;
-        rSpeed=v.y;
-        Chassis.getInstance().driveTank(lSpeed * Constants.Speeds.constantSpeed, rSpeed * Constants.Speeds.constantSpeed);
+        // Vector2D v=new Vector2D(lSpeed, rSpeed);
+        // if(v.getLength()>Constants.Speeds.driveMax.get()){
+        //     //normalizing the vector.
+        //     v.x/=(v.getLength());
+        //     v.y/=(v.getLength());
+        //     v.x*=Constants.Speeds.driveMax.get();
+        //     v.y*=Constants.Speeds.driveMax.get();
+        // }
+        // lSpeed=v.x;
+        // rSpeed=v.y;
+        Chassis.getInstance().driveTank(lSpeed * Constants.Speeds.constantSpeed.get(), rSpeed * Constants.Speeds.constantSpeed.get());
         
     }
 

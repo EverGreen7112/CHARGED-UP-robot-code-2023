@@ -58,7 +58,12 @@ public class Arm extends SubsystemBase {
     public ARMCONF getConf(){
       return m_currentconf;
     }
-
+    public double getFirstAngle(){
+      return Constants.Conversions.ticksToAngle(m_first.getSelectedSensorPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);
+    }
+    public double getSecondAngle(){
+      return Constants.Conversions.ticksToAngle(m_first.getSelectedSensorPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);
+    }
     public static Arm getInstance(){
         if(m_instance == null){
             m_instance = new Arm(new TalonFX(Constants.Ports.FIRST_ARM_PORT), new TalonFX(Constants.Ports.SECOND_ARM_PORT));
