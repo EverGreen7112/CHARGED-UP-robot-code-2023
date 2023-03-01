@@ -12,6 +12,9 @@ public class TankDrive extends CommandBase{
     private Supplier<Double> m_rightSupllier;
     private Supplier<Double> m_leftSupllier;
 
+    private boolean m_turbo;
+    private boolean m_slow;
+
     public TankDrive(Supplier<Double> left, Supplier<Double> right){
         addRequirements(Chassis.getInstance());
         m_rightSupllier=right;
@@ -26,16 +29,16 @@ public class TankDrive extends CommandBase{
         }
         double rSpeed=-m_rightSupllier.get();
         double lSpeed=-m_leftSupllier.get();
-        // Vector2D v=new Vector2D(lSpeed, rSpeed);
-        // if(v.getLength()>Constants.Speeds.driveMax.get()){
-        //     //normalizing the vector.
-        //     v.x/=(v.getLength());
-        //     v.y/=(v.getLength());
-        //     v.x*=Constants.Speeds.driveMax.get();
-        //     v.y*=Constants.Speeds.driveMax.get();
-        // }
-        // lSpeed=v.x;
-        // rSpeed=v.y;
+        Vector2D v=new Vector2D(lSpeed, rSpeed);
+        if(v.getLength()>Constants.Speeds.constantSpeed.get()){
+            //normalizing the vector.
+            v.x/=(v.getLength());
+            v.y/=(v.getLength());
+            v.x*=Constants.Speeds.constantSpeed.get();
+            v.y*=Constants.Speeds.constantSpeed.get();
+        }
+        lSpeed=v.x * ((m_turbo) ? Constants.Speeds.TURBO : (m_slow) ? Constants.Speeds.SLOW : 1);
+        rSpeed=v.y * ((m_turbo) ? Constants.Speeds.TURBO : (m_slow) ? Constants.Speeds.SLOW : 1);
         Chassis.getInstance().driveTank(lSpeed * Constants.Speeds.constantSpeed.get(), rSpeed * Constants.Speeds.constantSpeed.get());
         
     }
@@ -49,5 +52,12 @@ public class TankDrive extends CommandBase{
     public void end(boolean interrupted) {
         Chassis.getInstance().stop();
     }
+    public void setTurbo(boolean turbo){
+        m_turbo = turbo;
+    }
+    public void setSlow(boolean slow){
+        m_slow = slow;
+    }
+    
     
 }

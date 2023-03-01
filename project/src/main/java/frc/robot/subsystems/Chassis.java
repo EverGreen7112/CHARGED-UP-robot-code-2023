@@ -122,12 +122,12 @@ public class Chassis extends SubsystemBase {
         // SmartDashboard.putNumber("leftSideDistance", this.getLeftEncoderDist());
         // SmartDashboard.putNumber("rightSideDistance", this.getRightEncoderDist());
         
-        SmartDashboard.putNumber("x", m_vision.getX());
-        SmartDashboard.putNumber("y", m_vision.getY());
-        SmartDashboard.putNumber("z", m_vision.getZ());
+        // SmartDashboard.putNumber("x", m_vision.getX());
+        // SmartDashboard.putNumber("y", m_vision.getY());
+        // SmartDashboard.putNumber("z", m_vision.getZ());
         
-        SmartDashboard.putNumber("distanceR",Chassis.getInstance().getRightEncoderDist());
-        SmartDashboard.putNumber("distanceL",Chassis.getInstance().getLeftEncoderDist());
+      //  SmartDashboard.putNumber("distanceR",Chassis.getInstance().getRightEncoderDist());
+      //  SmartDashboard.putNumber("distanceL",Chassis.getInstance().getLeftEncoderDist());
 
       
 

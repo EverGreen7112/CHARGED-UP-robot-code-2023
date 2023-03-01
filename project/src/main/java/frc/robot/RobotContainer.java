@@ -12,7 +12,9 @@ import frc.robot.commands.MoveArmByAngleSupllier;
 import frc.robot.commands.MoveSecStart;
 import frc.robot.commands.OpenGripper;
 import frc.robot.commands.SetArmAngleToStartPos;
+import frc.robot.commands.Slow;
 import frc.robot.commands.TankDrive;
+import frc.robot.commands.Turbo;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Gripper;
@@ -43,7 +45,7 @@ public class RobotContainer {
   public static final Joystick m_leftStick = new Joystick(Constants.JoystickPorts.leftJoystick);
   public static final Joystick m_rightStick = new Joystick(Constants.JoystickPorts.rightJoystick);
   public static final Joystick m_operator = new Joystick(Constants.JoystickPorts.operator);
-  public static Command m_tankDriveCommand = new TankDrive(m_leftStick::getY,()->-1*m_rightStick.getY());
+  public static TankDrive m_tankDriveCommand = new TankDrive(m_leftStick::getY,()->-1*m_rightStick.getY());
   public static Trigger up = new POVButton(m_operator, 0);
   public static Trigger down = new POVButton(m_operator, 180);
   public static Trigger lefter = new POVButton(m_operator, 270);
@@ -118,6 +120,9 @@ private CommandBase lowerSmall = new RunCommand(()->Arm.getInstance().getSecond(
     
     Trigger bigArmPlus = new JoystickButton(m_operator, Constants.ButtonPorts.LB).whileTrue(upperBig);
     Trigger bigArmMinus = new JoystickButton(m_operator, Constants.ButtonPorts.LT).whileTrue(lowerBig);
+
+    Trigger turbo = new JoystickButton(m_leftStick, 1).whileTrue(new Turbo(m_tankDriveCommand));
+    Trigger slow = new JoystickButton(m_rightStick, 1).whileTrue(new Slow(m_tankDriveCommand));
 
     RobotContainer.up.onTrue(new MoveArmByAngle(-128,160));
     RobotContainer.down.onTrue(new MoveArmByAngle(-125, -288+360));
