@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.JoyStickSum;
 import frc.robot.commands.MoveArmByAngle;
 import frc.robot.commands.SetArmAngleToStartPos;
 import frc.robot.subsystems.Arm;
@@ -28,7 +29,6 @@ import frc.robot.subsystems.Gripper;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
   private RobotContainer m_robotContainer;
 
   /**
@@ -42,7 +42,7 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    SmartDashboard.putNumber("changeDriveSpeed",0.7);
+    
   }
 
   /**
@@ -55,17 +55,18 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
-    // and running subsystem periodic() methods.  This must be called from the robot's periodic
+    // and running subsystem periodic() methods. This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     SmartDashboard.putNumber("First Angle", Constants.Conversions.ticksToAngle(Arm.getInstance().getFirst().getSelectedSensorPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION));
     SmartDashboard.putNumber("Second Angle", Constants.Conversions.ticksToAngle(Arm.getInstance().getSecond().getSelectedSensorPosition(), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
+    //SmartDashboard.putNumber("distance", Constants.Conversions.ticksToMeters(Chassis.getInstance().getEncodersDist(), Constants.Values.DISTANCE_PER_TICK)); 
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-        CommandScheduler.getInstance().cancelAll();
+    CommandScheduler.getInstance().cancelAll();
   }
 
   @Override
@@ -80,7 +81,12 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     CommandScheduler.getInstance().cancelAll();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
+    Chassis.getInstance().m_leftFrontEngine.getEncoder().setPosition(0);
+    Chassis.getInstance().m_rightFrontEngine.getEncoder().setPosition(0);
+    Chassis.getInstance().m_leftMiddleEngine.getEncoder().setPosition(0);
+    Chassis.getInstance().m_rightMiddleEngine.getEncoder().setPosition(0);
+    Chassis.getInstance().m_leftBackEngine.getEncoder().setPosition(0);
+    Chassis.getInstance().m_rightBackEngine.getEncoder().setPosition(0);
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -110,10 +116,12 @@ public class Robot extends TimedRobot {
     RobotContainer.m_tankDriveCommand.schedule();
   }
 
-
+  JoyStickSum j = new JoyStickSum();
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    // j.schedule();
+    
   }
 
   @Override
@@ -129,11 +137,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called once when the robot is first started up. */
   @Override
-  public void simulationInit() {
-  }
+  public void simulationInit() {}
 
   /** This function is called periodically whilst in simulation. */
   @Override
-  public void simulationPeriodic() {
-  }
+  public void simulationPeriodic() {}
 }

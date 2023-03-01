@@ -148,7 +148,7 @@ public final class Values {
       FIRST_ARM_TICKS_PER_REVOLUTION = 2048*16.9142857,
       SECOND_ARM_TICKS_PER_REVOLUTION = 2048*10.8;
   public static final double 
-  TANKDRIVE_WHEEL_RADIUS = 0.76,
+  TANKDRIVE_WHEEL_RADIUS = 0.076,
   DISTANCE_BETWEEN_LEFT_TO_RIGHT = 0.5; //in meters;
   //swerve constants
   public static final double
@@ -189,9 +189,9 @@ public static class PidValues {
 
           //anti
           FIRST_ARM_ANTI_KP = 0.001,
-          FIRST_ARM_ANTI_KF = 0.25,
+          FIRST_ARM_ANTI_KF = 0.2,
           //bacl
-          FIRST_ARM_BACK_KP = 0.002,
+          FIRST_ARM_BACK_KP = 0.1,
           FIRST_ARM_BACK_KI = 0.00000,
           FIRST_ARM_BACK_KD = 0.000;
          public final static double driveKp = 0.0465;

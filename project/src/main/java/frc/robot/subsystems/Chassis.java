@@ -22,8 +22,8 @@ public class Chassis extends SubsystemBase {
     private AHRS m_navx;
 
     // front are leaders
-    private CANSparkMax m_leftFrontEngine, m_leftMiddleEngine, m_leftBackEngine;
-    private CANSparkMax m_rightFrontEngine, m_rightMiddleEngine, m_rightBackEngine;
+    public CANSparkMax m_leftFrontEngine, m_leftMiddleEngine, m_leftBackEngine;
+    public CANSparkMax m_rightFrontEngine, m_rightMiddleEngine, m_rightBackEngine;
     private double m_time;
     private double m_deltaTime;
     private double m_lastRightDist;
@@ -38,13 +38,14 @@ public class Chassis extends SubsystemBase {
         m_leftMiddleEngine = new CANSparkMax(Constants.Ports.LEFT_MIDDLE_PORT, MotorType.kBrushless);
         m_leftBackEngine = new CANSparkMax(Constants.Ports.LEFT_BACK_PORT, MotorType.kBrushless);
         m_rightFrontEngine = new CANSparkMax(Constants.Ports.RIGHT_FRONT_PORT, MotorType.kBrushless);
-        m_rightMiddleEngine = new CANSparkMax(Constants.Ports.RIGHT_MIDDLE_PORT, MotorType.kBrushless);
+       m_rightMiddleEngine = new CANSparkMax(Constants.Ports.RIGHT_MIDDLE_PORT, MotorType.kBrushless);
         m_rightBackEngine = new CANSparkMax(Constants.Ports.RIGHT_BACK_PORT, MotorType.kBrushless);
 
         leftMotors = new MotorControllerGroup(m_leftFrontEngine, m_leftMiddleEngine, m_leftBackEngine);
         rightMotors = new MotorControllerGroup(m_rightFrontEngine, m_rightMiddleEngine, m_rightBackEngine);
 
         rightMotors.setInverted(true);
+
 
         m_leftMiddleEngine.follow(m_leftFrontEngine);
         m_leftBackEngine.follow(m_leftFrontEngine);
@@ -127,9 +128,6 @@ public class Chassis extends SubsystemBase {
         
       //  SmartDashboard.putNumber("distanceR",Chassis.getInstance().getRightEncoderDist());
       //  SmartDashboard.putNumber("distanceL",Chassis.getInstance().getLeftEncoderDist());
-
-      
-
     }
 
     public static Chassis getInstance() {
@@ -169,7 +167,7 @@ public class Chassis extends SubsystemBase {
     }
 
     public double getRightEncoderDist() {
-        return m_rightFrontEngine.getEncoder().getPosition() / 10.97;
+        return -1 * m_rightFrontEngine.getEncoder().getPosition() / 10.97;
     }
 
     public double getLeftEncoderDist() {

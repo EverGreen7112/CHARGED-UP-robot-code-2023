@@ -16,7 +16,8 @@ public class SetArmAngleToStartPos extends CommandBase {
     double m_firstArmAngle;
     double m_secondArmAngle;
     double startDir = 1;
-    boolean cross =false;
+    boolean cross = false;
+
     public SetArmAngleToStartPos() {
         addRequirements(Arm.getInstance());
         m_first = Arm.getInstance().getFirst();
@@ -29,7 +30,7 @@ public class SetArmAngleToStartPos extends CommandBase {
         // m_first.config_kF(0, 0.35);
         m_second.config_kP(0, 0.02);
         startDir = Math.signum(Arm.getInstance().getFirstAngle());
-        m_second.config_kF(0,-1.3*Math.signum(Arm.getInstance().getFirstAngle()));
+        m_second.config_kF(0, -1.3 * Math.signum(Arm.getInstance().getFirstAngle()));
         m_second.config_kD(0, 0.0003);
         m_second.config_kI(0, 0);
         m_first.config_kF(0, 0);
@@ -38,8 +39,10 @@ public class SetArmAngleToStartPos extends CommandBase {
         m_first.config_kD(0, PidValues.FIRST_ARM_BACK_KD);
         endd = false;
     }
+
     private boolean endd;
-    private int stage =0;
+    private int stage = 0;
+
     @Override
     public void execute() {
         m_firstArmAngle = Constants.Conversions.ticksToAngle(m_first.getSelectedSensorPosition(),
@@ -48,71 +51,71 @@ public class SetArmAngleToStartPos extends CommandBase {
                 Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION);
         m_second.set(TalonFXControlMode.Position,
                 Constants.Conversions.angleToTicks(-1,
-                Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
-                // m_second.config_kF(0,-1.3*Math.signum(Arm.getInstance().getFirstAngle()));
-   //     SmartDashboard.putNumber("motor22", m_second.getMotorOutputPercent());
-   //     SmartDashboard.putBoolean("enterIf", m_secondArmAngle < Constants.ArmValues.LIMIT_TOLERANCE + 0
-               // && m_secondArmAngle > 0 - Constants.ArmValues.LIMIT_TOLERANCE;;
-        switch (stage) {
-            case 1:
-                
-                break;
-        
-            default:
-                break;
-        }
+                        Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
+        // m_second.config_kF(0,-1.3*Math.signum(Arm.getInstance().getFirstAngle()));
+        // SmartDashboard.putNumber("motor22", m_second.getMotorOutputPercent());
+        // SmartDashboard.putBoolean("enterIf", m_secondArmAngle <
+        // Constants.ArmValues.LIMIT_TOLERANCE + 0
+        // && m_secondArmAngle > 0 - Constants.ArmValues.LIMIT_TOLERANCE;;
+        // switch (stage) {
+        // case 1:
+
+        // break;
+
+        // default:
+        // break;
+        // }
         if (m_secondArmAngle < Constants.ArmValues.LIMIT_TOLERANCE + 0
-        && m_secondArmAngle > 0 - Constants.ArmValues.LIMIT_TOLERANCE) {
-            if (m_firstArmAngle > 0) {
-                m_first.set(TalonFXControlMode.PercentOutput, -PidValues.FIRST_ARM_ANTI_KF +
-                        -1 * Constants.PidValues.FIRST_ARM_ANTI_KP
-                                * (Constants.ArmValues.FIRST_ARM_R_MAX - m_firstArmAngle));
-                // m_first.set(TalonFXControlMode.PercentOutput,-PidValues.FIRST_ARM_ANTI_KF);
-                // m_first.set(TalonFXControlMode.PercentOutput, -1 *
-                // Constants.PidValues.FIRST_ARM_ANTI_KP
-                // * (Constants.ArmValues.FIRST_ARM_R_MAX - m_firstArmAngle));
-            }
-            else {
-                m_first.set(TalonFXControlMode.PercentOutput, PidValues.FIRST_ARM_ANTI_KF + -1
-                        * Constants.PidValues.FIRST_ARM_ANTI_KP
-                        * (Constants.ArmValues.FIRST_ARM_L_MIN - m_firstArmAngle));
-                // m_first.set(TalonFXControlMode.PercentOutput,PidValues.FIRST_ARM_ANTI_KF);
-                // m_first.set(TalonFXControlMode.PercentOutput,-1*Constants.PidValues.FIRST_ARM_ANTI_KP*(Constants.ArmValues.FIRST_ARM_L_MIN-m_firstArmAngle));
-
-            }
-
+                && m_secondArmAngle > 0 - Constants.ArmValues.LIMIT_TOLERANCE) {
             if (m_firstArmAngle < 23 && m_firstArmAngle > -23) {
+                SmartDashboard.putBoolean("heyy", true);
+                
+                    m_first.set(TalonFXControlMode.Position, -1);
+                
+            } else {
+                SmartDashboard.putBoolean("heyy", false);
                 if (m_firstArmAngle > 0) {
-                    m_first.set(TalonFXControlMode.Position, -1);
+                    m_first.set(TalonFXControlMode.PercentOutput, -PidValues.FIRST_ARM_ANTI_KF +
+                            -1 * Constants.PidValues.FIRST_ARM_ANTI_KP
+                                    * (Constants.ArmValues.FIRST_ARM_R_MAX - m_firstArmAngle));
+                    // m_first.set(TalonFXControlMode.PercentOutput,-PidValues.FIRST_ARM_ANTI_KF);
+                    // m_first.set(TalonFXControlMode.PercentOutput, -1 *
+                    // Constants.PidValues.FIRST_ARM_ANTI_KP
+                    // * (Constants.ArmValues.FIRST_ARM_R_MAX - m_firstArmAngle));
                 } else {
-                    m_first.set(TalonFXControlMode.Position, -1);
+                    m_first.set(TalonFXControlMode.PercentOutput, PidValues.FIRST_ARM_ANTI_KF + -1
+                            * Constants.PidValues.FIRST_ARM_ANTI_KP
+                            * (Constants.ArmValues.FIRST_ARM_L_MIN - m_firstArmAngle));
+
+                    // m_first.set(TalonFXControlMode.PercentOutput,PidValues.FIRST_ARM_ANTI_KF);
+                    // m_first.set(TalonFXControlMode.PercentOutput,-1*Constants.PidValues.FIRST_ARM_ANTI_KP*(Constants.ArmValues.FIRST_ARM_L_MIN-m_firstArmAngle));
 
                 }
-            if(!cross && startDir != (Math.signum(Arm.getInstance().getFirstAngle()))){
-                cross =true;
-                m_first.config_kP(0, PidValues.FIRST_ARM_BACK_KP*2);
             }
-            } else {
-                
-            }
+
+            // if(!cross && startDir != (Math.signum(Arm.getInstance().getFirstAngle()))){
+            // cross =true;
+            // m_first.config_kP(0, -1*PidValues.FIRST_ARM_BACK_KP);
+            // }
+
         }
-       // SmartDashboard.putNumber("test124", m_first.getMotorOutputPercent());
+        // SmartDashboard.putNumber("test124", m_first.getMotorOutputPercent());
         // }else{
-      
+
         // }
 
     }
 
     // @Override
     // public boolean isFinished() {
-    //     return m_firstArmAngle < 8 && m_firstArmAngle > -8;
+    // return m_firstArmAngle < 8 && m_firstArmAngle > -8;
     // }
 
     // @Override
     // public void end(boolean interrupted) {
-    //     endd = true;
-    //     SmartDashboard.putBoolean("endddd", endd)
-    //     m_first.config_kP(0, Constants.PidValues.FIRST_ARM_KP);
-    //     m_first.config_kF(0, 0);
+    // endd = true;
+    // SmartDashboard.putBoolean("endddd", endd)
+    // m_first.config_kP(0, Constants.PidValues.FIRST_ARM_KP);
+    // m_first.config_kF(0, 0);
     // }
 }
