@@ -83,7 +83,6 @@ public class Chassis extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("robot speed", 0.4);
 
         // double deltaRight = Chassis.getInstance().getRightEncoderDist() - m_lastRightDist;
         // m_lastRightDist = Chassis.getInstance().getRightEncoderDist();

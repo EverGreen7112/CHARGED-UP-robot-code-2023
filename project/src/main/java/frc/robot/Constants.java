@@ -82,7 +82,7 @@ public final class Constants {
     // public final static Supplier<Double> driveMax = () -> {
     //   return SmartDashboard.getNumber("robot speed", 0.2);
     // };
-     public static final double GRIPPER_OPEN_SPEED = 0.15;
+    public static final double GRIPPER_OPEN_SPEED = 0.15;
     public static final double GRIPPER_CLOSE_SPEED = -0.25;
     public static final double GRIPPER_DEFUALT_CLOSE = -0.15;
 
@@ -173,10 +173,10 @@ public final class Values {
 
 public static class PidValues {
   public static double 
-          FIRST_ARM_KP = 0.05,
+          FIRST_ARM_KP = 0.07,
           FIRST_ARM_KI = 0.000006
           ,FIRST_ARM_KD = 0
-          ,SECOND_ARM_KP = 0.01
+          ,SECOND_ARM_KP = 0.02
           ,SECOND_ARM_KI = 0
           ,SECOND_ARM_KD = 0
           ,SECOND_ARM_KF = 0.02,
@@ -186,6 +186,7 @@ public static class PidValues {
           ,_SECOND_ARM_KD = 0
           ,_SECOND_ARM_KF = 0.02,
           _SECOND_ARM_STALL_SPEED = 0.06,
+
           //anti
           FIRST_ARM_ANTI_KP = 0.001,
           FIRST_ARM_ANTI_KF = 0.25,
@@ -194,8 +195,8 @@ public static class PidValues {
           FIRST_ARM_BACK_KI = 0.00000,
           FIRST_ARM_BACK_KD = 0.000;
          public final static double driveKp = 0.0465;
-          public final static double driveKi = 0.007;
-          public final static double driveKd = 0.007;
+         public final static double driveKi = 0.007;
+         public final static double driveKd = 0.007;
 }
 
 public final static class Conversions {

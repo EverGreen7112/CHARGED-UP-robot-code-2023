@@ -3,7 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Chassis;
 
-public class AutoMoveBack extends CommandBase {
+public class AutoRouteOne extends CommandBase {
     //private double startDistance;
     private long m_startTime;
     private long m_timeToMove;

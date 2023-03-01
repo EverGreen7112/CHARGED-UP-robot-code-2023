@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.MoveArmByAngle;
 import frc.robot.commands.SetArmAngleToStartPos;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Gripper;
 
 /**
@@ -59,7 +60,6 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     SmartDashboard.putNumber("First Angle", Constants.Conversions.ticksToAngle(Arm.getInstance().getFirst().getSelectedSensorPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION));
     SmartDashboard.putNumber("Second Angle", Constants.Conversions.ticksToAngle(Arm.getInstance().getSecond().getSelectedSensorPosition(), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
-    RobotContainer.m_tankDriveCommand.schedule();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -69,15 +69,16 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledPeriodic() {
-  }
+  public void disabledPeriodic() {}
 
   /**
    * This autonomous runs the autonomous command selected by your
    * {@link RobotContainer} class.
    */
+
   @Override
   public void autonomousInit() {
+    CommandScheduler.getInstance().cancelAll();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -89,6 +90,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
+    
   }
   
   @Override
@@ -105,7 +107,8 @@ public class Robot extends TimedRobot {
     Arm.getInstance().getSecond().set(TalonFXControlMode.PercentOutput , 0);
     
     // CommandScheduler.getInstance().schedule(new SetArmAngleToStartPos());
-}
+    RobotContainer.m_tankDriveCommand.schedule();
+  }
 
 
   /** This function is called periodically during operator control. */

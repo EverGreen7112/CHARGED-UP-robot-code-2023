@@ -30,13 +30,13 @@ public class TankDrive extends CommandBase{
         double rSpeed=-m_rightSupllier.get();
         double lSpeed=-m_leftSupllier.get();
         Vector2D v=new Vector2D(lSpeed, rSpeed);
-        if(v.getLength()>Constants.Speeds.constantSpeed.get()){
-            //normalizing the vector.
-            v.x/=(v.getLength());
-            v.y/=(v.getLength());
-            v.x*=Constants.Speeds.constantSpeed.get();
-            v.y*=Constants.Speeds.constantSpeed.get();
-        }
+        // if(v.getLength()>Constants.Speeds.constantSpeed.get()){
+        //     //normalizing the vector.
+        //     v.x/=(v.getLength());
+        //     v.y/=(v.getLength());
+        //     v.x*=Constants.Speeds.constantSpeed.get();
+        //     v.y*=Constants.Speeds.constantSpeed.get();
+        // }
         lSpeed=v.x * ((m_turbo) ? Constants.Speeds.TURBO : (m_slow) ? Constants.Speeds.SLOW : 1);
         rSpeed=v.y * ((m_turbo) ? Constants.Speeds.TURBO : (m_slow) ? Constants.Speeds.SLOW : 1);
         Chassis.getInstance().driveTank(lSpeed * Constants.Speeds.constantSpeed.get(), rSpeed * Constants.Speeds.constantSpeed.get());

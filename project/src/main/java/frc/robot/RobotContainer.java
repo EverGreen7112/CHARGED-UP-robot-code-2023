@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.commands.ArmTwoStayInZero;
 import frc.robot.commands.Autos;
 import frc.robot.commands.CloseGripper;
 import frc.robot.commands.GripCube;
@@ -45,7 +46,7 @@ public class RobotContainer {
   public static final Joystick m_leftStick = new Joystick(Constants.JoystickPorts.leftJoystick);
   public static final Joystick m_rightStick = new Joystick(Constants.JoystickPorts.rightJoystick);
   public static final Joystick m_operator = new Joystick(Constants.JoystickPorts.operator);
-  public static TankDrive m_tankDriveCommand = new TankDrive(m_leftStick::getY,()->-1*m_rightStick.getY());
+  public static TankDrive m_tankDriveCommand = new TankDrive(m_leftStick::getY,m_rightStick::getY);
   public static Trigger up = new POVButton(m_operator, 0);
   public static Trigger down = new POVButton(m_operator, 180);
   public static Trigger lefter = new POVButton(m_operator, 270);
@@ -110,6 +111,7 @@ private CommandBase lowerSmall = new RunCommand(()->Arm.getInstance().getSecond(
     Trigger closeGripper = new JoystickButton(m_operator, Constants.ButtonPorts.Y).onTrue(new CloseGripper());
     Trigger openGripper = new JoystickButton(m_operator, Constants.ButtonPorts.B).onTrue(new OpenGripper());
     Trigger closeToCube = new JoystickButton(m_operator, Constants.ButtonPorts.X).onTrue(new GripCube());
+    Trigger armTwoToZero = new JoystickButton(m_operator, Constants.ButtonPorts.A).onTrue(new ArmTwoStayInZero());
 
     Trigger openArmToCollectCone = new JoystickButton(m_operator, Constants.ButtonPorts.START).onTrue(new MoveArmByAngle(120, -55));
     Trigger openArmToCollectCube = new JoystickButton(m_operator, Constants.ButtonPorts.BACK).onTrue(new MoveArmByAngle(105.49851545607983, -61.848));
@@ -122,7 +124,7 @@ private CommandBase lowerSmall = new RunCommand(()->Arm.getInstance().getSecond(
     Trigger bigArmMinus = new JoystickButton(m_operator, Constants.ButtonPorts.LT).whileTrue(lowerBig);
 
     Trigger turbo = new JoystickButton(m_leftStick, 1).whileTrue(new Turbo(m_tankDriveCommand));
-    Trigger slow = new JoystickButton(m_rightStick, 1).whileTrue(new Slow(m_tankDriveCommand));
+    Trigger slow = new JoystickButton(m_rightStick, 2).whileTrue(new Slow(m_tankDriveCommand));
 
     RobotContainer.up.onTrue(new MoveArmByAngle(-128,160));
     RobotContainer.down.onTrue(new MoveArmByAngle(-125, -288+360));

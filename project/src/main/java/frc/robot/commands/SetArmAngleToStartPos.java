@@ -36,7 +36,7 @@ public class SetArmAngleToStartPos extends CommandBase {
         m_first.config_kP(0, PidValues.FIRST_ARM_BACK_KP);
         m_first.config_kI(0, PidValues.FIRST_ARM_BACK_KI);
         m_first.config_kD(0, PidValues.FIRST_ARM_BACK_KD);
-        endd =false;
+        endd = false;
     }
     private boolean endd;
     private int stage =0;
@@ -50,9 +50,9 @@ public class SetArmAngleToStartPos extends CommandBase {
                 Constants.Conversions.angleToTicks(-1,
                 Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
                 // m_second.config_kF(0,-1.3*Math.signum(Arm.getInstance().getFirstAngle()));
-        SmartDashboard.putNumber("motor22", m_second.getMotorOutputPercent());
-        SmartDashboard.putBoolean("enterIf", m_secondArmAngle < Constants.ArmValues.LIMIT_TOLERANCE + 0
-                && m_secondArmAngle > 0 - Constants.ArmValues.LIMIT_TOLERANCE);
+   //     SmartDashboard.putNumber("motor22", m_second.getMotorOutputPercent());
+   //     SmartDashboard.putBoolean("enterIf", m_secondArmAngle < Constants.ArmValues.LIMIT_TOLERANCE + 0
+               // && m_secondArmAngle > 0 - Constants.ArmValues.LIMIT_TOLERANCE;;
         switch (stage) {
             case 1:
                 
@@ -71,7 +71,8 @@ public class SetArmAngleToStartPos extends CommandBase {
                 // m_first.set(TalonFXControlMode.PercentOutput, -1 *
                 // Constants.PidValues.FIRST_ARM_ANTI_KP
                 // * (Constants.ArmValues.FIRST_ARM_R_MAX - m_firstArmAngle));
-            } else {
+            }
+            else {
                 m_first.set(TalonFXControlMode.PercentOutput, PidValues.FIRST_ARM_ANTI_KF + -1
                         * Constants.PidValues.FIRST_ARM_ANTI_KP
                         * (Constants.ArmValues.FIRST_ARM_L_MIN - m_firstArmAngle));
@@ -95,7 +96,7 @@ public class SetArmAngleToStartPos extends CommandBase {
                 
             }
         }
-        SmartDashboard.putNumber("test124", m_first.getMotorOutputPercent());
+       // SmartDashboard.putNumber("test124", m_first.getMotorOutputPercent());
         // }else{
       
         // }
