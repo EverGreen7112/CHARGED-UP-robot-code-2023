@@ -105,7 +105,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    CommandScheduler.cancelAll();
+    CommandScheduler.getInstance().cancelAll();
     Arm.getFirst().set(TalonFXControlMode.PercentOutput , 0);
     Arm.getSecond().set(TalonFXControlMode.PercentOutput , 0);
     
@@ -124,14 +124,14 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
-    CommandScheduler.cancelAll();
+    CommandScheduler.getInstance().cancelAll();
     (new DriveDistanceByEncoders(1.2, 0.1)).schedule();
   }
 
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    CommandScheduler.run();
+    CommandScheduler.getInstance().run();
   }
 
   /** This function is called once when the robot is first started up. */
