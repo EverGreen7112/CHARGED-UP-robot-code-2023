@@ -172,7 +172,7 @@ public final class Values {
   ,SWERVE_LENGTH = 0
   ,SWERVE_WIDTH = 0
   ,MAX_SWERVE_SPEED = 3 //in m/s
-  ,DISTANCE_PER_TICK= 2 * Math.PI *TANKDRIVE_WHEEL_RADIUS/10.97;  // TODO: check
+  ,DISTANCE_PER_TICK= 1 / 22.3 //2 * Math.PI *TANKDRIVE_WHEEL_RADIUS/10.97;  // TODO: check
   ;
   
 }
