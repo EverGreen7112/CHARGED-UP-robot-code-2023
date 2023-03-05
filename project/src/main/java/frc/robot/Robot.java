@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods. This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
-    CommandScheduler.run();
+    CommandScheduler.getInstance().run();
     SmartDashboard.putNumber("First Angle", Constants.Conversions.ticksToAngle(Arm.getFirst().getSelectedSensorPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION));
     SmartDashboard.putNumber("Second Angle", Constants.Conversions.ticksToAngle(Arm.getSecond().getSelectedSensorPosition(), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
     //SmartDashboard.putNumber("distance", Constants.Conversions.ticksToMeters(Chassis.getEncodersDist(), Constants.Values.DISTANCE_PER_TICK)); 
@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    CommandScheduler.cancelAll();
+    CommandScheduler.getInstance().cancelAll();
   }
 
   @Override
@@ -75,7 +75,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    CommandScheduler.cancelAll();
+    CommandScheduler.getInstance().cancelAll();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     Chassis.m_leftFrontEngine.getEncoder().setPosition(0);
     Chassis.m_rightFrontEngine.getEncoder().setPosition(0);

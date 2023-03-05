@@ -95,7 +95,7 @@ public class Commands {
         PIDCommand rotateToOverlap = new PIDSetPointCommand(
                 rotateController,
                 () -> Chassis.getRobotAngle(), endAng,
-                Chassis.getInstance()::turnLeft, (Subsystem) Chassis.getInstance());// might be turn right
+                Chassis::turnLeft, (Subsystem) Chassis.getInstance());// might be turn right
         //create pid command to drive for p and e to overlap
         DoubleSupplier overlapSetPoint = () -> {
             double cAng = turnUntilWithinRange.endAng();

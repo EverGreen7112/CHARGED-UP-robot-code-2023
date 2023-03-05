@@ -37,13 +37,7 @@ public class Gripper extends SubsystemBase{
     private Command lastCom = null;
     @Override
     public  void periodic() {
-        lastCom = Gripper.getCurrentCommand() == null?lastCom :Gripper.getCurrentCommand();
-        SmartDashboard.putString("curCom", Gripper.getCurrentCommand() == null?"null":Gripper.getCurrentCommand().getClass().toString());
-        if(lastCom!=null &&lastCom.getClass().toString().equals(CloseGripper.class.toString()) && Arm.getConf() !=ARMCONF.MID){
-            closeGripper();
-        }else if(Gripper.getCurrentCommand() == null) {
-            stop();
-        }
+        lastCom = Gripper.getInstance().getCurrentCommand() == null?lastCom :Gripper.getInstance().getCurrentCommand();
     }
     public static void moveGripper(double speed){
         m_motor.set(ControlMode.PercentOutput, speed);
