@@ -1,10 +1,11 @@
-package frc.robot.commands;
+package frc.robot.commands.Chassis;
 
 import javax.swing.text.AbstractDocument.BranchElement;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
+import frc.robot.commands.Gripper.OpenGripper;
 import frc.robot.subsystems.Chassis;
 
 public class AutoRouteOne extends CommandBase {

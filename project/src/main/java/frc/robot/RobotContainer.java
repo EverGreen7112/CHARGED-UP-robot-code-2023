@@ -4,21 +4,21 @@
 
 package frc.robot;
 
-import frc.robot.commands.ArmTwoStayInZero;
-import frc.robot.commands.AutoMove;
-import frc.robot.commands.Autos;
-import frc.robot.commands.CloseGripper;
-import frc.robot.commands.GripCube;
-import frc.robot.commands.MotionMagicArmPID;
-import frc.robot.commands.MoveArmByAngle;
-import frc.robot.commands.MoveArmByAngleSupllier;
-import frc.robot.commands.MoveSecStart;
-import frc.robot.commands.OpenGripper;
-import frc.robot.commands.SetArmAngleToStartPos;
-import frc.robot.commands.Slow;
-import frc.robot.commands.TankDrive;
-import frc.robot.commands.Turbo;
-import frc.robot.commands.TurnArmTwo;
+import frc.robot.commands.Arm.ArmTwoStayInZero;
+import frc.robot.commands.Arm.MotionMagicArmPID;
+import frc.robot.commands.Arm.MoveArmByAngle;
+import frc.robot.commands.Arm.MoveArmByAngleSupllier;
+import frc.robot.commands.Arm.MoveSecStart;
+import frc.robot.commands.Arm.SetArmAngleToStartPos;
+import frc.robot.commands.Arm.TurnArmTwo;
+import frc.robot.commands.Chassis.AutoMove;
+import frc.robot.commands.Chassis.Autos;
+import frc.robot.commands.Chassis.Slow;
+import frc.robot.commands.Chassis.TankDrive;
+import frc.robot.commands.Chassis.Turbo;
+import frc.robot.commands.Gripper.CloseGripper;
+import frc.robot.commands.Gripper.GripCube;
+import frc.robot.commands.Gripper.OpenGripper;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.ExampleSubsystem;

@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.Gripper;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
