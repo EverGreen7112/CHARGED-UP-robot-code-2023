@@ -24,24 +24,30 @@ public class SetArmAngleToStartPos extends CommandBase {
         m_second = Arm.getInstance().getSecond();
     }
 
+    boolean hardDir = false;
+
     @Override
     public void initialize() {
         // m_first.config_kP(0, Constants.PidValues.FIRST_ARM_KP * 1.6);
         // m_first.config_kF(0, 0.35);
-        m_second.config_kP(0, 0.02);
+        m_second.config_kP(0, 0.035);
         startDir = Math.signum(Arm.getInstance().getFirstAngle());
-        m_second.config_kF(0, -1.3 * Math.signum(Arm.getInstance().getFirstAngle()));
+        m_second.config_kF(0, -0.7 * Math.signum(Arm.getInstance().getFirstAngle()));
         m_second.config_kD(0, 0.0003);
         m_second.config_kI(0, 0);
         m_first.config_kF(0, 0);
-        m_first.config_kP(0, PidValues.FIRST_ARM_BACK_KP);
+        m_first.config_kP(0, PidValues.FIRST_ARM_BACK_KP * -3);
         m_first.config_kI(0, PidValues.FIRST_ARM_BACK_KI);
         m_first.config_kD(0, PidValues.FIRST_ARM_BACK_KD);
+        m_firstArmAngle = Constants.Conversions.ticksToAngle(m_first.getSelectedSensorPosition(),
+                Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);
+        hardDir = m_firstArmAngle > 0;
         endd = false;
     }
 
     private boolean endd;
-    private int stage = 0;
+    // private int stage = 0;
+    boolean stage2 = false;
 
     @Override
     public void execute() {
@@ -49,6 +55,7 @@ public class SetArmAngleToStartPos extends CommandBase {
                 Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);
         m_secondArmAngle = Constants.Conversions.ticksToAngle(m_second.getSelectedSensorPosition(),
                 Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION);
+
         m_second.set(TalonFXControlMode.Position,
                 Constants.Conversions.angleToTicks(-1,
                         Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
@@ -65,15 +72,23 @@ public class SetArmAngleToStartPos extends CommandBase {
         // default:
         // break;
         // }
-        if (m_secondArmAngle < Constants.ArmValues.LIMIT_TOLERANCE + 0
-                && m_secondArmAngle > 0 - Constants.ArmValues.LIMIT_TOLERANCE) {
+        if (m_secondArmAngle < Constants.ArmValues.LIMIT_TOLERANCE
+                && m_secondArmAngle > -1 * Constants.ArmValues.LIMIT_TOLERANCE) {
+            // if (stage2 || hardDir && m_firstArmAngle < 0) {
+            //     if (!stage2) {
+            //         m_first.config_kP(0, PidValues.FIRST_ARM_BACK_KP * 2);
+            //     }
+            //     stage2 = true;
+            // }
+            m_first.set(TalonFXControlMode.Position, 0);
             if (m_firstArmAngle < 23 && m_firstArmAngle > -23) {
-                SmartDashboard.putBoolean("heyy", true);
-                
-                    m_first.set(TalonFXControlMode.Position, -1);
-                
-            } else {
-                SmartDashboard.putBoolean("heyy", false);
+                SmartDashboard.putBoolean("isInRange", true);
+
+                m_first.set(TalonFXControlMode.Position, 0);
+
+            } 
+            else {
+                SmartDashboard.putBoolean("isInRange", false);
                 if (m_firstArmAngle > 0) {
                     m_first.set(TalonFXControlMode.PercentOutput, -PidValues.FIRST_ARM_ANTI_KF +
                             -1 * Constants.PidValues.FIRST_ARM_ANTI_KP
@@ -82,7 +97,8 @@ public class SetArmAngleToStartPos extends CommandBase {
                     // m_first.set(TalonFXControlMode.PercentOutput, -1 *
                     // Constants.PidValues.FIRST_ARM_ANTI_KP
                     // * (Constants.ArmValues.FIRST_ARM_R_MAX - m_firstArmAngle));
-                } else {
+                }
+                else {
                     m_first.set(TalonFXControlMode.PercentOutput, PidValues.FIRST_ARM_ANTI_KF + -1
                             * Constants.PidValues.FIRST_ARM_ANTI_KP
                             * (Constants.ArmValues.FIRST_ARM_L_MIN - m_firstArmAngle));

@@ -167,11 +167,13 @@ public class Chassis extends SubsystemBase {
     }
 
     public double getRightEncoderDist() {
-        return -1 * m_rightFrontEngine.getEncoder().getPosition() / 10.97;
+        // return -1 * m_rightFrontEngine.getEncoder().getPosition() / 10.97;
+        return -1 * m_rightFrontEngine.getEncoder().getPosition();
     }
 
     public double getLeftEncoderDist() {
-        return m_leftFrontEngine.getEncoder().getPosition() / 10.97;
+        // return m_leftFrontEngine.getEncoder().getPosition() / 10.97;
+        return m_leftFrontEngine.getEncoder().getPosition();
     }
 
     public double getVelocity() {

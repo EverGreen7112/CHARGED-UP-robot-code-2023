@@ -51,7 +51,13 @@ public final class Constants {
     //limit switch ports
     CLOSED_LIMIT_SWITCH = 7,
     OPENED_LIMIT_SWITCH = 9,
-    CUBE_LIMIT_SWITCH = 8;
+    CUBE_LIMIT_SWITCH = 8,
+
+
+    // vision ports
+    REFLECTOR_PORT = 5802,
+    RECIEVE_LOCATION_PORT = 5800
+    ;
   }
 
 
@@ -67,7 +73,7 @@ public final class Constants {
             ,SECOND_ARM_MIN = 0
             ,SECOND_ARM_MAX = 180
             ,JOYSTICK_TOLERANCE = 0.5
-            ,LIMIT_TOLERANCE = 8
+            ,LIMIT_TOLERANCE = 20
             //angles for the arms
             ,FIRST_PICKUP_TOP_ANGLE = 120
             ,SECOND_PICKUP_TOP_ANGLE = 10
@@ -125,14 +131,14 @@ public final class Constants {
   public static class PIDS {
 
     public final static double driveKp = 0.05;
-    public final static double driveKi = 0.007;
+    public final static double driveKi = 0.009;
     public final static double driveKd = 0.007;
     public final static double drivePTolerance = 0.02;
     public final static double driveVTolerance = 1;
 
-    public final static double rotateKp = 0.05 / 75;
-    public final static double rotateKi = 0.007 / 75;
-    public final static double rotateKd = 0.007 / 75;
+    public final static double rotateKp = 0.05 / 40;
+    public final static double rotateKi = 0.0 / 20;
+    public final static double rotateKd = 0.0 / 20;
     public final static double rotatePTolerance = 2;
     public final static double rotateVTolerance = 10;
 

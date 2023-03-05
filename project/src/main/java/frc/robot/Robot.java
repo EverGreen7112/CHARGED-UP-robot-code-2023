@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.DriveDistanceByEncoders;
 import frc.robot.commands.JoyStickSum;
 import frc.robot.commands.MoveArmByAngle;
 import frc.robot.commands.SetArmAngleToStartPos;
@@ -88,9 +89,10 @@ public class Robot extends TimedRobot {
     Chassis.getInstance().m_leftBackEngine.getEncoder().setPosition(0);
     Chassis.getInstance().m_rightBackEngine.getEncoder().setPosition(0);
     // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
+    // if (m_autonomousCommand != null) {
+    //   m_autonomousCommand.schedule();
+    // }
+    (new DriveDistanceByEncoders(3, 0.01, 0.01)).schedule();
   }
 
   /** This function is called periodically during autonomous. */
@@ -128,11 +130,13 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    (new DriveDistanceByEncoders(1.2, 0.1)).schedule();
   }
 
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
+    CommandScheduler.getInstance().run();
   }
 
   /** This function is called once when the robot is first started up. */

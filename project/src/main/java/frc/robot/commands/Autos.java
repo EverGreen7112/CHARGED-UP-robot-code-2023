@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -16,6 +17,7 @@ public final class Autos {
     return new AutoMove(1.6, 0.3);
    // return new SequentialCommandGroup(new MoveArmByAngle(128,160),new AutoMove(1.6, 0.3), new OpenGripper(), new CloseGripper(),new AutoMove(1.6, -0.3));
     //return new SequentialCommandGroup(new MoveArmByAngle(-128,160), new OpenGripper(), new CloseGripper());
+    //return new SequentialCommandGroup( new TurnArmTwo(-25), new OpenGripper(), new CloseGripper(), new AutoMove(1.6, 0.3));
   }
 
 
