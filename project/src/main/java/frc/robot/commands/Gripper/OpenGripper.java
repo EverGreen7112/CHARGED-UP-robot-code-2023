@@ -13,7 +13,7 @@ public class OpenGripper extends CommandBase {
 
     public OpenGripper() {
         addRequirements(Gripper.getInstance());
-        limitSwitch = Gripper.getInstance().getOpened();
+        limitSwitch = Gripper.getOpened();
     }
 
     @Override

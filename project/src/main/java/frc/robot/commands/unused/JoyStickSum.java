@@ -16,7 +16,7 @@ public class JoyStickSum extends CommandBase{
             if(curval < 1 && curval > -1){
                 curval += RobotContainer.m_operator.getY() * factor;
             }
-            Arm.getInstance().getSecond().set(TalonFXControlMode.PercentOutput, curval);
+            Arm.getSecond().set(TalonFXControlMode.PercentOutput, curval);
         }
     }
     

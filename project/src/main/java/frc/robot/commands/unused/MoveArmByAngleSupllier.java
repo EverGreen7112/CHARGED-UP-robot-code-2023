@@ -24,9 +24,9 @@ public class MoveArmByAngleSupllier extends CommandBase {
         value2 = y;
         m_mode = mode; 
         if (mode == 1){
-            m_motor = Arm.getInstance().getFirst();
+            m_motor = Arm.getFirst();
         } else if (mode == 2){
-            m_motor = Arm.getInstance().getSecond();
+            m_motor = Arm.getSecond();
         }
     }
 

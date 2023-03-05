@@ -12,7 +12,7 @@ import frc.robot.subsystems.Arm;
 public class ArmTwoStayInZero extends CommandBase{
     TalonFX m_second;
     public ArmTwoStayInZero(){
-        m_second = Arm.getInstance().getSecond();
+        m_second = Arm.getSecond();
         m_second.config_kP(0, Constants.PidValues.SECOND_ARM_KP * 2.5);
         
     }

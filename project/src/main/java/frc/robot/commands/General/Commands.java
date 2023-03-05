@@ -83,7 +83,7 @@ public class Commands {
         // create pid command to drive to desired distance
         PIDController driveController = new PIDController(Constants.PIDS.driveKp, Constants.PIDS.driveKi,
                 Constants.PIDS.driveKd);
-        double startLocation = Chassis.getInstance().getEncodersDist();
+        double startLocation = Chassis.getEncodersDist();
         driveController.setTolerance(Constants.PIDS.drivePTolerance, Constants.PIDS.driveVTolerance);
         CommandBase driveToIntresection = new ChasisSetPointPosPID(intresectingSetPoint);
 
@@ -94,7 +94,7 @@ public class Commands {
         rotateController.enableContinuousInput(0, 360);
         PIDCommand rotateToOverlap = new PIDSetPointCommand(
                 rotateController,
-                () -> Chassis.getInstance().getRobotAngle(), endAng,
+                () -> Chassis.getRobotAngle(), endAng,
                 Chassis.getInstance()::turnLeft, (Subsystem) Chassis.getInstance());// might be turn right
         //create pid command to drive for p and e to overlap
         DoubleSupplier overlapSetPoint = () -> {

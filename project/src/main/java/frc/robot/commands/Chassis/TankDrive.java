@@ -24,7 +24,7 @@ public class TankDrive extends CommandBase{
     @Override
     public void execute() {
         if (Math.abs(m_leftSupllier.get()) < 0.2 && Math.abs(m_rightSupllier.get()) < 0.2) {
-            Chassis.getInstance().stop();
+            Chassis.stop();
             return;
         }
         double rSpeed=-m_rightSupllier.get();
@@ -39,7 +39,7 @@ public class TankDrive extends CommandBase{
         // }
         lSpeed=v.x * ((m_turbo) ? Constants.Speeds.TURBO : (m_slow) ? Constants.Speeds.SLOW : 1);
         rSpeed=v.y * ((m_turbo) ? Constants.Speeds.TURBO : (m_slow) ? Constants.Speeds.SLOW : 1);
-        Chassis.getInstance().driveTank(lSpeed * Constants.Speeds.constantSpeed.get(), rSpeed * Constants.Speeds.constantSpeed.get());
+        Chassis.driveTank(lSpeed * Constants.Speeds.constantSpeed.get(), rSpeed * Constants.Speeds.constantSpeed.get());
         
     }
 
@@ -50,7 +50,7 @@ public class TankDrive extends CommandBase{
 
     @Override
     public void end(boolean interrupted) {
-        Chassis.getInstance().stop();
+        Chassis.stop();
     }
     public void setTurbo(boolean turbo){
         m_turbo = turbo;

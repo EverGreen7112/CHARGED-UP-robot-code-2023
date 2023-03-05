@@ -30,8 +30,8 @@ public class MoveArmByPos extends CommandBase {
     public void execute(){
         CalcAngles();
         if (Possible()) {
-            Arm.getInstance().turnFirstTo(arm1Angle);
-            Arm.getInstance().turnSecondTo(arm2Angle);
+            Arm.turnFirstTo(arm1Angle);
+            Arm.turnSecondTo(arm2Angle);
         }
     }
 

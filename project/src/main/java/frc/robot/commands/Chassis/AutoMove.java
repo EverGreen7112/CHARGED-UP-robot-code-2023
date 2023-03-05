@@ -23,12 +23,12 @@ public class AutoMove extends CommandBase {
     @Override
     public void initialize() {
         m_time = System.currentTimeMillis();
-        Chassis.getInstance().driveStraight(m_speed);   
+        Chassis.driveStraight(m_speed);   
 
     }
     @Override
     public void end(boolean interrupted) {
-      Chassis.getInstance().stop();
+      Chassis.stop();
     }
 
     @Override

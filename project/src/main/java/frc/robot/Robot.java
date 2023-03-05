@@ -53,16 +53,16 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods. This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
-    CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("First Angle", Constants.Conversions.ticksToAngle(Arm.getInstance().getFirst().getSelectedSensorPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION));
-    SmartDashboard.putNumber("Second Angle", Constants.Conversions.ticksToAngle(Arm.getInstance().getSecond().getSelectedSensorPosition(), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
-    //SmartDashboard.putNumber("distance", Constants.Conversions.ticksToMeters(Chassis.getInstance().getEncodersDist(), Constants.Values.DISTANCE_PER_TICK)); 
+    CommandScheduler.run();
+    SmartDashboard.putNumber("First Angle", Constants.Conversions.ticksToAngle(Arm.getFirst().getSelectedSensorPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION));
+    SmartDashboard.putNumber("Second Angle", Constants.Conversions.ticksToAngle(Arm.getSecond().getSelectedSensorPosition(), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
+    //SmartDashboard.putNumber("distance", Constants.Conversions.ticksToMeters(Chassis.getEncodersDist(), Constants.Values.DISTANCE_PER_TICK)); 
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    CommandScheduler.getInstance().cancelAll();
+    CommandScheduler.cancelAll();
   }
 
   @Override
@@ -75,14 +75,14 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    CommandScheduler.getInstance().cancelAll();
+    CommandScheduler.cancelAll();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    Chassis.getInstance().m_leftFrontEngine.getEncoder().setPosition(0);
-    Chassis.getInstance().m_rightFrontEngine.getEncoder().setPosition(0);
-    Chassis.getInstance().m_leftMiddleEngine.getEncoder().setPosition(0);
-    Chassis.getInstance().m_rightMiddleEngine.getEncoder().setPosition(0);
-    Chassis.getInstance().m_leftBackEngine.getEncoder().setPosition(0);
-    Chassis.getInstance().m_rightBackEngine.getEncoder().setPosition(0);
+    Chassis.m_leftFrontEngine.getEncoder().setPosition(0);
+    Chassis.m_rightFrontEngine.getEncoder().setPosition(0);
+    Chassis.m_leftMiddleEngine.getEncoder().setPosition(0);
+    Chassis.m_rightMiddleEngine.getEncoder().setPosition(0);
+    Chassis.m_leftBackEngine.getEncoder().setPosition(0);
+    Chassis.m_rightBackEngine.getEncoder().setPosition(0);
     // schedule the autonomous command (example)
     // if (m_autonomousCommand != null) {
     //   m_autonomousCommand.schedule();
@@ -105,11 +105,11 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    CommandScheduler.getInstance().cancelAll();
-    Arm.getInstance().getFirst().set(TalonFXControlMode.PercentOutput , 0);
-    Arm.getInstance().getSecond().set(TalonFXControlMode.PercentOutput , 0);
+    CommandScheduler.cancelAll();
+    Arm.getFirst().set(TalonFXControlMode.PercentOutput , 0);
+    Arm.getSecond().set(TalonFXControlMode.PercentOutput , 0);
     
-    // CommandScheduler.getInstance().schedule(new SetArmAngleToStartPos());
+    // CommandScheduler.schedule(new SetArmAngleToStartPos());
     RobotContainer.m_tankDriveCommand.schedule();
   }
 
@@ -124,14 +124,14 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
-    CommandScheduler.getInstance().cancelAll();
+    CommandScheduler.cancelAll();
     (new DriveDistanceByEncoders(1.2, 0.1)).schedule();
   }
 
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    CommandScheduler.getInstance().run();
+    CommandScheduler.run();
   }
 
   /** This function is called once when the robot is first started up. */

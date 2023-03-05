@@ -19,8 +19,8 @@ public class MoveArmByAngle extends CommandBase{
     boolean doNothing =false;
     public MoveArmByAngle(double firstTargetAngle, double secondTargetAngle) {
         addRequirements(Arm.getInstance());
-        m_first = Arm.getInstance().getFirst();
-        m_second = Arm.getInstance().getSecond();
+        m_first = Arm.getFirst();
+        m_second = Arm.getSecond();
         m_firstArmTarget = firstTargetAngle;
         m_secondArmTarget = secondTargetAngle;
     }
@@ -70,7 +70,7 @@ public class MoveArmByAngle extends CommandBase{
     public void end(boolean interrupted) {
         if(!doNothing) { 
             m_second.config_kF(0, Constants.PidValues.SECOND_ARM_KF);
-            //m_second.set(TalonFXControlMode.PercentOutput,m_firstArmTarget <0 ? Gripper.getInstance().getCurGamePiece(): -1*Gripper.getInstance().getCurGamePiece().getKstall());//check whether positive power or negative
+            //m_second.set(TalonFXControlMode.PercentOutput,m_firstArmTarget <0 ? Gripper.getCurGamePiece(): -1*Gripper.getCurGamePiece().getKstall());//check whether positive power or negative
             double stallTarget = (m_firstArmTarget < 0) ? Constants.PidValues.SECOND_ARM_STALL_SPEED :  -Constants.PidValues.SECOND_ARM_STALL_SPEED ;
             m_second.set(TalonFXControlMode.PercentOutput , stallTarget);
             m_finished = true;       

@@ -13,7 +13,7 @@ public class GripCube extends CommandBase {
 
     public GripCube() {
         addRequirements(Gripper.getInstance());
-        limitSwitch = Gripper.getInstance().getCube();
+        limitSwitch = Gripper.getCube();
     }
 
     @Override
