@@ -130,14 +130,14 @@ public final class Constants {
 
   public static class PIDS {
 
-    public final static double driveKp = 0.05;
+    public final static double driveKp = 0.07;
     public final static double driveKi = 0.009;
     public final static double driveKd = 0.007;
     public final static double drivePTolerance = 0.02;
     public final static double driveVTolerance = 1;
 
     public final static double rotateKp = 0.05 / 40;
-    public final static double rotateKi = 0.0 / 20;
+    public final static double rotateKi = 0.001;
     public final static double rotateKd = 0.0 / 20;
     public final static double rotatePTolerance = 2;
     public final static double rotateVTolerance = 10;

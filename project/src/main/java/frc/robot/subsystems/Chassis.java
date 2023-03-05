@@ -66,8 +66,10 @@ public class Chassis extends SubsystemBase {
         m_rightFrontEngine.getPIDController().setD(PIDS.velKd, 1);
         m_rightFrontEngine.getPIDController().setI(PIDS.velKi, 1);
 
-        m_leftFrontEngine.getEncoder().setPositionConversionFactor(Constants.Values.DISTANCE_PER_TICK);
-        m_rightFrontEngine.getEncoder().setPositionConversionFactor(Constants.Values.DISTANCE_PER_TICK);
+        // m_leftFrontEngine.getEncoder().setPositionConversionFactor(Constants.Values.DISTANCE_PER_TICK);
+        // m_rightFrontEngine.getEncoder().setPositionConversionFactor(Constants.Values.DISTANCE_PER_TICK);
+        m_leftFrontEngine.getEncoder().setPositionConversionFactor(1);
+        m_rightFrontEngine.getEncoder().setPositionConversionFactor(1);
 
         m_leftFrontEngine.getEncoder().setPosition(0);
         m_rightFrontEngine.getEncoder().setPosition(0);
@@ -80,6 +82,10 @@ public class Chassis extends SubsystemBase {
         m_deltaTime = 0;
 
         m_vision = new Vision(5800);
+    }
+
+    public static AHRS getGyro(){
+        return getInstance().m_navx;
     }
 
     @Override
@@ -159,7 +165,7 @@ public class Chassis extends SubsystemBase {
     }
 
     public double getRobotAngle() {
-        return m_navx.getAngle();
+        return m_navx.getYaw();
     }
 
     public double getEncodersDist() {

@@ -4,6 +4,7 @@ package frc.robot;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -43,7 +44,6 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    
   }
 
   /**
@@ -62,6 +62,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("First Angle", Constants.Conversions.ticksToAngle(Arm.getInstance().getFirst().getSelectedSensorPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION));
     SmartDashboard.putNumber("Second Angle", Constants.Conversions.ticksToAngle(Arm.getInstance().getSecond().getSelectedSensorPosition(), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
     //SmartDashboard.putNumber("distance", Constants.Conversions.ticksToMeters(Chassis.getInstance().getEncodersDist(), Constants.Values.DISTANCE_PER_TICK)); 
+    SmartDashboard.putNumber("pitch", Chassis.getGyro().getPitch());
+    SmartDashboard.putNumber("roll", Chassis.getGyro().getRoll());
+    SmartDashboard.putNumber("yaw", Chassis.getGyro().getYaw());
+    SmartDashboard.putNumber("ticks", Chassis.getInstance().getEncodersDist());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -71,7 +75,8 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+  }
 
   /**
    * This autonomous runs the autonomous command selected by your
@@ -81,6 +86,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     CommandScheduler.getInstance().cancelAll();
+    Chassis.getGyro().reset();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     Chassis.getInstance().m_leftFrontEngine.getEncoder().setPosition(0);
     Chassis.getInstance().m_rightFrontEngine.getEncoder().setPosition(0);
@@ -92,7 +98,7 @@ public class Robot extends TimedRobot {
     // if (m_autonomousCommand != null) {
     //   m_autonomousCommand.schedule();
     // }
-    (new DriveDistanceByEncoders(3, 0.01, 0.01)).schedule();
+    (new DriveDistanceByEncoders(2, 0.01, 0.05)).schedule();
   }
 
   /** This function is called periodically during autonomous. */

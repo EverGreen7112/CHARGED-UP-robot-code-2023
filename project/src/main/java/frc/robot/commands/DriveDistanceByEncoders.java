@@ -57,12 +57,12 @@ public class DriveDistanceByEncoders extends CommandBase {
   public void execute() {
     SmartDashboard.putNumber("distance", Chassis.getInstance().getEncodersDist() - (_targetDistance - _distance));
     SmartDashboard.putNumber("angle: ", Chassis.getInstance().getRobotAngle());
-    double distanceSpeed = _feedForward + _distancePID.calculate(Chassis.getInstance().getEncodersDist(), _targetDistance);
+    double distanceSpeed = _feedForward + (_distancePID.calculate(Chassis.getInstance().getEncodersDist(), _targetDistance));
     double angleSpeed = _anglePID.calculate(Chassis.getInstance().getRobotAngle(), 0);
-    Vector2D v = new Vector2D(MathUtil.clamp(distanceSpeed - angleSpeed, -1.0, 1.0), MathUtil.clamp(distanceSpeed + angleSpeed, -1.0, 1.0));
+    Vector2D v = new Vector2D(MathUtil.clamp(distanceSpeed + angleSpeed, -1.0, 1.0), MathUtil.clamp(distanceSpeed - angleSpeed, -1.0, 1.0));
     v.normalize();
     v.multiply(distanceSpeed * Math.sqrt(2));
-    Chassis.getInstance().driveTank(v.x, v.y);
+    Chassis.getInstance().driveTank(v.x * (Math.signum(_distance)), v.y  * (Math.signum(_distance)));
   }
 
   // Called once the command ends or is interrupted.
