@@ -93,7 +93,7 @@ public class Robot extends TimedRobot {
     // if (m_autonomousCommand != null) {
     //   m_autonomousCommand.schedule();
     // }
-    (new DriveDistanceByEncoders(2, 0.01, 0.05)).schedule();
+    (new DriveDistanceByEncoders(-1, 0.01, 0.05)).schedule();
   }
 
   /** This function is called periodically during autonomous. */
