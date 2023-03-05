@@ -130,15 +130,15 @@ public final class Constants {
 
   public static class PIDS {
 
-    public final static double driveKp = 0.07;
+    public final static double driveKp = 0.05;
     public final static double driveKi = 0.009;
     public final static double driveKd = 0.007;
     public final static double drivePTolerance = 0.02;
     public final static double driveVTolerance = 1;
 
     public final static double rotateKp = 0.05 / 40;
-    public final static double rotateKi = 0.001;
-    public final static double rotateKd = 0.0 / 20;
+    public final static double rotateKi = 0.001 / 20;
+    public final static double rotateKd = 0.003 / 20;
     public final static double rotatePTolerance = 2;
     public final static double rotateVTolerance = 10;
 
@@ -172,7 +172,7 @@ public final class Values {
   ,SWERVE_LENGTH = 0
   ,SWERVE_WIDTH = 0
   ,MAX_SWERVE_SPEED = 3 //in m/s
-  ,DISTANCE_PER_TICK= 1 / 22.3 //2 * Math.PI *TANKDRIVE_WHEEL_RADIUS/10.97;  // TODO: check
+  ,DISTANCE_PER_TICK= 2 * Math.PI *TANKDRIVE_WHEEL_RADIUS/10.97;  // TODO: check
   ;
   
 }
