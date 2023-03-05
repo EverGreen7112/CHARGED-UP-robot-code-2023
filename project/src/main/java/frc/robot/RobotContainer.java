@@ -16,9 +16,6 @@ import frc.robot.commands.Gripper.CloseGripper;
 import frc.robot.commands.Gripper.GripCube;
 import frc.robot.commands.Gripper.OpenGripper;
 import frc.robot.commands.unused.ArmTwoStayInZero;
-import frc.robot.commands.unused.MotionMagicArmPID;
-import frc.robot.commands.unused.MoveArmByAngleSupllier;
-import frc.robot.commands.unused.MoveSecStart;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -111,7 +108,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    Trigger rtButton = new JoystickButton(m_operator, 12).onTrue(new MotionMagicArmPID());
+    // Trigger rtButton = new JoystickButton(m_operator, 12).onTrue(new MotionMagicArmPID());
     Trigger closeGripper = new JoystickButton(m_operator, Constants.ButtonPorts.Y).onTrue(new CloseGripper());
     Trigger openGripper = new JoystickButton(m_operator, Constants.ButtonPorts.B).onTrue(new OpenGripper());
     Trigger closeToCube = new JoystickButton(m_operator, Constants.ButtonPorts.X).onTrue(new GripCube());

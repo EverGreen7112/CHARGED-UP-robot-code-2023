@@ -83,10 +83,6 @@ public class Robot extends TimedRobot {
     Chassis.m_rightMiddleEngine.getEncoder().setPosition(0);
     Chassis.m_leftBackEngine.getEncoder().setPosition(0);
     Chassis.m_rightBackEngine.getEncoder().setPosition(0);
-    // schedule the autonomous command (example)
-    // if (m_autonomousCommand != null) {
-    //   m_autonomousCommand.schedule();
-    // }
     (new DriveDistanceByEncoders(3, 0.01, 0.01)).schedule();
   }
 
@@ -98,18 +94,12 @@ public class Robot extends TimedRobot {
   
   @Override
   public void teleopInit() {
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
     CommandScheduler.getInstance().cancelAll();
     Arm.getFirst().set(TalonFXControlMode.PercentOutput , 0);
     Arm.getSecond().set(TalonFXControlMode.PercentOutput , 0);
-    
-    // CommandScheduler.schedule(new SetArmAngleToStartPos());
     RobotContainer.m_tankDriveCommand.schedule();
   }
 

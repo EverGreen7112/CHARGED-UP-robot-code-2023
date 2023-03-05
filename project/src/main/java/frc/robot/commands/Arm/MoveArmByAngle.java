@@ -62,15 +62,12 @@ public class MoveArmByAngle extends CommandBase{
 
     @Override
     public boolean isFinished() {
-    //   return (m_secondArmAngle < 4 +  m_secondArmTarget && m_secondArmAngle > m_secondArmTarget - 4)||m_secondArmAngle>180;
           return (m_secondArmAngle < 7 +  m_secondArmTarget && m_secondArmAngle > m_secondArmTarget - 7)||doNothing;
 
     }
     @Override
     public void end(boolean interrupted) {
         if(!doNothing) { 
-            m_second.config_kF(0, Constants.PidValues.SECOND_ARM_KF);
-            //m_second.set(TalonFXControlMode.PercentOutput,m_firstArmTarget <0 ? Gripper.getCurGamePiece(): -1*Gripper.getCurGamePiece().getKstall());//check whether positive power or negative
             double stallTarget = (m_firstArmTarget < 0) ? Constants.PidValues.SECOND_ARM_STALL_SPEED :  -Constants.PidValues.SECOND_ARM_STALL_SPEED ;
             m_second.set(TalonFXControlMode.PercentOutput , stallTarget);
             m_finished = true;       

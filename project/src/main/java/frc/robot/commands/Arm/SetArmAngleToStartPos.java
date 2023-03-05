@@ -27,8 +27,6 @@ public class SetArmAngleToStartPos extends CommandBase {
 
     @Override
     public void initialize() {
-        // m_first.config_kP(0, Constants.PidValues.FIRST_ARM_KP * 1.6);
-        // m_first.config_kF(0, 0.35);
         m_second.config_kP(0, 0.035);
         startDir = Math.signum(Arm.getFirstAngle());
         m_second.config_kF(0, -0.7 * Math.signum(Arm.getFirstAngle()));
