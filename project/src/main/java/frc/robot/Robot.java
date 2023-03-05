@@ -14,6 +14,7 @@ import frc.robot.commands.unused.DriveDistanceByEncoders;
 import frc.robot.commands.unused.JoyStickSum;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Chassis;
+import frc.robot.subsystems.Gripper;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -39,6 +40,9 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    Chassis.getInstance();
+    Arm.getInstance();
+    Gripper.getInstance();
   }
 
   /**
@@ -78,6 +82,7 @@ public class Robot extends TimedRobot {
    * {@link RobotContainer} class.
    */
 
+   
   @Override
   public void autonomousInit() {
     CommandScheduler.getInstance().cancelAll();
@@ -93,7 +98,7 @@ public class Robot extends TimedRobot {
     // if (m_autonomousCommand != null) {
     //   m_autonomousCommand.schedule();
     // }
-    (new DriveDistanceByEncoders(-1, 0.01, 0.05)).schedule();
+    (new DriveDistanceByEncoders(-2, 0.01, 0.05)).schedule();
   }
 
   /** This function is called periodically during autonomous. */
@@ -104,13 +109,14 @@ public class Robot extends TimedRobot {
   
   @Override
   public void teleopInit() {
+    Chassis.resetGyro();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
     CommandScheduler.getInstance().cancelAll();
     Arm.getFirst().set(TalonFXControlMode.PercentOutput , 0);
     Arm.getSecond().set(TalonFXControlMode.PercentOutput , 0);
-    RobotContainer.m_tankDriveCommand.schedule();
+    // RobotContainer.m_tankDriveCommand.schedule();
   }
 
   JoyStickSum j = new JoyStickSum();
