@@ -4,10 +4,7 @@
 
 package frc.robot;
 
-import frc.robot.commands.Arm.ArmTwoStayInZero;
-import frc.robot.commands.Arm.MotionMagicArmPID;
 import frc.robot.commands.Arm.MoveArmByAngle;
-import frc.robot.commands.Arm.MoveArmByAngleSupllier;
 import frc.robot.commands.Arm.MoveSecStart;
 import frc.robot.commands.Arm.SetArmAngleToStartPos;
 import frc.robot.commands.Arm.TurnArmTwo;
@@ -19,6 +16,9 @@ import frc.robot.commands.Chassis.Turbo;
 import frc.robot.commands.Gripper.CloseGripper;
 import frc.robot.commands.Gripper.GripCube;
 import frc.robot.commands.Gripper.OpenGripper;
+import frc.robot.commands.unused.ArmTwoStayInZero;
+import frc.robot.commands.unused.MotionMagicArmPID;
+import frc.robot.commands.unused.MoveArmByAngleSupllier;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.ExampleSubsystem;
