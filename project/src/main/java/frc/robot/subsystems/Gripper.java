@@ -9,15 +9,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.commands.CloseGripper;
+import frc.robot.commands.Gripper.CloseGripper;
 import frc.robot.subsystems.Arm.ARMCONF;
 
 public class Gripper extends SubsystemBase{
     
     private static Gripper m_instance;
-    private TalonSRX m_motor;
-    private DigitalInput m_open, m_close, m_cube;
-    private boolean mode; //true is cone and false is else  
+    private static TalonSRX m_motor;
+    private static DigitalInput m_open, m_close, m_cube;
+    private static boolean mode; //true is cone and false is else  
 
     public Gripper(TalonSRX motor){
         m_motor = motor;
@@ -36,50 +36,44 @@ public class Gripper extends SubsystemBase{
     }
     private Command lastCom = null;
     @Override
-    public void periodic() {
+    public  void periodic() {
         lastCom = Gripper.getInstance().getCurrentCommand() == null?lastCom :Gripper.getInstance().getCurrentCommand();
-        SmartDashboard.putString("curCom", Gripper.getInstance().getCurrentCommand() == null?"null":Gripper.getInstance().getCurrentCommand().getClass().toString());
-        if(lastCom!=null &&lastCom.getClass().toString().equals(CloseGripper.class.toString()) && Arm.getInstance().getConf() !=ARMCONF.MID){
-            closeGripper();
-        }else if(Gripper.getInstance().getCurrentCommand() == null) {
-            stop();
-        }
     }
-    public void moveGripper(double speed){
+    public static void moveGripper(double speed){
         m_motor.set(ControlMode.PercentOutput, speed);
     }
     
 
-    public void closeGripper(){
+    public static void closeGripper(){
         moveGripper(Constants.Speeds.GRIPPER_CLOSE_SPEED);
     }
-    public void closeGripperCube(){
+    public static void closeGripperCube(){
         moveGripper(Constants.Speeds.GRIPPER_CLOSE_CUBE);
     }
 
-    public void openGripper(){
+    public static void openGripper(){
         moveGripper(Constants.Speeds.GRIPPER_OPEN_SPEED);
     }
 
-    public void stop(){
+    public static void stop(){
         moveGripper(0);
     }
 
-    public DigitalInput getOpened(){
+    public static DigitalInput getOpened(){
         return m_open;
     }
 
-    public DigitalInput getClosed(){
+    public static DigitalInput getClosed(){
         return m_close;
     }
 
-    public DigitalInput getCube(){
+    public static DigitalInput getCube(){
         return m_cube;
     }
-    public boolean getCurrentMode(){
+    public static boolean getCurrentMode(){
         return mode;
     }
-    public void switchModes(){
+    public static void switchModes(){
         mode = !mode;
         SmartDashboard.putBoolean("mode", mode);
         if(mode){ 

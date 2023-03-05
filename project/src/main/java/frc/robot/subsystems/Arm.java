@@ -10,8 +10,8 @@ import frc.robot.Constants.PidValues;
 
 public class Arm extends SubsystemBase {
 
-    private TalonFX m_first, m_second;
-    private double m_firstMinRange, m_firstMaxRange, m_secondMinRange, m_secondMaxRange;
+    private static TalonFX m_first, m_second;
+    private static double m_firstMinRange, m_firstMaxRange, m_secondMinRange, m_secondMaxRange;
     private static Arm m_instance;
     public static enum ARMCONF{
       FORWARD,MID,BACK;
@@ -55,13 +55,13 @@ public class Arm extends SubsystemBase {
           m_currentconf = ARMCONF.BACK;
         }
     }
-    public ARMCONF getConf(){
+    public static ARMCONF getConf(){
       return m_currentconf;
     }
-    public double getFirstAngle(){
+    public static double getFirstAngle(){
       return Constants.Conversions.ticksToAngle(m_first.getSelectedSensorPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);
     }
-    public double getSecondAngle(){
+    public static double getSecondAngle(){
       return Constants.Conversions.ticksToAngle(m_first.getSelectedSensorPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);
     }
     public static Arm getInstance(){
@@ -71,7 +71,7 @@ public class Arm extends SubsystemBase {
         return m_instance;
     }
 
-    public void turnFirstTo(double angle) {
+    public static void turnFirstTo(double angle) {
           double m_firstAngle = Constants.Conversions.ticksToAngle(m_first.getSelectedSensorPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);
           double m_firstTarget = Constants.Conversions.angleToTicks(m_firstAngle + Constants.Conversions.closestAngle(m_firstAngle, angle), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);
           if (m_firstAngle <= m_firstMaxRange && m_firstAngle >= m_firstMinRange){
@@ -83,13 +83,13 @@ public class Arm extends SubsystemBase {
             }
           }
     }
-    public void setSecondFPID(double kf1,double kp1,double ki1, double kd1){
+    public static void setSecondFPID(double kf1,double kp1,double ki1, double kd1){
       m_second.config_kF(0, kf1);
       m_second.config_kP(0, kp1);
       m_second.config_kI(0, ki1);
       m_second.config_kD(0, kd1);
     }
-    public void turnSecondTo(double angle) {
+    public static void turnSecondTo(double angle) {
           double m_secondAngle = Constants.Conversions.ticksToAngle(m_second.getSelectedSensorPosition(), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION);
           double m_secondTarget = Constants.Conversions.angleToTicks(m_secondAngle + Constants.Conversions.closestAngle(m_secondAngle, angle), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION);
           if (m_secondAngle <= m_secondMaxRange && m_secondAngle >= m_secondMinRange){
@@ -102,11 +102,11 @@ public class Arm extends SubsystemBase {
           }
     }
 
-    public TalonFX getFirst(){
+    public static TalonFX getFirst(){
       return m_first;
     }
 
-    public TalonFX getSecond(){
+    public static TalonFX getSecond(){
       return m_second;
     }
 

@@ -7,7 +7,7 @@ public class ResetArmToZeroMotionMagic extends CommandBase{
     // @Override
     // public void initialize() {
     //     addRequirements(Arm.getInstance());
-    //     Arm.getInstance().getFirst().configMoti
+    //     Arm.getFirst().configMoti
         
     // }
     // @Override

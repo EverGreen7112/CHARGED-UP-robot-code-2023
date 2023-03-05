@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.unused;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
@@ -13,8 +13,8 @@ public class ArmStayInPlace extends CommandBase{
     private TalonFX m_first;
     private TalonFX m_second;
     public ArmStayInPlace(){
-        m_first = Arm.getInstance().getFirst();
-        m_second = Arm.getInstance().getSecond();
+        m_first = Arm.getFirst();
+        m_second = Arm.getSecond();
     }
 
     @Override
