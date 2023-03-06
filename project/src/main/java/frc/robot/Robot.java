@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.Autos;
 import frc.robot.commands.DriveDistanceByEncoders;
 import frc.robot.commands.JoyStickSum;
 import frc.robot.commands.MoveArmByAngle;
@@ -66,6 +67,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("roll", Chassis.getGyro().getRoll());
     SmartDashboard.putNumber("yaw", Chassis.getGyro().getYaw());
     SmartDashboard.putNumber("ticks", Chassis.getInstance().getEncodersDist());
+    
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -94,12 +96,13 @@ public class Robot extends TimedRobot {
     Chassis.getInstance().m_rightMiddleEngine.getEncoder().setPosition(0);
     Chassis.getInstance().m_leftBackEngine.getEncoder().setPosition(0);
     Chassis.getInstance().m_rightBackEngine.getEncoder().setPosition(0);
-    // schedule the autonomous command (example)
-    // if (m_autonomousCommand != null) {
-    //   m_autonomousCommand.schedule();
-    // }
-    (new DriveDistanceByEncoders(-1, 0.01, 0.05)).schedule();
-  }
+   // schedule the autonomous command (example)
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.schedule();
+    }
+    // (new DriveDistanceByEncoders(1, 0.01, 0.05)).schedule();
+
+ }
 
   /** This function is called periodically during autonomous. */
   @Override
@@ -121,7 +124,8 @@ public class Robot extends TimedRobot {
     Arm.getInstance().getSecond().set(TalonFXControlMode.PercentOutput , 0);
     
     // CommandScheduler.getInstance().schedule(new SetArmAngleToStartPos());
-    RobotContainer.m_tankDriveCommand.schedule();
+    //RobotContainer.m_tankDriveCommand.schedule();
+    Chassis.getInstance().driveToReflactor();
   }
 
   JoyStickSum j = new JoyStickSum();
@@ -129,7 +133,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     // j.schedule();
-    
   }
 
   @Override

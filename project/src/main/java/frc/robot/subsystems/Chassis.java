@@ -10,11 +10,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.SparkMaxPIDController;
 
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Vector2D;
 import frc.robot.Vision;
 import frc.robot.Constants.PIDS;
+import frc.robot.commands.DriveDistanceByEncoders;
+import frc.robot.commands.TurnToAnglePID;
 
 public class Chassis extends SubsystemBase {
     private MotorControllerGroup rightMotors;
@@ -29,8 +32,8 @@ public class Chassis extends SubsystemBase {
     private double m_lastRightDist;
     private double m_lastLeftDist;
     private Vector2D m_pos;
-    private Vision m_vision;
-
+    private Vision m_robotLocation;
+    private Vision m_reflector;
     private static Chassis m_instance = null;
 
     public Chassis() {
@@ -79,7 +82,8 @@ public class Chassis extends SubsystemBase {
 
         m_deltaTime = 0;
 
-        m_vision = new Vision(5800);
+        m_robotLocation = new Vision(Constants.Ports.RECIEVE_LOCATION_PORT);
+        m_reflector = new Vision(Constants.Ports.REFLECTOR_PORT);
     }
 
     public static AHRS getGyro(){
@@ -208,5 +212,26 @@ public class Chassis extends SubsystemBase {
         return leftMotors;
     }
 
+    public double calcReflactorZ(){
+        return Math.sin(m_navx.getAngle() - m_reflector.getAngleY()) * (new Vector2D(m_reflector.getX(), m_reflector.getZ())).getLength() + m_robotLocation.getZ(); 
+    }
 
+    public double calcReflactorX(){
+        return Math.cos(m_navx.getAngle() - m_reflector.getAngleY()) * (new Vector2D(m_reflector.getX(), m_reflector.getZ())).getLength() + m_robotLocation.getX(); 
+    }
+
+    public double calcTargetX(){
+        return calcReflactorX() + Constants.Values.X_AXIS_OFFSET * -Math.signum(m_robotLocation.getX());
+    }
+    public double calcTargetZ(){
+        return calcReflactorZ();
+    }
+    
+    public void getToPos(double angle, double magnitude){
+        new SequentialCommandGroup(new TurnToAnglePID(angle), new DriveDistanceByEncoders(magnitude, 0.1), new TurnToAnglePID(0)).schedule();
+    }
+    public void driveToReflactor(){
+        Vector2D target = new Vector2D(calcTargetX(), calcTargetZ());
+        getToPos(target.getAngle(), target.getLength());
+    }
 }

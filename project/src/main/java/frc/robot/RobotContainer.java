@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.commands.ArmTwoStayInZero;
 import frc.robot.commands.AutoMove;
 import frc.robot.commands.Autos;
+import frc.robot.commands.Balance;
 import frc.robot.commands.CloseGripper;
 import frc.robot.commands.GripCube;
 import frc.robot.commands.MotionMagicArmPID;
@@ -117,6 +118,7 @@ public class RobotContainer {
     Trigger rtButton = new JoystickButton(m_operator, 12).onTrue(new SetArmAngleToStartPos());
     // Trigger rtButton = new JoystickButton(m_operator, 12).onTrue(new MotionMagicArmPID());
 
+    Trigger balance = new JoystickButton(m_operator, Constants.ButtonPorts.RB).whileTrue(new Balance());
     // // Trigger upperButton = new JoystickButton(m_operator, Constants.ButtonPorts.RB).onTrue(new MoveArmByAngle(-128,160)); // big
     // Trigger midButton = new JoystickButton(m_operator, Constants.ButtonPorts.RT).onTrue(new MoveArmByAngle(-125, -288+360)); //mid
     // Trigger collectCone = new JoystickButton(m_operator, Constants.ButtonPorts.START).onTrue(new MoveArmByAngle(120, -55)); //isuf mahmadaf

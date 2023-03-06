@@ -75,13 +75,13 @@ public class Vision {
     }
     
 
-    public double getAngleX(){
+    public double getAngleY(){
         // this.getLocals();
         float[] temp=getXYZ();
         return Math.toDegrees(Math.atan(temp[0]/temp[2]))*-1;
     }
 
-    public double getAngleY(){
+    public double getAngleX(){
         // this.getLocals();
         float[] temp=getXYZ();
         return Math.toDegrees(Math.atan(temp[1]/temp[2]))*-1;
