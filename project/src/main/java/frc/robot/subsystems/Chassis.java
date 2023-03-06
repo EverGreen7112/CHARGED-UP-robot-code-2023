@@ -212,19 +212,13 @@ public class Chassis extends SubsystemBase {
         return leftMotors;
     }
 
-    public double calcReflactorZ(){
-        return Math.sin(m_navx.getAngle() - m_reflector.getAngleY()) * (new Vector2D(m_reflector.getX(), m_reflector.getZ())).getLength() + m_robotLocation.getZ(); 
-    }
-
-    public double calcReflactorX(){
-        return Math.cos(m_navx.getAngle() - m_reflector.getAngleY()) * (new Vector2D(m_reflector.getX(), m_reflector.getZ())).getLength() + m_robotLocation.getX(); 
-    }
+   
 
     public double calcTargetX(){
-        return calcReflactorX() + Constants.Values.X_AXIS_OFFSET * -Math.signum(m_robotLocation.getX());
+        return m_reflector.getX() + Constants.Values.X_AXIS_OFFSET * -Math.signum(m_robotLocation.getX());
     }
     public double calcTargetZ(){
-        return calcReflactorZ();
+        return m_reflector.getZ();
     }
     
     public void getToPos(double angle, double magnitude){

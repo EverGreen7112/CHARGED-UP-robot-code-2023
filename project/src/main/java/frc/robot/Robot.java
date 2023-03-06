@@ -17,6 +17,7 @@ import frc.robot.commands.DriveDistanceByEncoders;
 import frc.robot.commands.JoyStickSum;
 import frc.robot.commands.MoveArmByAngle;
 import frc.robot.commands.SetArmAngleToStartPos;
+import frc.robot.commands.TurnToAnglePID;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Gripper;
@@ -67,7 +68,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("roll", Chassis.getGyro().getRoll());
     SmartDashboard.putNumber("yaw", Chassis.getGyro().getYaw());
     SmartDashboard.putNumber("ticks", Chassis.getInstance().getEncodersDist());
-    
+    SmartDashboard.putNumber("Vision", Chassis.getInstance().calcTargetX());
+    SmartDashboard.putNumber("Vision2", Chassis.getInstance().calcTargetZ());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -125,7 +127,8 @@ public class Robot extends TimedRobot {
     
     // CommandScheduler.getInstance().schedule(new SetArmAngleToStartPos());
     //RobotContainer.m_tankDriveCommand.schedule();
-    Chassis.getInstance().driveToReflactor();
+     Chassis.getInstance().driveToReflactor();
+   //  new TurnToAnglePID(Chassis.getGyro().getAngle() + 180).schedule();
   }
 
   JoyStickSum j = new JoyStickSum();
