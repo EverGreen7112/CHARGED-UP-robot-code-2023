@@ -2,6 +2,8 @@ package frc.robot.commands.Chassis;
 
 import javax.swing.text.AbstractDocument.BranchElement;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+// import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.commands.General.Commands;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
@@ -16,7 +18,7 @@ public class AutoRouteOne extends CommandBase {
     public void initialize() {
         //startDistance = Constants.Conversions.ticksToMeters(Chassis.getEncodersDist(), );
         m_startTime = System.currentTimeMillis();
-        RobotContainer.upperSmall.schedule();
+        Commands.upperSmall.schedule();
         // Thread.sleep(3000);
         new WaitCommand(3.0).schedule();
         new OpenGripper().schedule();

@@ -32,7 +32,7 @@ public class Chassis extends SubsystemBase {
     private static double m_lastRightDist;
     private static double m_lastLeftDist;
     private static Vector2D m_pos;
-    private static Vision m_vision;
+    private static Vision m_robotLocation, m_reflector;
 
     private static Chassis m_instance = null;
 

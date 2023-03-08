@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.DriveDistanceByEncoders;
 import frc.robot.commands.Autos;
-import frc.robot.commands.JoyStickSum;
-import frc.robot.commands.MoveArmByAngle;
-import frc.robot.commands.SetArmAngleToStartPos;
+// import frc.robot.commands.JoyStickSum;
+// import frc.robot.commands.MoveArmByAngle;
+// import frc.robot.commands.SetArmAngleToStartPos;
 import frc.robot.commands.TurnToAnglePID;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Chassis;
@@ -62,13 +62,13 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods. This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("First Angle", Constants.Conversions.ticksToAngle(Arm.getInstance().getFirst().getSelectedSensorPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION));
-    SmartDashboard.putNumber("Second Angle", Constants.Conversions.ticksToAngle(Arm.getInstance().getSecond().getSelectedSensorPosition(), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
+    SmartDashboard.putNumber("First Angle", Constants.Conversions.ticksToAngle(Arm.getFirst().getSelectedSensorPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION));
+    SmartDashboard.putNumber("Second Angle", Constants.Conversions.ticksToAngle(Arm.getSecond().getSelectedSensorPosition(), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
     //SmartDashboard.putNumber("distance", Constants.Conversions.ticksToMeters(Chassis.getInstance().getEncodersDist(), Constants.Values.DISTANCE_PER_TICK)); 
     SmartDashboard.putNumber("pitch", Chassis.getGyro().getPitch());
     SmartDashboard.putNumber("roll", Chassis.getGyro().getRoll());
     SmartDashboard.putNumber("yaw", Chassis.getGyro().getYaw());
-    SmartDashboard.putNumber("ticks", Chassis.getInstance().getEncodersDist());
+    SmartDashboard.putNumber("ticks", Chassis.getEncodersDist());
     SmartDashboard.putNumber("Vision", Chassis.getInstance().calcTargetX());
     SmartDashboard.putNumber("Vision2", Chassis.getInstance().calcTargetZ());
   }
@@ -128,7 +128,7 @@ public class Robot extends TimedRobot {
    //  new TurnToAnglePID(Chassis.getGyro().getAngle() + 180).schedule();
   }
 
-  JoyStickSum j = new JoyStickSum();
+  // JoyStickSum j = new JoyStickSum();
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {

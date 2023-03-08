@@ -3,23 +3,27 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
-import frc.robot.commands.ArmTwoStayInZero;
-import frc.robot.commands.AutoMove;
-import frc.robot.commands.CloseGripper;
+import frc.robot.commands.General.Commands;
+import frc.robot.commands.Gripper.CloseGripper;
+import frc.robot.commands.Gripper.GripCube;
+import frc.robot.commands.Gripper.OpenGripper;
+import frc.robot.commands.unused.unusedThatWereUsed.MoveArmByAngle;
+// import frc.robot.commands.ArmTwoStayInZero;
+// import frc.robot.commands.AutoMove;
+// import frc.robot.commands.CloseGripper;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Balance;
-import frc.robot.commands.MotionMagicArmPID;
-import frc.robot.commands.GripCube;
-import frc.robot.commands.MoveArmByAngle;
-import frc.robot.commands.MoveSecStart;
-import frc.robot.commands.MoveArmByAngleSupllier;
-import frc.robot.commands.OpenGripper;
-import frc.robot.commands.SetArmAngleToStartPos;
-import frc.robot.commands.Slow;
-import frc.robot.commands.Turbo;
-import frc.robot.commands.TankDrive;
-import frc.robot.commands.TurnArmTwo;
+// import frc.robot.commands.MotionMagicArmPID;
+// import frc.robot.commands.GripCube;
+// import frc.robot.commands.MoveArmByAngle;
+// import frc.robot.commands.MoveSecStart;
+// import frc.robot.commands.MoveArmByAngleSupllier;
+// import frc.robot.commands.OpenGripper;
+// import frc.robot.commands.SetArmAngleToStartPos;
+// import frc.robot.commands.Slow;
+// import frc.robot.commands.Turbo;
+// import frc.robot.commands.TankDrive;
+// import frc.robot.commands.TurnArmTwo;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -54,8 +58,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  public static final Vision REFLECTOR = new Vision(Constants.Ports.REFLECTOR_PORT);
-  public static final Vision ROBOT_LOCATION = new Vision(Constants.Ports.RECIEVE_LOCATION_PORT);
+  // public static final Vision REFLECTOR = new Vision(Constants.Ports.REFLECTOR_PORT);
+  // public static final Vision ROBOT_LOCATION = new Vision(Constants.Ports.RECIEVE_LOCATION_PORT);
   public static final Joystick m_leftStick = new Joystick(Constants.JoystickPorts.leftJoystick);
   public static final Joystick m_rightStick = new Joystick(Constants.JoystickPorts.rightJoystick);
   public static final Joystick m_operator = new Joystick(Constants.JoystickPorts.operator);

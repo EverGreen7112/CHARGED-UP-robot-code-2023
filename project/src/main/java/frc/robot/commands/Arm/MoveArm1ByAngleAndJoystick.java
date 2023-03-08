@@ -9,7 +9,7 @@ public class MoveArm1ByAngleAndJoystick extends CommandBase{
     private PIDController cont;
     public MoveArm1ByAngleAndJoystick(double desierdAngle) {
         addRequirements(Arm.getInstance());
-        cont.setPID(PidOldValuesDontUse.FIRST_ARM_ANTI_KP);
+        cont.setP(PidOldValuesDontUse.FIRST_ARM_ANTI_KP);
     }
     @Override
     public void initialize() {
