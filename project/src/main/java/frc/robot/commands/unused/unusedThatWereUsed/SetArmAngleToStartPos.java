@@ -1,4 +1,4 @@
-package frc.robot.commands.Arm;
+package frc.robot.commands.unused.unusedThatWereUsed;
 
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -6,7 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.Constants.PidValues;
+import frc.robot.Constants.PidOldValuesDontUse;
 import frc.robot.subsystems.Arm;
 
 public class SetArmAngleToStartPos extends CommandBase {
@@ -33,9 +33,9 @@ public class SetArmAngleToStartPos extends CommandBase {
         m_second.config_kD(0, 0.0003);
         m_second.config_kI(0, 0);
         m_first.config_kF(0, 0);
-        m_first.config_kP(0, PidValues.FIRST_ARM_BACK_KP * -3);
-        m_first.config_kI(0, PidValues.FIRST_ARM_BACK_KI);
-        m_first.config_kD(0, PidValues.FIRST_ARM_BACK_KD);
+        m_first.config_kP(0, PidOldValuesDontUse.FIRST_ARM_BACK_KP * -3);
+        m_first.config_kI(0, PidOldValuesDontUse.FIRST_ARM_BACK_KI);
+        m_first.config_kD(0, PidOldValuesDontUse.FIRST_ARM_BACK_KD);
         m_firstArmAngle = Constants.Conversions.ticksToAngle(m_first.getSelectedSensorPosition(),
                 Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);
         hardDir = m_firstArmAngle > 0;
@@ -70,14 +70,14 @@ public class SetArmAngleToStartPos extends CommandBase {
             else {
                 SmartDashboard.putBoolean("isInRange", false);
                 if (m_firstArmAngle > 0) {
-                    m_first.set(TalonFXControlMode.PercentOutput, -PidValues.FIRST_ARM_ANTI_KF +
-                            -1 * Constants.PidValues.FIRST_ARM_ANTI_KP
+                    m_first.set(TalonFXControlMode.PercentOutput, -PidOldValuesDontUse.FIRST_ARM_ANTI_KF +
+                            -1 * Constants.PidOldValuesDontUse.FIRST_ARM_ANTI_KP
                                     * (Constants.ArmValues.FIRST_ARM_R_MAX - m_firstArmAngle));
                     
                 }
                 else {
-                    m_first.set(TalonFXControlMode.PercentOutput, PidValues.FIRST_ARM_ANTI_KF + -1
-                            * Constants.PidValues.FIRST_ARM_ANTI_KP
+                    m_first.set(TalonFXControlMode.PercentOutput, PidOldValuesDontUse.FIRST_ARM_ANTI_KF + -1
+                            * Constants.PidOldValuesDontUse.FIRST_ARM_ANTI_KP
                             * (Constants.ArmValues.FIRST_ARM_L_MIN - m_firstArmAngle));
 
                 }

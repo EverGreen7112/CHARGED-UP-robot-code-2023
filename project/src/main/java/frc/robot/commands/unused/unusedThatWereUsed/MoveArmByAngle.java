@@ -1,4 +1,4 @@
-package frc.robot.commands.Arm;
+package frc.robot.commands.unused.unusedThatWereUsed;
 
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -6,7 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.Constants.PidValues;
+import frc.robot.Constants.PidOldValuesDontUse;
 import frc.robot.subsystems.Arm;
 
 public class MoveArmByAngle extends CommandBase{
@@ -48,7 +48,7 @@ public class MoveArmByAngle extends CommandBase{
             m_first.set(TalonFXControlMode.Position, Constants.Conversions.angleToTicks(m_firstArmTarget, Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION));
             if(stage == 0){
                 if(m_firstArmAngle < Constants.ArmValues.LIMIT_TOLERANCE +  m_firstArmTarget && m_firstArmAngle > m_firstArmTarget - Constants.ArmValues.LIMIT_TOLERANCE){
-                    m_second.config_kF(0, PidValues.SECOND_ARM_KF);
+                    m_second.config_kF(0, PidOldValuesDontUse.SECOND_ARM_KF);
                     stage =1;
                 }
                 m_second.set(TalonFXControlMode.Position, 0);
@@ -68,7 +68,7 @@ public class MoveArmByAngle extends CommandBase{
     @Override
     public void end(boolean interrupted) {
         if(!doNothing) { 
-            double stallTarget = (m_firstArmTarget < 0) ? Constants.PidValues.SECOND_ARM_STALL_SPEED :  -Constants.PidValues.SECOND_ARM_STALL_SPEED ;
+            double stallTarget = (m_firstArmTarget < 0) ? Constants.PidOldValuesDontUse.SECOND_ARM_STALL_SPEED :  -Constants.PidOldValuesDontUse.SECOND_ARM_STALL_SPEED ;
             m_second.set(TalonFXControlMode.PercentOutput , stallTarget);
             m_finished = true;       
             SmartDashboard.putBoolean("finished", m_finished);

@@ -77,18 +77,18 @@ public class Gripper extends SubsystemBase{
         mode = !mode;
         SmartDashboard.putBoolean("mode", mode);
         if(mode){ 
-        Constants.PidValues.SECOND_ARM_KP *=1.3;
-        Constants.PidValues.SECOND_ARM_KI *=1.3;
-        Constants.PidValues.SECOND_ARM_KD *=1.3;
-        Constants.PidValues.SECOND_ARM_KF *=1.4;
-        Constants.PidValues.SECOND_ARM_STALL_SPEED *=1.7;
+        Constants.PidOldValuesDontUse.SECOND_ARM_KP *=1.3;
+        Constants.PidOldValuesDontUse.SECOND_ARM_KI *=1.3;
+        Constants.PidOldValuesDontUse.SECOND_ARM_KD *=1.3;
+        Constants.PidOldValuesDontUse.SECOND_ARM_KF *=1.4;
+        Constants.PidOldValuesDontUse.SECOND_ARM_STALL_SPEED *=1.7;
 
         }else{
-            Constants.PidValues.SECOND_ARM_KP =Constants.PidValues._SECOND_ARM_KP;
-            Constants.PidValues.SECOND_ARM_KI= Constants.PidValues._SECOND_ARM_KI;
-            Constants.PidValues.SECOND_ARM_KD =Constants.PidValues._SECOND_ARM_KD;
-            Constants.PidValues.SECOND_ARM_KF =Constants.PidValues._SECOND_ARM_KF;
-            Constants.PidValues.SECOND_ARM_STALL_SPEED =Constants.PidValues._SECOND_ARM_STALL_SPEED;
+            Constants.PidOldValuesDontUse.SECOND_ARM_KP =Constants.PidOldValuesDontUse._SECOND_ARM_KP;
+            Constants.PidOldValuesDontUse.SECOND_ARM_KI= Constants.PidOldValuesDontUse._SECOND_ARM_KI;
+            Constants.PidOldValuesDontUse.SECOND_ARM_KD =Constants.PidOldValuesDontUse._SECOND_ARM_KD;
+            Constants.PidOldValuesDontUse.SECOND_ARM_KF =Constants.PidOldValuesDontUse._SECOND_ARM_KF;
+            Constants.PidOldValuesDontUse.SECOND_ARM_STALL_SPEED =Constants.PidOldValuesDontUse._SECOND_ARM_STALL_SPEED;
         }
     }
 }

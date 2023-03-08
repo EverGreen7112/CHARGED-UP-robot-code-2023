@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.Constants.PidValues;
+import frc.robot.Constants.PidOldValuesDontUse;
 import frc.robot.subsystems.Arm;
 
 public class MoveSecStart extends CommandBase {

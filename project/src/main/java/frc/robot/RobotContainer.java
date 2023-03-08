@@ -4,17 +4,18 @@
 
 package frc.robot;
 
-import frc.robot.commands.Arm.MoveArmByAngle;
-import frc.robot.commands.Arm.SetArmAngleToStartPos;
-import frc.robot.commands.Arm.TurnArmTwo;
 import frc.robot.commands.Chassis.AutoMove;
 import frc.robot.commands.Chassis.Autos;
 import frc.robot.commands.Chassis.Slow;
 import frc.robot.commands.Chassis.TankDrive;
 import frc.robot.commands.Chassis.Turbo;
+import frc.robot.commands.General.Commands;
 import frc.robot.commands.Gripper.CloseGripper;
 import frc.robot.commands.Gripper.GripCube;
 import frc.robot.commands.Gripper.OpenGripper;
+import frc.robot.commands.unused.unusedThatWereUsed.MoveArmByAngle;
+import frc.robot.commands.unused.unusedThatWereUsed.SetArmAngleToStartPos;
+import frc.robot.commands.unused.unusedThatWereUsed.TurnArmTwo;
 //import frc.robot.commands.unused.ArmTwoStayInZero;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Chassis;
@@ -61,34 +62,7 @@ public class RobotContainer {
   public static Trigger lefter = new POVButton(m_operator, 270);
   public static Trigger righter = new POVButton(m_operator, 90);
 
-  private CommandBase upperBig = new RunCommand(
-      () -> Arm.getFirst().set(TalonFXControlMode.PercentOutput, 0.3),Arm.getInstance()) {
-    @Override
-    public void end(boolean interrupted) {
-      Arm.getFirst().set(TalonFXControlMode.PercentOutput, 0);
-    }
-  };
-  private CommandBase lowerBig = new RunCommand(
-      () -> Arm.getFirst().set(TalonFXControlMode.PercentOutput, -0.3),Arm.getInstance()) {
-    @Override
-    public void end(boolean interrupted) {
-      Arm.getFirst().set(TalonFXControlMode.PercentOutput, 0);
-    }
-  };
-  public static CommandBase upperSmall = new RunCommand(
-      () -> Arm.getSecond().set(TalonFXControlMode.PercentOutput, 0.12 + (m_operator.getY() * 0.5)),Arm.getInstance()) {
-    @Override
-    public void end(boolean interrupted) {
-      Arm.getSecond().set(TalonFXControlMode.PercentOutput, 0);
-    }
-  };
-  private CommandBase lowerSmall = new RunCommand(
-      () -> Arm.getSecond().set(TalonFXControlMode.PercentOutput, -0.12 + (m_operator.getY() * 0.5)),Arm.getInstance()) {
-    @Override
-    public void end(boolean interrupted) {
-      Arm.getSecond().set(TalonFXControlMode.PercentOutput, 0);
-    }
-  };
+ 
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -117,23 +91,22 @@ public class RobotContainer {
     Trigger openArmToCollectCone = new JoystickButton(m_operator, Constants.ButtonPorts.START).onTrue(new MoveArmByAngle(120, -55));
     Trigger openArmToCollectCube = new JoystickButton(m_operator, Constants.ButtonPorts.BACK).onTrue(new MoveArmByAngle(105.49851545607983, -61.848));
 
-    Trigger smallArmPlus = new JoystickButton(m_operator, Constants.ButtonPorts.RB).whileTrue(upperSmall);
-    Trigger smallArmMinus = new JoystickButton(m_operator, Constants.ButtonPorts.RT).whileTrue(lowerSmall);
+    Trigger smallArmPlus = new JoystickButton(m_operator, Constants.ButtonPorts.RB).whileTrue(Commands.upperSmall);
+    Trigger smallArmMinus = new JoystickButton(m_operator, Constants.ButtonPorts.RT).whileTrue(Commands.lowerSmall);
 
     
-    Trigger bigArmPlus = new JoystickButton(m_operator, Constants.ButtonPorts.LB).whileTrue(upperBig);
-    Trigger bigArmMinus = new JoystickButton(m_operator, Constants.ButtonPorts.LT).whileTrue(lowerBig);
+    Trigger bigArmPlus = new JoystickButton(m_operator, Constants.ButtonPorts.LB).whileTrue(Commands.upperBig);
+    Trigger bigArmMinus = new JoystickButton(m_operator, Constants.ButtonPorts.LT).whileTrue(Commands.lowerBig);
 
     // Trigger turbo = new JoystickButton(m_leftStick, 1).whileTrue(new Turbo(m_tankDriveCommand));
     // Trigger slow = new JoystickButton(m_rightStick, 2).whileTrue(new Slow(m_tankDriveCommand));
 
-    RobotContainer.up.onTrue(new MoveArmByAngle(-128,160));
-    RobotContainer.down.onTrue(new MoveArmByAngle(-125, -288+360));
+    righter.onTrue(Commands.toggleConeIn);
+    
+    // RobotContainer.up.onTrue(new MoveArmByAngle(-128,160));
+    // RobotContainer.down.onTrue(new MoveArmByAngle(-125, -288+360));
 
-    Trigger a = new JoystickButton(m_rightStick, 4).onTrue(new InstantCommand(()->{
-    Chassis.m_rightFrontEngine.setInverted(!Chassis.getInstance().m_rightFrontEngine.getInverted());
-    Chassis.m_leftFrontEngine.setInverted(!Chassis.getInstance().m_leftFrontEngine.getInverted());
-    SmartDashboard.putBoolean("AaaaAAA", Chassis.getInstance().m_rightFrontEngine.getInverted());}));
+    Trigger a = new JoystickButton(m_rightStick, 4).onTrue(Commands.invertChassis);
   }
 
   /**

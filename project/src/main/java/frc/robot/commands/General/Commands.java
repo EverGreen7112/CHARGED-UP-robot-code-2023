@@ -3,16 +3,23 @@ package frc.robot.commands.General;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.Vector2D;
-import frc.robot.commands.Arm.TurnUntilWithInRange;
 import frc.robot.commands.ChassisPid.ChasisSetPointPosPID;
+import frc.robot.commands.unused.unusedThatWereUsed.TurnUntilWithInRange;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Chassis;
 
 public class Commands {
@@ -96,7 +103,7 @@ public class Commands {
                 rotateController,
                 () -> Chassis.getRobotAngle(), endAng,
                 Chassis::turnLeft, (Subsystem) Chassis.getInstance());// might be turn right
-        //create pid command to drive for p and e to overlap
+        // create pid command to drive for p and e to overlap
         DoubleSupplier overlapSetPoint = () -> {
             double cAng = turnUntilWithinRange.endAng();
             double m1 = Math.tan(cAng);
@@ -110,10 +117,44 @@ public class Commands {
             return intreToEnd.getLength();
         };
         CommandBase driveToOverlap = new ChasisSetPointPosPID(overlapSetPoint);
-        
-        return new SequentialCommandGroup(turnUntilWithinRange,driveToIntresection,rotateToOverlap,driveToOverlap);
+
+        return new SequentialCommandGroup(turnUntilWithinRange, driveToIntresection, rotateToOverlap, driveToOverlap);
     }
 
-    
-
+    public static CommandBase toggleConeIn = new InstantCommand(() -> Arm.toggleConeIn());
+    public static CommandBase invertChassis = new InstantCommand(() -> {
+        Chassis.m_rightFrontEngine.setInverted(!Chassis.getInstance().m_rightFrontEngine.getInverted());
+        Chassis.m_leftFrontEngine.setInverted(!Chassis.getInstance().m_leftFrontEngine.getInverted());
+        SmartDashboard.putBoolean("AaaaAAA", Chassis.getInstance().m_rightFrontEngine.getInverted());
+    });
+    public static CommandBase upperBig = new RunCommand(
+            () -> Arm.getFirst().set(TalonFXControlMode.PercentOutput, 0.3), Arm.getInstance()) {
+        @Override
+        public void end(boolean interrupted) {
+            Arm.getFirst().set(TalonFXControlMode.PercentOutput, 0);
+        }
+    };
+    public static CommandBase lowerBig = new RunCommand(
+            () -> Arm.getFirst().set(TalonFXControlMode.PercentOutput, -0.3), Arm.getInstance()) {
+        @Override
+        public void end(boolean interrupted) {
+            Arm.getFirst().set(TalonFXControlMode.PercentOutput, 0);
+        }
+    };
+    public static CommandBase upperSmall = new RunCommand(
+            () -> Arm.getSecond().set(TalonFXControlMode.PercentOutput, 0.12 + (RobotContainer.m_operator.getY() * 0.5)),
+            Arm.getInstance()) {
+        @Override
+        public void end(boolean interrupted) {
+            Arm.getSecond().set(TalonFXControlMode.PercentOutput, 0);
+        }
+    };
+    public static CommandBase lowerSmall = new RunCommand(
+            () -> Arm.getSecond().set(TalonFXControlMode.PercentOutput, -0.12 + (RobotContainer.m_operator.getY() * 0.5)),
+            Arm.getInstance()) {
+        @Override
+        public void end(boolean interrupted) {
+            Arm.getSecond().set(TalonFXControlMode.PercentOutput, 0);
+        }
+    };
 }
