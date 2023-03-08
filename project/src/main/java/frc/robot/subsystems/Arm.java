@@ -41,6 +41,8 @@ public class Arm extends SubsystemBase {
   private final static double secondKdCone = firstKd * 1.3;
   private final static double secondStallCone = firstStall * 1.5;
 
+  
+
   public final static double firstArmTol = 1;
   public final static double firstArmVTol = 20;
 
@@ -171,7 +173,7 @@ public class Arm extends SubsystemBase {
    * @return the current [f,p,i,d] parqameters depends of whther a cone is inside
    *         or not
    */
-  public static double[] getSecondFPID() {
+  public static double[] getSecondUpFPID() {
     if (m_coneIn) {
       double[] res = { secondKfCone, secondKpCone, secondKiCone, secondKdCone };
       return res;
@@ -179,6 +181,7 @@ public class Arm extends SubsystemBase {
     double[] res = { secondKf, secondKp, secondKi, secondKd };
     return res;
   }
+
 
   // TODO: currently constants, probably should be depand on cos(ang) or somthing
   /**

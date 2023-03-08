@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Vector2D;
+import frc.robot.commands.Arm.MoveArm1ByAngle;
+import frc.robot.commands.Arm.StallArmOne;
 import frc.robot.commands.ChassisPid.ChasisSetPointPosPID;
 import frc.robot.commands.unused.unusedThatWereUsed.TurnUntilWithInRange;
 import frc.robot.subsystems.Arm;
@@ -157,4 +159,7 @@ public class Commands {
             Arm.getSecond().set(TalonFXControlMode.PercentOutput, 0);
         }
     };
+    public static CommandBase getMoveArm1ToAng(double desierdAng){
+        return new MoveArm1ByAngle(desierdAng).andThen(new StallArmOne());
+    }
 }

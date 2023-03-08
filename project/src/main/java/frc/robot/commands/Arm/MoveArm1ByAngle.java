@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
 
 public class MoveArm1ByAngle extends CommandBase{
@@ -21,9 +22,18 @@ public class MoveArm1ByAngle extends CommandBase{
     private double lastOutput = 0;
     @Override
     public void execute() {
+        
+    }
+    //normal pid
+    private void ex1(){
         double [] fpid = Arm.getFirstFPID();
-        //might use othe more physiclly accurate calculation 
         lastOutput = fpid[0]*Math.signum(fpid[0]) + cont.calculate(Arm.getFirstAngle());
+        Arm.getFirst().set(TalonFXControlMode.PercentOutput,lastOutput);
+    }
+    //physical calculation pid
+    private void ex2(){
+        double [] fpid = Arm.getFirstFPID();
+        lastOutput = fpid[0]*Math.sin(Math.toRadians(Arm.getFirstAngle())) + cont.calculate(Arm.getFirstAngle());
         Arm.getFirst().set(TalonFXControlMode.PercentOutput,lastOutput);
     }
     @Override
