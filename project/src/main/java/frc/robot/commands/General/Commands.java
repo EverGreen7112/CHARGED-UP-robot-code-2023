@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -21,6 +22,8 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Vector2D;
+import frc.robot.Constants.ArmValues;
+import frc.robot.commands.Arm.JoystickArmControll;
 import frc.robot.commands.Arm.MoveArm1ByAngle;
 import frc.robot.commands.Arm.StallArm1;
 import frc.robot.commands.ChassisPid.ChasisSetPointPosPID;
@@ -168,6 +171,17 @@ public class Commands {
     public static CommandBase getMoveArm1ToAng(double desierdAng){
         return new MoveArm1ByAngle(desierdAng).andThen(new StallArm1());
     }
+    public static boolean joystick1OutOfRange(){
+        return Math.abs(RobotContainer.m_operator.getY()) > ArmValues.JOYSTICK_TOLERANCE; 
+    }
+    public static boolean joystic2OutOfRange(){
+        return Math.abs(RobotContainer.m_operator.getZ()) > ArmValues.JOYSTICK_TOLERANCE; 
+    }
+    public static CommandBase getJoysticControl(){
+        return new JoystickArmControll(null)
+    }
+
+
 
    
     
