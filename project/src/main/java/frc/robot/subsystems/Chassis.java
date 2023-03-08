@@ -20,20 +20,20 @@ import frc.robot.commands.DriveDistanceByEncoders;
 import frc.robot.commands.TurnToAnglePID;
 
 public class Chassis extends SubsystemBase {
-    private MotorControllerGroup rightMotors;
-    private MotorControllerGroup leftMotors;
-    private AHRS m_navx;
+    private static MotorControllerGroup rightMotors;
+    private static MotorControllerGroup leftMotors;
+    private static AHRS m_navx;
 
     // front are leaders
-    public CANSparkMax m_leftFrontEngine, m_leftMiddleEngine, m_leftBackEngine;
-    public CANSparkMax m_rightFrontEngine, m_rightMiddleEngine, m_rightBackEngine;
-    private double m_time;
-    private double m_deltaTime;
-    private double m_lastRightDist;
-    private double m_lastLeftDist;
-    private Vector2D m_pos;
-    private Vision m_robotLocation;
-    private Vision m_reflector;
+    public static CANSparkMax m_leftFrontEngine, m_leftMiddleEngine, m_leftBackEngine;
+    public static CANSparkMax m_rightFrontEngine, m_rightMiddleEngine, m_rightBackEngine;
+    private static double m_deltaTime;
+    private static double m_time;
+    private static double m_lastRightDist;
+    private static double m_lastLeftDist;
+    private static Vector2D m_pos;
+    private static Vision m_vision;
+
     private static Chassis m_instance = null;
 
     public Chassis() {
@@ -145,71 +145,74 @@ public class Chassis extends SubsystemBase {
         return m_instance;
     }
 
-    public void driveTank(double lSpeed, double rSpeed) {
+    public static void driveTank(double lSpeed, double rSpeed) {
         rightMotors.set(rSpeed);
         leftMotors.set(lSpeed);
     }
 
-    public void turnRight(double speed) {
+    public static void turnRight(double speed) {
         driveTank(speed, -speed);
     }
 
-    public void turnLeft(double speed) {
+    public static void turnLeft(double speed) {
         driveTank(-speed, speed);
     }
 
-    public void driveStraight(double speed) {
+    public static void driveStraight(double speed) {
         driveTank(speed, speed);
     }
 
-    public void stop() {
+    public static void stop() {
         driveTank(0.0, 0.0);
     }
 
-    public double getRobotAngle() {
+    public static double getRobotAngle() {
         return m_navx.getYaw();
     }
 
-    public double getEncodersDist() {
+    public static double getEncodersDist() {
         return (getRightEncoderDist() + getLeftEncoderDist()) / 2;
     }
 
-    public double getRightEncoderDist() {
+    public static double getRightEncoderDist() {
         // return -1 * m_rightFrontEngine.getEncoder().getPosition() / 10.97;
         return -1 * m_rightFrontEngine.getEncoder().getPosition();
     }
 
-    public double getLeftEncoderDist() {
+    public static double getLeftEncoderDist() {
         // return m_leftFrontEngine.getEncoder().getPosition() / 10.97;
         return m_leftFrontEngine.getEncoder().getPosition();
     }
 
-    public double getVelocity() {
+    public static double getVelocity() {
         return (getRightVelocity() + getLeftVelocity()) / 2;
     }
 
-    public double getRightVelocity() {
+    public static double getRightVelocity() {
         return m_rightFrontEngine.getEncoder().getVelocity();
     }
 
-    public double getLeftVelocity() {
+    public static double getLeftVelocity() {
         return m_leftFrontEngine.getEncoder().getVelocity();
     }
 
-    public SparkMaxPIDController getRightPID() {
+    public static SparkMaxPIDController getRightPID() {
         return m_rightFrontEngine.getPIDController();
     }
 
-    public SparkMaxPIDController getLeftPID() {
+    public static  SparkMaxPIDController getLeftPID() {
         return m_leftFrontEngine.getPIDController();
     }
 
-    public MotorControllerGroup getRightMotorControllerGroup() {
+    public static  MotorControllerGroup getRightMotorControllerGroup() {
         return rightMotors;
     }
 
-    public MotorControllerGroup getLeftMotorControllerGroup() {
+    public static MotorControllerGroup getLeftMotorControllerGroup() {
         return leftMotors;
+    }
+    public static void resetGyro(){
+        m_navx.reset();
     }
 
    

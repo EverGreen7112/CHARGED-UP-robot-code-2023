@@ -19,28 +19,28 @@ public class ChassisPostionPID extends CommandBase {
     protected double m_startDist =-1;
     public ChassisPostionPID(DoubleSupplier setpointSource) {
         m_setPoint = setpointSource;
-        SparkMaxPIDController rpid = Chassis.getInstance().getRightPID();
-        SparkMaxPIDController lpid = Chassis.getInstance().getLeftPID();
+        SparkMaxPIDController rpid = Chassis.getRightPID();
+        SparkMaxPIDController lpid = Chassis.getLeftPID();
         addRequirements(Chassis.getInstance());
 
     }
 
     @Override
     public void initialize() {
-        Chassis.getInstance().getRightPID().setIAccum(0);
-        Chassis.getInstance().getLeftPID().setIAccum(0);
-        Chassis.getInstance().getRightPID().setReference(m_setPoint.getAsDouble(),CANSparkMax.ControlType.kPosition
+        Chassis.getRightPID().setIAccum(0);
+        Chassis.getLeftPID().setIAccum(0);
+        Chassis.getRightPID().setReference(m_setPoint.getAsDouble(),CANSparkMax.ControlType.kPosition
         , 0);
-        Chassis.getInstance().getLeftPID().setReference(m_setPoint.getAsDouble(),CANSparkMax.ControlType.kPosition
+        Chassis.getLeftPID().setReference(m_setPoint.getAsDouble(),CANSparkMax.ControlType.kPosition
         , 0);
-        m_startDist = Chassis.getInstance().getEncodersDist();
+        m_startDist = Chassis.getEncodersDist();
     }
 
     public double getCurDistance(){
-        return Chassis.getInstance().getEncodersDist()-m_startDist;
+        return Chassis.getEncodersDist()-m_startDist;
     }
     @Override
     public void end(boolean interrupted) {
-        Chassis.getInstance().stop();
+        Chassis.stop();
     }
 }

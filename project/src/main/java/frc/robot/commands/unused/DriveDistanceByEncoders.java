@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.unused;
 
 import java.lang.annotation.Target;
 
@@ -57,18 +57,18 @@ public class DriveDistanceByEncoders extends CommandBase {
   public void execute() {
     SmartDashboard.putNumber("distance", Chassis.getEncodersDist() - (_targetDistance - _distance));
     SmartDashboard.putNumber("angle: ", Chassis.getRobotAngle());
-    double distanceSpeed = _feedForward + (_distancePID.calculate(Chassis.getEncodersDist(), _targetDistance));
+    double distanceSpeed = _feedForward + _distancePID.calculate(Chassis.getEncodersDist(), _targetDistance);
     double angleSpeed = _anglePID.calculate(Chassis.getRobotAngle(), 0);
-    Vector2D v = new Vector2D(MathUtil.clamp(distanceSpeed - angleSpeed, -1.0, 1.0), MathUtil.clamp(distanceSpeed + angleSpeed, -1.0, 1.0));
+    Vector2D v = new Vector2D(MathUtil.clamp(distanceSpeed + angleSpeed, -1.0, 1.0), MathUtil.clamp(distanceSpeed - angleSpeed, -1.0, 1.0));
     v.normalize();
     v.multiply(distanceSpeed * Math.sqrt(2));
-    Chassis.getInstance().driveTank(v.x * (Math.signum(_distance)), v.y  * (Math.signum(_distance)));
+    Chassis.driveTank(v.x * Math.signum(_distance), v.y * Math.signum(_distance));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Chassis.getInstance().stop();
+    Chassis.stop();
   }
 
   // Returns true when the command should end.

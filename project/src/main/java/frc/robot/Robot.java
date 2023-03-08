@@ -6,14 +6,12 @@ import java.util.function.Supplier;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.Autos;
 import frc.robot.commands.DriveDistanceByEncoders;
+import frc.robot.commands.Autos;
 import frc.robot.commands.JoyStickSum;
 import frc.robot.commands.MoveArmByAngle;
 import frc.robot.commands.SetArmAngleToStartPos;
@@ -46,6 +44,9 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    Chassis.getInstance();
+    Arm.getInstance();
+    Gripper.getInstance();
   }
 
   /**
@@ -87,6 +88,7 @@ public class Robot extends TimedRobot {
    * {@link RobotContainer} class.
    */
 
+   
   @Override
   public void autonomousInit() {
     CommandScheduler.getInstance().cancelAll();
@@ -100,8 +102,8 @@ public class Robot extends TimedRobot {
     Chassis.getInstance().m_rightBackEngine.getEncoder().setPosition(0);
    // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
     }
+      m_autonomousCommand.schedule();
     // (new DriveDistanceByEncoders(1, 0.01, 0.05)).schedule();
 
  }
@@ -114,20 +116,15 @@ public class Robot extends TimedRobot {
   
   @Override
   public void teleopInit() {
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
+    Chassis.resetGyro();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
     CommandScheduler.getInstance().cancelAll();
-    Arm.getInstance().getFirst().set(TalonFXControlMode.PercentOutput , 0);
-    Arm.getInstance().getSecond().set(TalonFXControlMode.PercentOutput , 0);
-    
+    Arm.getFirst().set(TalonFXControlMode.PercentOutput , 0);
+    Arm.getSecond().set(TalonFXControlMode.PercentOutput , 0);
     // CommandScheduler.getInstance().schedule(new SetArmAngleToStartPos());
     //RobotContainer.m_tankDriveCommand.schedule();
-     Chassis.getInstance().driveToReflactor();
    //  new TurnToAnglePID(Chassis.getGyro().getAngle() + 180).schedule();
   }
 

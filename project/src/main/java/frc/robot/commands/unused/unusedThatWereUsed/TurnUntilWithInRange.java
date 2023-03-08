@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.unused.unusedThatWereUsed;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -22,21 +22,21 @@ public class TurnUntilWithInRange extends CommandBase {
     }
 
     private boolean inRange() {
-        return !(m_minAng > Chassis.getInstance().getRobotAngle() || m_maxAng < Chassis.getInstance().getRobotAngle());
+        return !(m_minAng > Chassis.getRobotAngle() || m_maxAng < Chassis.getRobotAngle());
     }
 
     @Override
     public void initialize() {
-        double curAngle = Chassis.getInstance().getRobotAngle();
+        double curAngle = Chassis.getRobotAngle();
         if (!inRange()) {
             double rTurnAngDist = calcAng(curAngle - m_maxAng);
             double lTurnAngDist = calcAng(curAngle - m_minAng);
             double finalSpeed = Constants.Speeds.constantSpeed.get()
                     + Constants.Speeds.constantSpeed.get() * Math.min(rTurnAngDist, lTurnAngDist);
             if (rTurnAngDist < lTurnAngDist) {
-                Chassis.getInstance().turnRight(finalSpeed);
+                Chassis.turnRight(finalSpeed);
             } else {
-                Chassis.getInstance().turnLeft(finalSpeed);
+                Chassis.turnLeft(finalSpeed);
             }
         }
     }
@@ -44,14 +44,14 @@ public class TurnUntilWithInRange extends CommandBase {
     @Override
     public boolean isFinished() {
         if (inRange()&&this.isScheduled()) {
-            m_endAng = Chassis.getInstance().getRobotAngle();
+            m_endAng = Chassis.getRobotAngle();
         }
         return inRange();
     }
 
     @Override
     public void end(boolean interrupted) {
-        Chassis.getInstance().stop();
+        Chassis.stop();
     }
 
     /**

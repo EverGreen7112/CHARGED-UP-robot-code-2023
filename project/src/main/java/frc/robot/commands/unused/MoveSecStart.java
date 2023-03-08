@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.unused;
 
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.Constants.PidValues;
+import frc.robot.Constants.PidOldValuesDontUse;
 import frc.robot.subsystems.Arm;
 
 public class MoveSecStart extends CommandBase {
@@ -22,8 +22,8 @@ public class MoveSecStart extends CommandBase {
     private boolean cross =false;
     public MoveSecStart() {
         addRequirements(Arm.getInstance());
-        m_first = Arm.getInstance().getFirst();
-        m_second = Arm.getInstance().getSecond();
+        m_first = Arm.getFirst();
+        m_second = Arm.getSecond();
     }
     
     @Override
@@ -31,7 +31,7 @@ public class MoveSecStart extends CommandBase {
         // m_first.config_kP(0, Constants.PidValues.FIRST_ARM_KP * 1.6);
         // m_first.config_kF(0, 0.35);
         m_second.config_kP(0, 0.02);
-        m_second.config_kF(0,-1.3*Math.signum(Arm.getInstance().getFirstAngle()));
+        m_second.config_kF(0,-1.3*Math.signum(Arm.getFirstAngle()));
         m_second.config_kD(0, 0.0003);
         m_second.config_kI(0, 0);
         addRequirements(Arm.getInstance());
@@ -46,7 +46,7 @@ public class MoveSecStart extends CommandBase {
         m_second.set(TalonFXControlMode.Position,
         Constants.Conversions.angleToTicks(-1,
         Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
-        m_second.config_kF(0,-1.3*Math.signum(Arm.getInstance().getFirstAngle()));
+        m_second.config_kF(0,-1.3*Math.signum(Arm.getFirstAngle()));
     }
 
 }

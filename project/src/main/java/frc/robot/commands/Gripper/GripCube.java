@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.Gripper;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -13,7 +13,7 @@ public class GripCube extends CommandBase {
 
     public GripCube() {
         addRequirements(Gripper.getInstance());
-        limitSwitch = Gripper.getInstance().getCube();
+        limitSwitch = Gripper.getCube();
     }
 
     @Override

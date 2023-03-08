@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.unused.unusedThatWereUsed;
 
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -14,7 +14,7 @@ public class TurnArmTwo extends CommandBase{
 
     public TurnArmTwo(double targetAngle) {
         addRequirements(Arm.getInstance());
-        m_second = Arm.getInstance().getSecond();
+        m_second = Arm.getSecond();
         m_armTarget = targetAngle;
         
     }

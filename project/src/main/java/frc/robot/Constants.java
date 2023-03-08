@@ -130,15 +130,15 @@ public final class Constants {
 
   public static class PIDS {
 
-    public final static double driveKp = 0.07;
+    public final static double driveKp = 0.05;
     public final static double driveKi = 0.009;
     public final static double driveKd = 0.007;
     public final static double drivePTolerance = 0.02;
     public final static double driveVTolerance = 1;
 
     public final static double rotateKp = 0.05 / 40;
-    public final static double rotateKi = 0.001;
-    public final static double rotateKd = 0.0 / 20;
+    public final static double rotateKi = 0.001 / 20;
+    public final static double rotateKd = 0.003 / 20;
     public final static double rotatePTolerance = 2;
     public final static double rotateVTolerance = 10;
 
@@ -147,6 +147,35 @@ public final class Constants {
     public final static double velKd = 0.007 / 75;
     public final static double velPTolerance = 2;
     public final static double velVTolerance = 10;
+
+    public final static double firstKf = 0;
+    public final static double firstKp = 0;
+    public final static double firstKi = 0;
+    public final static double firstKd = 0;
+    public final static double firstStall = firstKf;
+
+    public final static double firstKfCone = firstKf*1.5;
+    public final static double firstKpCone = firstKp*1.3;
+    public final static double firstKiCone = firstKi*1.3;
+    public final static double firstKdCone= firstKd *1.3;
+    public final static double firstStallCone = firstKfCone;
+
+    public final static double secondKf = 0;
+    public final static double secondKp = 0;
+    public final static double secondKi = 0;
+    public final static double secondKd = 0;
+    public final static double secondStall = 0;
+
+    public final static double secondKfCone = firstKf*1.5;
+    public final static double secondKpCone = firstKp*1.3;
+    public final static double secondKiCone = firstKi*1.3;
+    public final static double secondKdCone= firstKd *1.3;
+    public final static double secondStallCone = firstStall*1.5;
+
+
+
+
+
   }
 
 public final class Values {
@@ -179,7 +208,7 @@ public final class Values {
   
 }
 
-public static class PidValues {
+public static class PidOldValuesDontUse {
   public static double 
           FIRST_ARM_KP = 0.07,
           FIRST_ARM_KI = 0.000006
@@ -202,9 +231,7 @@ public static class PidValues {
           FIRST_ARM_BACK_KP = 0.1,
           FIRST_ARM_BACK_KI = 0.00000,
           FIRST_ARM_BACK_KD = 0.000;
-         public final static double driveKp = 0.0465;
-         public final static double driveKi = 0.007;
-         public final static double driveKd = 0.007;
+         
 }
 
 public final static class Conversions {

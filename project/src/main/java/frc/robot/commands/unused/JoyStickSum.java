@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.unused;
 
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 
@@ -16,7 +16,7 @@ public class JoyStickSum extends CommandBase{
             if(curval < 1 && curval > -1){
                 curval += RobotContainer.m_operator.getY() * factor;
             }
-            Arm.getInstance().getSecond().set(TalonFXControlMode.PercentOutput, curval);
+            Arm.getSecond().set(TalonFXControlMode.PercentOutput, curval);
         }
     }
     

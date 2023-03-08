@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.unused;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
@@ -15,8 +15,8 @@ public class MotionMagicArmPID extends CommandBase {
 
 
     public MotionMagicArmPID(){
-        m_first = Arm.getInstance().getFirst();
-        //m_seccond = Arm.getInstance().getSecond();
+        m_first = Arm.getFirst();
+        //m_seccond = Arm.getSecond();
 
         m_first.configFactoryDefault();
         //m_seccond.configFactoryDefault();

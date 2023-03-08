@@ -15,7 +15,7 @@ public class ChasisSetPointPosPID extends ChassisPostionPID {
     @Override
     public boolean isFinished() {
              return (Math.abs(getCurDistance() - m_setPoint.getAsDouble()) < PIDS.drivePTolerance
-                && (Math.abs(Chassis.getInstance().getVelocity()) < PIDS.driveVTolerance));
+                && (Math.abs(Chassis.getVelocity()) < PIDS.driveVTolerance));
     }
 
 }
