@@ -148,32 +148,7 @@ public final class Constants {
     public final static double velPTolerance = 2;
     public final static double velVTolerance = 10;
 
-    public final static double firstKf = 0;
-    public final static double firstKp = 0;
-    public final static double firstKi = 0;
-    public final static double firstKd = 0;
-    public final static double firstStall = firstKf;
-
-    public final static double firstKfCone = firstKf*1.5;
-    public final static double firstKpCone = firstKp*1.3;
-    public final static double firstKiCone = firstKi*1.3;
-    public final static double firstKdCone= firstKd *1.3;
-    public final static double firstStallCone = firstKfCone;
-
-    public final static double secondKf = 0;
-    public final static double secondKp = 0;
-    public final static double secondKi = 0;
-    public final static double secondKd = 0;
-    public final static double secondStall = 0;
-
-    public final static double secondKfCone = firstKf*1.5;
-    public final static double secondKpCone = firstKp*1.3;
-    public final static double secondKiCone = firstKi*1.3;
-    public final static double secondKdCone= firstKd *1.3;
-    public final static double secondStallCone = firstStall*1.5;
-
-
-
+   
 
 
   }

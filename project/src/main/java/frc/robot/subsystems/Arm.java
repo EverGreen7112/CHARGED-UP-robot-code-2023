@@ -16,6 +16,34 @@ public class Arm extends SubsystemBase {
   private static double m_firstMinRange, m_firstMaxRange, m_secondMinRange, m_secondMaxRange;
   private static Arm m_instance;
 
+  // privates because shoul be get only with the corresponding functions
+  private final static double firstKf = 0;
+  private final static double firstKp = 0;
+  private final static double firstKi = 0;
+  private final static double firstKd = 0;
+  private final static double firstStall = firstKf;
+
+  private final static double firstKfCone = firstKf * 1.5;
+  private final static double firstKpCone = firstKp * 1.3;
+  private final static double firstKiCone = firstKi * 1.3;
+  private final static double firstKdCone = firstKd * 1.3;
+  private final static double firstStallCone = firstKfCone;
+
+  private final static double secondKf = 0;
+  private final static double secondKp = 0;
+  private final static double secondKi = 0;
+  private final static double secondKd = 0;
+  private final static double secondStall = 0;
+
+  private final static double secondKfCone = firstKf * 1.5;
+  private final static double secondKpCone = firstKp * 1.3;
+  private final static double secondKiCone = firstKi * 1.3;
+  private final static double secondKdCone = firstKd * 1.3;
+  private final static double secondStallCone = firstStall * 1.5;
+
+  public final static double firstArmTol = 1;
+  public final static double firstArmVTol = 20;
+
   public static enum ARMCONF {
     FORWARD, MID, BACK;
   }
@@ -109,6 +137,7 @@ public class Arm extends SubsystemBase {
       }
     }
   }
+
   /**
    * @deprecated use specific controller instead
    * @param kf1
@@ -128,12 +157,12 @@ public class Arm extends SubsystemBase {
    * @return the current [f,p,i,d] parqameters depends of whther a cone is inside
    *         or not
    */
-  public static double[] getCurrentFirstFPID() {
+  public static double[] getFirstFPID() {
     if (m_coneIn) {
-      double[] res = { PIDS.firstKfCone, PIDS.firstKpCone, PIDS.firstKiCone, PIDS.firstKdCone };
+      double[] res = { firstKfCone, firstKpCone, firstKiCone, firstKdCone };
       return res;
     }
-    double[] res = { PIDS.firstKf, PIDS.firstKp, PIDS.firstKi, PIDS.firstKd };
+    double[] res = { firstKf, firstKp, firstKi, firstKd };
     return res;
   }
 
@@ -142,12 +171,12 @@ public class Arm extends SubsystemBase {
    * @return the current [f,p,i,d] parqameters depends of whther a cone is inside
    *         or not
    */
-  public static double[] getCurrentSecondFPID() {
+  public static double[] getSecondFPID() {
     if (m_coneIn) {
-      double[] res = { PIDS.secondKfCone, PIDS.secondKpCone, PIDS.secondKiCone, PIDS.secondKdCone };
+      double[] res = { secondKfCone, secondKpCone, secondKiCone, secondKdCone };
       return res;
     }
-    double[] res = { PIDS.secondKf, PIDS.secondKp, PIDS.secondKi, PIDS.secondKd };
+    double[] res = { secondKf, secondKp, secondKi, secondKd };
     return res;
   }
 
@@ -158,9 +187,9 @@ public class Arm extends SubsystemBase {
    */
   public static double getFirstStall() {
     if (m_coneIn) {
-      return PIDS.firstStallCone;
+      return firstStallCone;
     }
-    return PIDS.firstStall;
+    return firstStall;
   }
 
   /**
@@ -169,17 +198,20 @@ public class Arm extends SubsystemBase {
    */
   public static double getSecondStall() {
     if (m_coneIn) {
-      return PIDS.secondStallCone;
+      return secondStallCone;
     }
-    return PIDS.secondStall;
+    return secondStall;
   }
-  public static void setconeIn(boolean coneIn){
+
+  public static void setconeIn(boolean coneIn) {
     m_coneIn = coneIn;
   }
-  public static void toggleConeIn(){
+
+  public static void toggleConeIn() {
     setconeIn(!m_coneIn);
   }
-  public static boolean getconeIn(){
+
+  public static boolean getconeIn() {
     return m_coneIn;
   }
 
