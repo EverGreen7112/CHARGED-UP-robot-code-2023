@@ -1,6 +1,7 @@
 package frc.robot.commands.Arm;
 
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.revrobotics.ControlType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -45,8 +46,8 @@ public class MoveArm2ByAngle extends CommandBase {
         double[] fpid = Arm.getSecondUpFPID();
         // might use othe more physiclly accurate calculation
         lastOutput = fpid[0] * Math.signum(fpid[0]) + cont.calculate(Arm.getFirstAngle());
-        Arm.getSecond().set(TalonFXControlMode.PercentOutput, lastOutput);
-    }
+        Arm.getSecond().set(lastOutput);  
+      }
 
     @Override
     public boolean isFinished() {

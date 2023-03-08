@@ -2,6 +2,10 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -12,7 +16,8 @@ import frc.robot.Constants.PidOldValuesDontUse;
 
 public class Arm extends SubsystemBase {
 
-  private static TalonFX m_first, m_second;
+  private static CANSparkMax m_first, m_second;
+  private static SparkMaxPIDController m_firstPIDController,m_secondPIDController;
   private static double m_firstMinRange, m_firstMaxRange, m_secondMinRange, m_secondMaxRange;
   private static Arm m_instance;
 
@@ -54,25 +59,23 @@ public class Arm extends SubsystemBase {
 
   private static ARMCONF m_currentconf = ARMCONF.MID;
 
-  public Arm(TalonFX first, TalonFX second) {
+  public Arm(CANSparkMax first, CANSparkMax second) {
     m_first = first;
     m_firstMinRange = Constants.ArmValues.FIRST_ARM_MIN;
     m_firstMaxRange = Constants.ArmValues.FIRST_ARM_MAX;
-    first.configFactoryDefault();
-    first.selectProfileSlot(0, 0);
-    first.config_kP(0, Constants.PidOldValuesDontUse.FIRST_ARM_KP);
-    first.config_kI(0, Constants.PidOldValuesDontUse.FIRST_ARM_KI);
-    first.config_kD(0, Constants.PidOldValuesDontUse.FIRST_ARM_KD);
-    first.setSensorPhase(true);
+    m_first.restoreFactoryDefaults();
+    m_firstPIDController.setP(Constants.PidOldValuesDontUse.FIRST_ARM_KP);
+    m_firstPIDController.setI(Constants.PidOldValuesDontUse.FIRST_ARM_KI);
+    m_firstPIDController.setD(Constants.PidOldValuesDontUse.FIRST_ARM_KD);
+  
     // first.setSelectedSensorPosition(0);
     m_second = second;
     m_secondMinRange = Constants.ArmValues.SECOND_ARM_MIN;
     m_secondMaxRange = Constants.ArmValues.SECOND_ARM_MAX;
-    second.configFactoryDefault();
-    second.selectProfileSlot(0, 0);
-    second.config_kP(0, Constants.PidOldValuesDontUse.SECOND_ARM_KP);
-    second.config_kI(0, Constants.PidOldValuesDontUse.SECOND_ARM_KI);
-    second.config_kD(0, Constants.PidOldValuesDontUse.SECOND_ARM_KD);
+    m_second.restoreFactoryDefaults();
+    m_secondPIDController.setP(Constants.PidOldValuesDontUse.SECOND_ARM_KP);
+    m_secondPIDController.setI(Constants.PidOldValuesDontUse.SECOND_ARM_KI);
+    m_secondPIDController.setD(Constants.PidOldValuesDontUse.SECOND_ARM_KD);
     m_coneIn = false;
     // kf in specific commands
     // second.setSelectedSensorPosition(0);
@@ -80,14 +83,11 @@ public class Arm extends SubsystemBase {
 
   @Override
   public void periodic() {
-    double firstAng = Constants.Conversions.ticksToAngle(m_first.getSelectedSensorPosition(),
+    double firstAng = Constants.Conversions.ticksToAngle(m_first.getEncoder().getPosition(),
         Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);
     SmartDashboard.putNumber("First Angle", firstAng);
-    SmartDashboard.putNumber("Second Angle", Constants.Conversions.ticksToAngle(m_second.getSelectedSensorPosition(),
+    SmartDashboard.putNumber("Second Angle", Constants.Conversions.ticksToAngle(m_second.getEncoder().getPosition(),
         Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
-    SmartDashboard.putNumber("motor1 output", m_first.getMotorOutputPercent());
-    SmartDashboard.putNumber("motor2 output", m_second.getMotorOutputPercent());
-    SmartDashboard.putBoolean("coneInside", m_coneIn);
     if (firstAng < 15 && firstAng > -15) {
       m_currentconf = ARMCONF.MID;
     } else if (firstAng < 15) {
@@ -102,24 +102,24 @@ public class Arm extends SubsystemBase {
   }
 
   public static double getFirstAngle() {
-    return Constants.Conversions.ticksToAngle(m_first.getSelectedSensorPosition(),
+    return Constants.Conversions.ticksToAngle(m_first.getEncoder().getPosition(),
         Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);
   }
 
   public static double getSecondAngle() {
-    return Constants.Conversions.ticksToAngle(m_first.getSelectedSensorPosition(),
+    return Constants.Conversions.ticksToAngle(m_first.getEncoder().getPosition(),
         Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);
   }
 
   public static Arm getInstance() {
     if (m_instance == null) {
-      m_instance = new Arm(new TalonFX(Constants.Ports.FIRST_ARM_PORT), new TalonFX(Constants.Ports.SECOND_ARM_PORT));
+      m_instance = new Arm(new CANSparkMax(Constants.Ports.FIRST_ARM_PORT, MotorType.kBrushless), new CANSparkMax(Constants.Ports.SECOND_ARM_PORT, MotorType.kBrushless));
     }
     return m_instance;
   }
 
   public static void turnFirstTo(double angle) {
-    double m_firstAngle = Constants.Conversions.ticksToAngle(m_first.getSelectedSensorPosition(),
+    double m_firstAngle = Constants.Conversions.ticksToAngle(m_first.getEncoder().getPosition(),
         Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);
     double m_firstTarget = Constants.Conversions.angleToTicks(
         m_firstAngle + Constants.Conversions.closestAngle(m_firstAngle, angle),
@@ -132,10 +132,10 @@ public class Arm extends SubsystemBase {
           || Math.abs(m_firstAngle - Math.abs(Constants.Conversions.modulo(
               Constants.Conversions.ticksToAngle(m_firstTarget, Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION),
               360))) < m_firstMinRange - Constants.ArmValues.LIMIT_TOLERANCE) {
-        m_first.set(TalonFXControlMode.Position, m_firstTarget);
+        m_firstPIDController.setReference(m_firstTarget, ControlType.kPosition);
       } else {
-        m_first.set(TalonFXControlMode.Position,
-            Constants.Conversions.angleToTicks(m_firstAngle, Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION));
+        m_firstPIDController.setReference(
+            Constants.Conversions.angleToTicks(m_firstAngle, Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION), ControlType.kPosition);
       }
     }
   }
@@ -148,10 +148,10 @@ public class Arm extends SubsystemBase {
    * @param kd1
    */
   public static void _setSecondFPID(double kf1, double kp1, double ki1, double kd1) {
-    m_second.config_kF(0, kf1);
-    m_second.config_kP(0, kp1);
-    m_second.config_kI(0, ki1);
-    m_second.config_kD(0, kd1);
+    m_secondPIDController.setFF(kf1);
+    m_secondPIDController.setP(kp1);
+    m_secondPIDController.setI(ki1);
+    m_secondPIDController.setD(kd1);
   }
 
   /**
@@ -219,7 +219,7 @@ public class Arm extends SubsystemBase {
   }
 
   public static void turnSecondTo(double angle) {
-    double m_secondAngle = Constants.Conversions.ticksToAngle(m_second.getSelectedSensorPosition(),
+    double m_secondAngle = Constants.Conversions.ticksToAngle(m_second.getEncoder().getPosition(),
         Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION);
     double m_secondTarget = Constants.Conversions.angleToTicks(
         m_secondAngle + Constants.Conversions.closestAngle(m_secondAngle, angle),
@@ -232,19 +232,19 @@ public class Arm extends SubsystemBase {
           || Math.abs(m_secondAngle - Math.abs(Constants.Conversions.modulo(
               Constants.Conversions.ticksToAngle(m_secondTarget, Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION),
               360))) < m_secondMinRange - Constants.ArmValues.LIMIT_TOLERANCE) {
-        m_second.set(TalonFXControlMode.Position, m_secondTarget);
+        m_secondPIDController.setReference(m_secondTarget, ControlType.kPosition);
       } else {
-        m_second.set(TalonFXControlMode.Position,
-            Constants.Conversions.angleToTicks(m_secondAngle, Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
+        m_secondPIDController.setReference(
+            Constants.Conversions.angleToTicks(m_secondAngle, Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION),ControlType.kPosition);
       }
     }
   }
 
-  public static TalonFX getFirst() {
+  public static CANSparkMax getFirst() {
     return m_first;
   }
 
-  public static TalonFX getSecond() {
+  public static CANSparkMax getSecond() {
     return m_second;
   }
 

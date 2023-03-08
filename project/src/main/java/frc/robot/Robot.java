@@ -62,8 +62,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods. This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("First Angle", Constants.Conversions.ticksToAngle(Arm.getFirst().getSelectedSensorPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION));
-    SmartDashboard.putNumber("Second Angle", Constants.Conversions.ticksToAngle(Arm.getSecond().getSelectedSensorPosition(), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
+    
     //SmartDashboard.putNumber("distance", Constants.Conversions.ticksToMeters(Chassis.getInstance().getEncodersDist(), Constants.Values.DISTANCE_PER_TICK)); 
     SmartDashboard.putNumber("pitch", Chassis.getGyro().getPitch());
     SmartDashboard.putNumber("roll", Chassis.getGyro().getRoll());
@@ -121,8 +120,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     CommandScheduler.getInstance().cancelAll();
-    Arm.getFirst().set(TalonFXControlMode.PercentOutput , 0);
-    Arm.getSecond().set(TalonFXControlMode.PercentOutput , 0);
+
     // CommandScheduler.getInstance().schedule(new SetArmAngleToStartPos());
     //RobotContainer.m_tankDriveCommand.schedule();
    //  new TurnToAnglePID(Chassis.getGyro().getAngle() + 180).schedule();

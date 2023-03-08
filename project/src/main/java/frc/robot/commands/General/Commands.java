@@ -4,6 +4,10 @@ import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
@@ -18,9 +22,8 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Vector2D;
 import frc.robot.commands.Arm.MoveArm1ByAngle;
-import frc.robot.commands.Arm.StallArmOne;
+import frc.robot.commands.Arm.StallArm1;
 import frc.robot.commands.ChassisPid.ChasisSetPointPosPID;
-import frc.robot.commands.unused.unusedThatWereUsed.TurnUntilWithInRange;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Chassis;
 
@@ -60,7 +63,7 @@ public class Commands {
      * @param maxLineDist the maximum line distance (see first step)
      * @return the command
      */
-    public static CommandBase getDriveToLocationCommand(Vector2D startP, double curAng, Vector2D endP, double endAng,
+    /*  public static CommandBase getDriveToLocationCommand(Vector2D startP, double curAng, Vector2D endP, double endAng,
             double minLineDist, double maxLineDist) {
         // TODO: maybe can be optimized using reverse
         // TODO:!!! replace pid with canspark pid
@@ -77,7 +80,7 @@ public class Commands {
         double minimumAngle = Math.min(minAng, maxAng);// while minAng is the angle of the vector to the minLine point
                                                        // minimumAng is the minimum angle between minAng and maxAng
         double maximumAngle = Math.max(maxAng, minAng);
-        TurnUntilWithInRange turnUntilWithinRange = new TurnUntilWithInRange(minimumAngle, maximumAngle);
+        // turnUntilWithinRange = new TurnUntilWithInRange(minimumAngle, maximumAngle);
         // Calculate desired distance
         DoubleSupplier intresectingSetPoint = () -> {
             double cAng = turnUntilWithinRange.endAng();
@@ -122,7 +125,7 @@ public class Commands {
 
         return new SequentialCommandGroup(turnUntilWithinRange, driveToIntresection, rotateToOverlap, driveToOverlap);
     }
-
+*/
     public static CommandBase toggleConeIn = new InstantCommand(() -> Arm.toggleConeIn());
     public static CommandBase invertChassis = new InstantCommand(() -> {
         Chassis.m_rightFrontEngine.setInverted(!Chassis.getInstance().m_rightFrontEngine.getInverted());
@@ -130,36 +133,42 @@ public class Commands {
         SmartDashboard.putBoolean("AaaaAAA", Chassis.getInstance().m_rightFrontEngine.getInverted());
     });
     public static CommandBase upperBig = new RunCommand(
-            () -> Arm.getFirst().set(TalonFXControlMode.PercentOutput, 0.3), Arm.getInstance()) {
+            () -> Arm.getFirst().set( 0.3), Arm.getInstance()) {
         @Override
         public void end(boolean interrupted) {
-            Arm.getFirst().set(TalonFXControlMode.PercentOutput, 0);
+            Arm.getFirst().set( 0);
         }
     };
     public static CommandBase lowerBig = new RunCommand(
-            () -> Arm.getFirst().set(TalonFXControlMode.PercentOutput, -0.3), Arm.getInstance()) {
+            () -> Arm.getFirst().set( -0.3), Arm.getInstance()) {
         @Override
         public void end(boolean interrupted) {
-            Arm.getFirst().set(TalonFXControlMode.PercentOutput, 0);
+            Arm.getFirst().set( 0);
         }
     };
     public static CommandBase upperSmall = new RunCommand(
-            () -> Arm.getSecond().set(TalonFXControlMode.PercentOutput, 0.12 + (RobotContainer.m_operator.getY() * 0.5)),
+            () -> Arm.getSecond().set( 0.12 + (RobotContainer.m_operator.getY() * 0.5)),
             Arm.getInstance()) {
         @Override
         public void end(boolean interrupted) {
-            Arm.getSecond().set(TalonFXControlMode.PercentOutput, 0);
+            Arm.getSecond().set( 0);
         }
     };
     public static CommandBase lowerSmall = new RunCommand(
-            () -> Arm.getSecond().set(TalonFXControlMode.PercentOutput, -0.12 + (RobotContainer.m_operator.getY() * 0.5)),
+            () -> Arm.getSecond().set( -0.12 + (RobotContainer.m_operator.getY() * 0.5)),
             Arm.getInstance()) {
         @Override
         public void end(boolean interrupted) {
-            Arm.getSecond().set(TalonFXControlMode.PercentOutput, 0);
+            Arm.getSecond().set( 0);
         }
     };
+    CANSparkMax s = new CANSparkMax(0, MotorType.kBrushless);
+    RelativeEncoder a = s.getEncoder();
+    SparkMaxPIDController H = s.getPIDController();
     public static CommandBase getMoveArm1ToAng(double desierdAng){
-        return new MoveArm1ByAngle(desierdAng).andThen(new StallArmOne());
+        return new MoveArm1ByAngle(desierdAng).andThen(new StallArm1());
     }
+
+   
+    
 }

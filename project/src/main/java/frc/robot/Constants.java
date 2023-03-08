@@ -28,12 +28,12 @@ public final class Constants {
   public final class Ports{
     //tank drive chassis
     public static final int 
-    LEFT_FRONT_PORT = 2,
-    LEFT_MIDDLE_PORT = 14,
-    LEFT_BACK_PORT = 10,
-    RIGHT_FRONT_PORT = 15,
-    RIGHT_MIDDLE_PORT = 12,
-    RIGHT_BACK_PORT = 11,
+    LEFT_FRONT_PORT = 14,
+    LEFT_MIDDLE_PORT = 1,
+    LEFT_BACK_PORT = 2,
+    RIGHT_FRONT_PORT = 12,
+    RIGHT_MIDDLE_PORT = 3,
+    RIGHT_BACK_PORT = 4,
     //swerve constants 
     FLY_WHEEL_PORT = 0,
     RIGHT_UP_DRIVE_MOTOR_PORT = 0,
@@ -46,7 +46,7 @@ public final class Constants {
     LEFT_DOWN_TURN_MOTOR_PORT = 0,
     //arm ports
     FIRST_ARM_PORT = 13,
-    SECOND_ARM_PORT = 3,
+    SECOND_ARM_PORT = 15,
     GRIPPER_PORT = 1,
     //limit switch ports
     CLOSED_LIMIT_SWITCH = 7,
@@ -155,8 +155,8 @@ public final class Constants {
 
 public final class Values {
   public static final double 
-      FIRST_ARM_TICKS_PER_REVOLUTION = 2048*16.9142857,
-      SECOND_ARM_TICKS_PER_REVOLUTION = 2048*10.8;
+      FIRST_ARM_TICKS_PER_REVOLUTION = 2048*16.9142857*9,
+      SECOND_ARM_TICKS_PER_REVOLUTION = 2048*10.8*9;
   public static final double 
   TANKDRIVE_WHEEL_RADIUS = 0.076,
   DISTANCE_BETWEEN_LEFT_TO_RIGHT = 0.5; //in meters;

@@ -1,6 +1,7 @@
 package frc.robot.commands.Arm;
 
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
@@ -12,6 +13,7 @@ public class StallArm2 extends CommandBase{
     }
     @Override
     public void execute() {
-       Arm.getSecond().set(TalonFXControlMode.PercentOutput, Arm.getSecondStall());
-    }
+      Arm.getSecond().set(Arm.getSecondStall());
+      
+   }
 }
