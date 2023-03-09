@@ -23,7 +23,7 @@ public class MoveArm1ByAngle extends CommandBase{
     private double lastOutput = 0;
     @Override
     public void execute() {
-        
+        ex1();
     }
     //normal pid
     private void ex1(){

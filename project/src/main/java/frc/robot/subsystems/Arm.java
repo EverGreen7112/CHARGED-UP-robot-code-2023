@@ -68,7 +68,7 @@ public class Arm extends SubsystemBase {
     m_firstPIDController.setP(Constants.PidOldValuesDontUse.FIRST_ARM_KP);
     m_firstPIDController.setI(Constants.PidOldValuesDontUse.FIRST_ARM_KI);
     m_firstPIDController.setD(Constants.PidOldValuesDontUse.FIRST_ARM_KD);
-    //m_first.getEncoder().setPositionConversionFactor(Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);
+    m_first.getEncoder().setPositionConversionFactor(4096);
   
     // first.setSelectedSensorPosition(0);
     m_second = second;
@@ -79,6 +79,7 @@ public class Arm extends SubsystemBase {
     m_secondPIDController.setP(Constants.PidOldValuesDontUse.SECOND_ARM_KP);
     m_secondPIDController.setI(Constants.PidOldValuesDontUse.SECOND_ARM_KI);
     m_secondPIDController.setD(Constants.PidOldValuesDontUse.SECOND_ARM_KD);
+    m_second.getEncoder().setPositionConversionFactor(4096);
     m_coneIn = false;
     // kf in specific commands
     // second.setSelectedSensorPosition(0);
@@ -105,12 +106,12 @@ public class Arm extends SubsystemBase {
   }
 
   public static double getFirstAngle() {
-    return Constants.Conversions.ticksToAngle(m_first.getEncoder().getPosition() * 4096,
+    return Constants.Conversions.ticksToAngle(m_first.getEncoder().getPosition(),
        Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);
   }
 
   public static double getSecondAngle() {
-    return Constants.Conversions.ticksToAngle(m_second.getEncoder().getPosition() * 4096,
+    return Constants.Conversions.ticksToAngle(m_second.getEncoder().getPosition(),
         Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION);
   }
 

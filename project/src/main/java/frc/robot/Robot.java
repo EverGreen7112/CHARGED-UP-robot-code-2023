@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,6 +18,8 @@ import frc.robot.commands.Autos;
 // import frc.robot.commands.MoveArmByAngle;
 // import frc.robot.commands.SetArmAngleToStartPos;
 import frc.robot.commands.TurnToAnglePID;
+import frc.robot.commands.Arm.MoveArm1ByAngle;
+import frc.robot.commands.Arm.StallArm1;
 import frc.robot.commands.Chassis.TankDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Chassis;
@@ -131,7 +134,8 @@ public class Robot extends TimedRobot {
     // CommandScheduler.getInstance().schedule(new SetArmAngleToStartPos());
   //  new TankDrive(RobotContainer.m_rightStick::getY, RobotContainer.m_leftStick::getY).schedule();
    //  new TurnToAnglePID(Chassis.getGyro().getAngle() + 180).schedule();1
-
+   //new MoveArm1ByAngle(90).andThen(new StallArm1());
+    
   }
 
   // JoyStickSum j = new JoyStickSum();
@@ -140,7 +144,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     // j.schedule();
     // Chassis.driveStraight(0.2);
-    
+    new MoveArm1ByAngle(90).andThen(new StallArm1());
   }
 
 
