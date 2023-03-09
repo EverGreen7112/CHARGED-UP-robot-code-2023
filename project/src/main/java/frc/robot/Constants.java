@@ -72,7 +72,8 @@ public final class Constants {
             FIRST_ARM_L_MIN =-130
             ,SECOND_ARM_MIN = 0
             ,SECOND_ARM_MAX = 180
-            ,JOYSTICK_TOLERANCE = 0.5
+            ,JOYSTICK_ANGLE_TOLERANCE = 0.5
+            ,JOYSTICK_STRENGTH_TOLERANCE = 0.1
             ,LIMIT_TOLERANCE = 20
             //angles for the arms
             ,FIRST_PICKUP_TOP_ANGLE = 120

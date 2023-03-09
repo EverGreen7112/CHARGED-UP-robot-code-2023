@@ -17,9 +17,8 @@ public class MoveArmByAngleSuplliers extends CommandBase {
     int m_mode;
 
     //mode controls which arm the command moves, 1 moves the first arm, 2 moves the second arm.
-    public 
-    MoveArmByAngleSuplliers(Supplier<Double> x, Supplier<Double> y, int mode) {
-         addRequirements(Arm.getInstance());
+    public MoveArmByAngleSuplliers(Supplier<Double> x, Supplier<Double> y, int mode) {
+        //  addRequirements(Arm.getInstance());
         value1 = x;
         value2 = y;
         m_mode = mode;
@@ -38,31 +37,23 @@ public class MoveArmByAngleSuplliers extends CommandBase {
     @Override
     public void execute() {
         //tolerance for joystick.
-        // if (Math.abs(value1.get()) < Constants.ArmValues.JOYSTICK_TOLERANCE && Math.abs(value2.get()) < Constants.ArmValues.JOYSTICK_TOLERANCE) {
-        //     return;
-        // }
+        if (Math.abs(value1.get()) < Constants.ArmValues.JOYSTICK_ANGLE_TOLERANCE && Math.abs(value2.get()) < Constants.ArmValues.JOYSTICK_ANGLE_TOLERANCE) {
+            return;
+        }
         //convert joystick values to degrees.
         m_JoystickAngle = Math.toDegrees(Math.atan2(value1.get(), value2.get()));
         if (m_JoystickAngle <= 0)
             m_JoystickAngle += 360;
         SmartDashboard.putNumber("joystick angle", m_JoystickAngle);
         if (m_mode == 1){
-            m_armAngle = Constants.Conversions.ticksToAngle(m_motor.getEncoder().getPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);
-            m_armTarget = Constants.Conversions.angleToTicks(m_armAngle + Constants.Conversions.closestAngle(m_armAngle, m_JoystickAngle), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);    
+            // m_armAngle = Arm.getFirstAngle();
+            // m_armTarget = Constants.Conversions.angleToTicks(m_armAngle + Constants.Conversions.closestAngle(m_armAngle, m_JoystickAngle), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);    
+            new MoveArm1ByAngle(m_JoystickAngle).schedule();
         } else if (m_mode == 2){
-            m_armAngle = Constants.Conversions.ticksToAngle(m_motor.getEncoder().getPosition(), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION);
-            m_armTarget = Constants.Conversions.angleToTicks(m_armAngle + Constants.Conversions.closestAngle(m_armAngle, m_JoystickAngle), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION);
+            // m_armAngle = Arm.getSecondAngle();
+            // m_armTarget = Constants.Conversions.angleToTicks(m_armAngle + Constants.Conversions.closestAngle(m_armAngle, m_JoystickAngle), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION);
+            new MoveArm2ByAngle(m_JoystickAngle).schedule();
         }
-        SmartDashboard.putNumber("Target", m_JoystickAngle);
-        // if (m_JoystickAngle <= Constants.ArmValues.FIRST_ARM_MAX && m_JoystickAngle >= Constants.ArmValues.FIRST_ARM_MIN) {
-            // if (Math.abs(m_JoystickAngle - Math.abs(Constants.Conversions.modulo(Constants.Conversions.ticksToAngle(m_armTarget), 360))) > Constants.ArmValues.FIRST_ARM_MAX + 5 || Math.abs(m_JoystickAngle - Math.abs(Constants.Conversions.modulo(Constants.Conversions.ticksToAngle(m_armTarget), 360))) < Constants.ArmValues.FIRST_ARM_MIN - 5) {
-                // motor.set(TalonSRXControlMode.Position, m_armTarget);
-            // } 
-            // else {
-        m_motor.getPIDController().setReference(m_armTarget, ControlType.kPosition);
-            // }
-        // }
-  
     }
 
     @Override

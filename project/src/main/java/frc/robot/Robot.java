@@ -1,28 +1,15 @@
 
 package frc.robot;
 
-import java.util.function.Supplier;
-
-import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
-import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.CANSparkMax.IdleMode;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.DriveDistanceByEncoders;
-import frc.robot.commands.Autos;
-// import frc.robot.commands.JoyStickSum;
-// import frc.robot.commands.MoveArmByAngle;
-// import frc.robot.commands.SetArmAngleToStartPos;
-import frc.robot.commands.TurnToAnglePID;
 import frc.robot.commands.Arm.MoveArm1ByAngle;
 import frc.robot.commands.Arm.MoveArmByAngleSuplliers;
 import frc.robot.commands.Arm.StallArm1;
-import frc.robot.commands.Chassis.TankDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Gripper;
@@ -120,12 +107,12 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().cancelAll();
     Chassis.getGyro().reset();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    Chassis.getInstance().m_leftFrontEngine.getEncoder().setPosition(0);
-    Chassis.getInstance().m_rightFrontEngine.getEncoder().setPosition(0);
-    Chassis.getInstance().m_leftMiddleEngine.getEncoder().setPosition(0);
-    Chassis.getInstance().m_rightMiddleEngine.getEncoder().setPosition(0);
-    Chassis.getInstance().m_leftBackEngine.getEncoder().setPosition(0);
-    Chassis.getInstance().m_rightBackEngine.getEncoder().setPosition(0);
+    Chassis.m_leftFrontEngine.getEncoder().setPosition(0);
+    Chassis.m_rightFrontEngine.getEncoder().setPosition(0);
+    Chassis.m_leftMiddleEngine.getEncoder().setPosition(0);
+    Chassis.m_rightMiddleEngine.getEncoder().setPosition(0);
+    Chassis.m_leftBackEngine.getEncoder().setPosition(0);
+    Chassis.m_rightBackEngine.getEncoder().setPosition(0);
    // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
     }
