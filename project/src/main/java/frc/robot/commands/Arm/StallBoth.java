@@ -1,12 +1,9 @@
 package frc.robot.commands.Arm;
 
-import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
-import com.revrobotics.ControlType;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 
-public class StallArm2 extends CommandBase{
+public class StallBoth extends CommandBase{
     @Override
     public void initialize() {
        addRequirements(Arm.getInstance());
@@ -14,5 +11,6 @@ public class StallArm2 extends CommandBase{
     @Override
     public void execute() {
       Arm.stall2();
+      Arm.stall1();
    }
 }

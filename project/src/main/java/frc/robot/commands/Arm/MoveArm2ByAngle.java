@@ -13,11 +13,21 @@ public class MoveArm2ByAngle extends CommandBase {
     private PIDController cont = new PIDController(0, 0, 0);
     private double m_desierdAngle;
     private CANSparkMax m_second;
+    private boolean m_stallFirst = false;
+    private StallArm1 sta1;
     public MoveArm2ByAngle(double desierdAngle) {
         addRequirements(Arm.getInstance());
         m_desierdAngle = desierdAngle;
         cont.setSetpoint(desierdAngle);
         m_second = Arm.getSecond();
+        
+    }
+    public MoveArm2ByAngle(double desierdAngle,boolean stallFirst) {
+        addRequirements(Arm.getInstance());
+        m_desierdAngle = desierdAngle;
+        cont.setSetpoint(desierdAngle);
+        m_second = Arm.getSecond();
+        m_stallFirst = stallFirst;
     }
 
     @Override
@@ -25,6 +35,7 @@ public class MoveArm2ByAngle extends CommandBase {
         double[] fpid = Arm.getSecondUpFPID();
         cont.setPID(fpid[1], fpid[2], fpid[3]);
         cont.setTolerance(Arm.firstArmTol, Arm.firstArmVTol);
+        sta1 = new StallArm1();
     }
 
     private double lastOutput = 0;
@@ -32,6 +43,9 @@ public class MoveArm2ByAngle extends CommandBase {
     @Override
     public void execute() {
         ex1();
+        if(m_stallFirst){
+            Arm.stall1();
+        }
         // ex2();
     }
 
@@ -69,8 +83,5 @@ public class MoveArm2ByAngle extends CommandBase {
         return cont.atSetpoint();
     }
 
-    @Override
-    public void end(boolean interrupted) {
 
-    }
 }

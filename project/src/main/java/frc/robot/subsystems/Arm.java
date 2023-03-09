@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -17,16 +18,16 @@ import frc.robot.Constants.PidOldValuesDontUse;
 public class Arm extends SubsystemBase {
 
   private static CANSparkMax m_first, m_second;
-  private static SparkMaxPIDController m_firstPIDController,m_secondPIDController;
+  private static SparkMaxPIDController m_firstPIDController, m_secondPIDController;
   private static double m_firstMinRange, m_firstMaxRange, m_secondMinRange, m_secondMaxRange;
   private static Arm m_instance;
 
   // privates because shoul be get only with the corresponding functions
-  private final static double firstKf = 0;
+  private final static double firstKf = 0.2;
   private final static double firstKp = 0;
   private final static double firstKi = 0;
   private final static double firstKd = 0;
-  private final static double firstStall = firstKf;
+  private final static double firstStall = 0.05;
 
   private final static double firstKfCone = firstKf * 1.5;
   private final static double firstKpCone = firstKp * 1.3;
@@ -46,8 +47,6 @@ public class Arm extends SubsystemBase {
   private final static double secondKdCone = firstKd * 1.3;
   private final static double secondStallCone = firstStall * 1.5;
 
-  
-
   public final static double firstArmTol = 1;
   public final static double firstArmVTol = 20;
 
@@ -64,17 +63,19 @@ public class Arm extends SubsystemBase {
     m_firstMinRange = Constants.ArmValues.FIRST_ARM_MIN;
     m_firstMaxRange = Constants.ArmValues.FIRST_ARM_MAX;
     m_first.restoreFactoryDefaults();
+    m_first.setIdleMode(IdleMode.kBrake);
     m_firstPIDController = m_first.getPIDController();
     m_firstPIDController.setP(Constants.PidOldValuesDontUse.FIRST_ARM_KP);
     m_firstPIDController.setI(Constants.PidOldValuesDontUse.FIRST_ARM_KI);
     m_firstPIDController.setD(Constants.PidOldValuesDontUse.FIRST_ARM_KD);
     m_first.getEncoder().setPositionConversionFactor(4096);
-  
+
     // first.setSelectedSensorPosition(0);
     m_second = second;
     m_secondMinRange = Constants.ArmValues.SECOND_ARM_MIN;
     m_secondMaxRange = Constants.ArmValues.SECOND_ARM_MAX;
     m_second.restoreFactoryDefaults();
+    m_second.setIdleMode(IdleMode.kBrake);
     m_secondPIDController = m_second.getPIDController();
     m_secondPIDController.setP(Constants.PidOldValuesDontUse.SECOND_ARM_KP);
     m_secondPIDController.setI(Constants.PidOldValuesDontUse.SECOND_ARM_KI);
@@ -107,7 +108,7 @@ public class Arm extends SubsystemBase {
 
   public static double getFirstAngle() {
     return Constants.Conversions.ticksToAngle(m_first.getEncoder().getPosition(),
-       Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);
+        Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);
   }
 
   public static double getSecondAngle() {
@@ -117,7 +118,8 @@ public class Arm extends SubsystemBase {
 
   public static Arm getInstance() {
     if (m_instance == null) {
-      m_instance = new Arm(new CANSparkMax(Constants.Ports.FIRST_ARM_PORT, MotorType.kBrushless), new CANSparkMax(Constants.Ports.SECOND_ARM_PORT, MotorType.kBrushless));
+      m_instance = new Arm(new CANSparkMax(Constants.Ports.FIRST_ARM_PORT, MotorType.kBrushless),
+          new CANSparkMax(Constants.Ports.SECOND_ARM_PORT, MotorType.kBrushless));
     }
     return m_instance;
   }
@@ -139,7 +141,8 @@ public class Arm extends SubsystemBase {
         m_firstPIDController.setReference(m_firstTarget, ControlType.kPosition);
       } else {
         m_firstPIDController.setReference(
-            Constants.Conversions.angleToTicks(m_firstAngle, Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION), ControlType.kPosition);
+            Constants.Conversions.angleToTicks(m_firstAngle, Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION),
+            ControlType.kPosition);
       }
     }
   }
@@ -186,17 +189,21 @@ public class Arm extends SubsystemBase {
     return res;
   }
 
-
   // TODO: currently constants, probably should be depand on cos(ang) or somthing
   /**
    * 
    * @return the current firstStall
    */
   public static double getFirstStall() {
-    if (m_coneIn) {
-      return firstStallCone;
-    }
-    return firstStall;
+    // if (m_coneIn) {
+    //   return firstStallCone;
+    // }
+    // return firstStall;
+   if(Arm.getFirstAngle()>0){
+     return firstStall*0.8;
+   }else{
+    return firstStall*-1;
+   }
   }
 
   /**
@@ -239,7 +246,8 @@ public class Arm extends SubsystemBase {
         m_secondPIDController.setReference(m_secondTarget, ControlType.kPosition);
       } else {
         m_secondPIDController.setReference(
-            Constants.Conversions.angleToTicks(m_secondAngle, Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION),ControlType.kPosition);
+            Constants.Conversions.angleToTicks(m_secondAngle, Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION),
+            ControlType.kPosition);
       }
     }
   }
@@ -251,5 +259,11 @@ public class Arm extends SubsystemBase {
   public static CANSparkMax getSecond() {
     return m_second;
   }
-
+  public static void stall1(){
+    m_first.set(getFirstStall());
+  }
+  public static void stall2(){
+    m_first.set(getSecondStall());
+  }
+  // }
 }

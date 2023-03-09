@@ -1,18 +1,31 @@
 package frc.robot.commands.Arm;
 
+import java.util.function.Supplier;
+
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.revrobotics.CANSparkMax.ControlType;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
 
 public class MoveArm1ByAngle extends CommandBase{
     private PIDController cont = new PIDController(0, 0, 0);
-    public MoveArm1ByAngle(double desierdAngle) {
+    private Supplier<Double> m_desAng;
+    private boolean m_stallSecond = false;
+
+    public MoveArm1ByAngle(Supplier<Double> desierdAngle) {
         addRequirements(Arm.getInstance());
-        cont.setSetpoint(desierdAngle);
+        m_desAng = desierdAngle;
+        cont.setSetpoint(desierdAngle.get());
+    }
+    public MoveArm1ByAngle(Supplier<Double> desierdAngle, boolean stalSec) {
+        addRequirements(Arm.getInstance());
+        m_desAng = desierdAngle;
+        cont.setSetpoint(desierdAngle.get());
+        m_stallSecond = stalSec;
     }
     @Override
     public void initialize() {
@@ -23,7 +36,15 @@ public class MoveArm1ByAngle extends CommandBase{
     private double lastOutput = 0;
     @Override
     public void execute() {
-        ex1();
+        cont.setSetpoint(m_desAng.get());
+        ex2();
+        if(m_stallSecond){
+            Arm.stall2();
+        }
+        
+        SmartDashboard.putNumber("lastOutp", lastOutput);
+        SmartDashboard.putBoolean("atSetPoint", cont.atSetpoint());
+
     }
     //normal pid
     private void ex1(){
@@ -34,15 +55,12 @@ public class MoveArm1ByAngle extends CommandBase{
     //physical calculation pid
     private void ex2(){
         double [] fpid = Arm.getFirstFPID();
-        lastOutput = fpid[0]*Math.sin(Math.toRadians(Arm.getFirstAngle())) + cont.calculate(Arm.getFirstAngle());
+        lastOutput = fpid[0]*Math.sin(Math.toRadians(m_desAng.get())) + cont.calculate(Arm.getFirstAngle());
         Arm.getFirst().set(lastOutput);
     }
     @Override
     public boolean isFinished() {
         return cont.atSetpoint();
     }
-    @Override
-    public void end(boolean interrupted) {
-        
-    }
+
 }

@@ -95,8 +95,8 @@ public class RobotContainer {
   //  Trigger armTwoToZero = new JoystickButton(m_operator, Constants.ButtonPorts.A).onTrue(new ArmTwoStayInZero());
 
     Trigger balance = new JoystickButton(m_operator, Constants.ButtonPorts.RB).whileTrue(new Balance());
-    //Trigger openArmToCollectCone = new JoystickButton(m_operator, Constants.ButtonPorts.START).onTrue(new MoveArmByAngle(120, -55));
-    //Trigger openArmToCollectCube = new JoystickButton(m_operator, Constants.ButtonPorts.BACK).onTrue(new MoveArmByAngle(105.49851545607983, -61.848));
+    // Trigger openArmToCollectCone = new JoystickButton(m_operator, Constants.ButtonPorts.START).onTrue(new MoveArmByAngle(120, -55));
+    // Trigger openArmToCollectCube = new JoystickButton(m_operator, Constants.ButtonPorts.BACK).onTrue(new MoveArmByAngle(105.49851545607983, -61.848));
 
     Trigger smallArmPlus = new JoystickButton(m_operator, Constants.ButtonPorts.RB).whileTrue(Commands.upperSmall);
     Trigger smallArmMinus = new JoystickButton(m_operator, Constants.ButtonPorts.RT).whileTrue(Commands.lowerSmall);
@@ -107,9 +107,9 @@ public class RobotContainer {
 
     // Trigger turbo = new JoystickButton(m_leftStick, 1).whileTrue(new Turbo(m_tankDriveCommand));
     // Trigger slow = new JoystickButton(m_rightStick, 2).whileTrue(new Slow(m_tankDriveCommand));
-
+    
     righter.onTrue(Commands.toggleConeIn);
-    // Trigger trig = new Trigger(Commands::joystick1OutOfRange);
+    // Trigger trig = new Trigger(Commands::joystick1OutOfRange).
     // Trigger trig2 = new Trigger(Commands::joystic2OutOfRange);
     // RobotContainer.up.onTrue(new MoveArmByAngle(-128,160));
     // RobotContainer.down.onTrue(new MoveArmByAngle(-125, -288+360));

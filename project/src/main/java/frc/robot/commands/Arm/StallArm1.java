@@ -1,5 +1,7 @@
 package frc.robot.commands.Arm;
 
+import java.util.function.Supplier;
+
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.revrobotics.CANSparkMax.ControlType;
 
@@ -12,6 +14,6 @@ public class StallArm1 extends CommandBase{
     }
     @Override
     public void execute() {
-        Arm.getFirst().set(Arm.getFirstStall());
+        Arm.stall1();
     }
 }

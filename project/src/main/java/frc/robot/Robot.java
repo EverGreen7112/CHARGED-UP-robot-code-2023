@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.DriveDistanceByEncoders;
@@ -19,6 +20,7 @@ import frc.robot.commands.Autos;
 // import frc.robot.commands.SetArmAngleToStartPos;
 import frc.robot.commands.TurnToAnglePID;
 import frc.robot.commands.Arm.MoveArm1ByAngle;
+import frc.robot.commands.Arm.MoveArmByAngleSuplliers;
 import frc.robot.commands.Arm.StallArm1;
 import frc.robot.commands.Chassis.TankDrive;
 import frc.robot.subsystems.Arm;
@@ -55,7 +57,12 @@ public class Robot extends TimedRobot {
     Arm.getFirst().getEncoder().setPosition(0);
     Arm.getSecond().getEncoder().setPosition(0);
   }
-
+  @Override
+  public void disabledExit() {
+    Arm.getInstance();
+    Arm.getFirst().setIdleMode(IdleMode.kBrake);
+    Arm.getSecond().setIdleMode(IdleMode.kBrake);
+  }
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
    * that you want ran during disabled, autonomous, teleoperated and test.
@@ -81,16 +88,25 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("second goofy ahhngle", Arm.getSecondAngle());
     SmartDashboard.putNumber("first position", Arm.getFirst().getEncoder().getPosition());
     SmartDashboard.putNumber("second position", Arm.getSecond().getEncoder().getPosition());
+    SmartDashboard.putNumber("xControoler", RobotContainer.m_operator.getRawAxis(0));
+    SmartDashboard.putNumber("yControoler", RobotContainer.m_operator.getRawAxis(1));
+    SmartDashboard.putNumber("zControoler", RobotContainer.m_operator.getRawAxis(2));
+    SmartDashboard.putNumber("wControoler", RobotContainer.m_operator.getRawAxis(3));
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
     CommandScheduler.getInstance().cancelAll();
+    
+
   }
 
   @Override
   public void disabledPeriodic() {
+    Arm.getInstance();
+    Arm.getFirst().setIdleMode(IdleMode.kCoast);
+    Arm.getSecond().setIdleMode(IdleMode.kCoast);
   }
 
   /**
@@ -98,7 +114,7 @@ public class Robot extends TimedRobot {
    * {@link RobotContainer} class.
    */
 
-   
+  
   @Override
   public void autonomousInit() {
     CommandScheduler.getInstance().cancelAll();
@@ -144,25 +160,28 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     // j.schedule();
     // Chassis.driveStraight(0.2);
-    new MoveArm1ByAngle(90).andThen(new StallArm1());
+    // new MoveArm1ByAngle(90).andThen(new StallArm1());
+    CommandScheduler.getInstance().run();
+    m1Ang.schedule();
+
   }
+  CommandBase m1Ang = frc.robot.commands.General.Commands.getMoveArm1ToAng(90);
 
-
+  private CommandBase m_com = new MoveArmByAngleSuplliers(()->RobotContainer.m_operator.getRawAxis(Constants.ButtonPorts.OPERATOR_LEFT_JOYSTICK_X), ()->RobotContainer.m_operator.getRawAxis(Constants.ButtonPorts.OPERATOR_LEFT_JOYSTICK_Y), 1);
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
-    CommandScheduler.getInstance().cancelAll();
-    (new DriveDistanceByEncoders(1.2, 0.1)).schedule();
+    // CommandScheduler.getInstance().cancelAll();
+    // (new DriveDistanceByEncoders(1.2, 0.1)).schedule();
   }
 
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    CommandScheduler.getInstance().run();
-
+   
   }
 
-  /** This function is called once when the robot is first started up. */
+  /** This function i++++++++++++++++++++s called once when the robot is first started up. */
   @Override
   public void simulationInit() {}
 

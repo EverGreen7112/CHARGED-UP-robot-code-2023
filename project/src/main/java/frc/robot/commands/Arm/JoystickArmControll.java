@@ -9,18 +9,20 @@ import frc.robot.subsystems.Arm;
 
 public class JoystickArmControll extends CommandBase {
     private double range = 0.4;
-    private Supplier<Double> m_lastOutput;
+    private double m_lastOutput;
 
     
-    public JoystickArmControll(Supplier<Double> lastPow) {
+    public JoystickArmControll() {
         addRequirements(Arm.getInstance());
-        m_lastOutput = lastPow;
     }
-
+    @Override
+    public void initialize() {
+        m_lastOutput = Arm.getFirst().get();
+    }
     @Override
     public void execute() {
-        Arm.getFirst().set(RobotContainer.m_operator.getY() * range + m_lastOutput.get());
-        Arm.getSecond().set(RobotContainer.m_operator.getZ() * range + m_lastOutput.get());
+        Arm.getFirst().set(RobotContainer.m_operator.getY() * range + m_lastOutput);
+        Arm.getSecond().set(RobotContainer.m_operator.getZ() * range + m_lastOutput);
     }
 
 }

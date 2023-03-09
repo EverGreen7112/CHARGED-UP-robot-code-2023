@@ -25,7 +25,9 @@ import frc.robot.Vector2D;
 import frc.robot.Constants.ArmValues;
 import frc.robot.commands.Arm.JoystickArmControll;
 import frc.robot.commands.Arm.MoveArm1ByAngle;
+import frc.robot.commands.Arm.MoveArm2ByAngle;
 import frc.robot.commands.Arm.StallArm1;
+import frc.robot.commands.Arm.StallBoth;
 import frc.robot.commands.ChassisPid.ChasisSetPointPosPID;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Chassis;
@@ -165,11 +167,14 @@ public class Commands {
             Arm.getSecond().set( 0);
         }
     };
-    CANSparkMax s = new CANSparkMax(0, MotorType.kBrushless);
-    RelativeEncoder a = s.getEncoder();
-    SparkMaxPIDController H = s.getPIDController();
+ 
     public static CommandBase getMoveArm1ToAng(double desierdAng){
+        return getMoveArm1ToAng(()->desierdAng);
+
+    }
+    public static CommandBase getMoveArm1ToAng(Supplier<Double> desierdAng){
         return new MoveArm1ByAngle(desierdAng).andThen(new StallArm1());
+
     }
     public static boolean joystick1OutOfRange(){
         return Math.abs(RobotContainer.m_operator.getY()) > ArmValues.JOYSTICK_TOLERANCE; 
@@ -178,7 +183,10 @@ public class Commands {
         return Math.abs(RobotContainer.m_operator.getZ()) > ArmValues.JOYSTICK_TOLERANCE; 
     }
     public static CommandBase getJoysticControl(){
-        return new JoystickArmControll(null);
+        return new JoystickArmControll();
+    }
+    public static CommandBase moveForwordAngles(double ang1, double ang2){
+        return new MoveArm1ByAngle(()->ang1).andThen(new MoveArm2ByAngle(ang2,true).andThen(new StallBoth()));
     }
 
 
