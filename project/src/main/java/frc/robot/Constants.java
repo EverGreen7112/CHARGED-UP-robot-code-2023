@@ -96,6 +96,8 @@ public final class Constants {
 
     public static final double TURBO = 1.5;
     public static final double SLOW = 0.5;
+
+    public static final double ARM2SPEED = 0.3;
   }
 
   public static class JoystickPorts {
@@ -155,8 +157,8 @@ public final class Constants {
 
 public final class Values {
   public static final double 
-      FIRST_ARM_TICKS_PER_REVOLUTION = 2048*16.9142857*9,
-      SECOND_ARM_TICKS_PER_REVOLUTION = 2048*10.8*9;
+      FIRST_ARM_TICKS_PER_REVOLUTION  = 4096 * 16.9142857 * 9, 
+      SECOND_ARM_TICKS_PER_REVOLUTION = 4096 * 10.8 * 9;
   public static final double 
   TANKDRIVE_WHEEL_RADIUS = 0.076,
   DISTANCE_BETWEEN_LEFT_TO_RIGHT = 0.5; //in meters;

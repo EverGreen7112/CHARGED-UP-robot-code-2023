@@ -10,12 +10,14 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.DriveDistanceByEncoders;
 import frc.robot.commands.Autos;
 // import frc.robot.commands.JoyStickSum;
 // import frc.robot.commands.MoveArmByAngle;
 // import frc.robot.commands.SetArmAngleToStartPos;
 import frc.robot.commands.TurnToAnglePID;
+import frc.robot.commands.Chassis.TankDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Gripper;
@@ -47,6 +49,8 @@ public class Robot extends TimedRobot {
     Chassis.getInstance();
     Arm.getInstance();
     Gripper.getInstance();
+    Arm.getFirst().getEncoder().setPosition(0);
+    Arm.getSecond().getEncoder().setPosition(0);
   }
 
   /**
@@ -70,6 +74,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("ticks", Chassis.getEncodersDist());
     SmartDashboard.putNumber("Vision", Chassis.getInstance().calcTargetX());
     SmartDashboard.putNumber("Vision2", Chassis.getInstance().calcTargetZ());
+    SmartDashboard.putNumber("first goofy ahhngle", Arm.getFirstAngle());
+    SmartDashboard.putNumber("second goofy ahhngle", Arm.getSecondAngle());
+    SmartDashboard.putNumber("first position", Arm.getFirst().getEncoder().getPosition());
+    SmartDashboard.putNumber("second position", Arm.getSecond().getEncoder().getPosition());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -122,8 +130,9 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().cancelAll();
 
     // CommandScheduler.getInstance().schedule(new SetArmAngleToStartPos());
-    //RobotContainer.m_tankDriveCommand.schedule();
-   //  new TurnToAnglePID(Chassis.getGyro().getAngle() + 180).schedule();
+   // new TankDrive(RobotContainer.m_rightStick::getY, RobotContainer.m_leftStick::getY).schedule();
+   //  new TurnToAnglePID(Chassis.getGyro().getAngle() + 180).schedule();1
+
   }
 
   // JoyStickSum j = new JoyStickSum();
@@ -131,6 +140,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     // j.schedule();
+   Chassis.m_leftFrontEngine.set(0.3);
   }
 
   @Override
