@@ -112,7 +112,6 @@ public class Robot extends TimedRobot {
     }
       m_autonomousCommand.schedule();
     // (new DriveDistanceByEncoders(1, 0.01, 0.05)).schedule();
-
  }
 
   /** This function is called periodically during autonomous. */
@@ -130,7 +129,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().cancelAll();
 
     // CommandScheduler.getInstance().schedule(new SetArmAngleToStartPos());
-   // new TankDrive(RobotContainer.m_rightStick::getY, RobotContainer.m_leftStick::getY).schedule();
+  //  new TankDrive(RobotContainer.m_rightStick::getY, RobotContainer.m_leftStick::getY).schedule();
    //  new TurnToAnglePID(Chassis.getGyro().getAngle() + 180).schedule();1
 
   }
@@ -140,8 +139,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     // j.schedule();
-   Chassis.m_leftFrontEngine.set(0.3);
+    // Chassis.driveStraight(0.2);
+    
   }
+
 
   @Override
   public void testInit() {
@@ -154,6 +155,7 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
     CommandScheduler.getInstance().run();
+
   }
 
   /** This function is called once when the robot is first started up. */

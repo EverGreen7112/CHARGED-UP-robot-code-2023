@@ -178,7 +178,7 @@ public class Commands {
         return Math.abs(RobotContainer.m_operator.getZ()) > ArmValues.JOYSTICK_TOLERANCE; 
     }
     public static CommandBase getJoysticControl(){
-        return new JoystickArmControll(null)
+        return new JoystickArmControll(null);
     }
 
 

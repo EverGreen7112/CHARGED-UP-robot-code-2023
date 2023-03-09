@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -47,7 +48,9 @@ public class Chassis extends SubsystemBase {
         leftMotors = new MotorControllerGroup(m_leftFrontEngine, m_leftMiddleEngine, m_leftBackEngine);
         rightMotors = new MotorControllerGroup(m_rightFrontEngine, m_rightMiddleEngine, m_rightBackEngine);
 
-        rightMotors.setInverted(true);
+        leftMotors.setInverted(true);
+
+
 
 
         m_leftMiddleEngine.follow(m_leftFrontEngine);
@@ -171,7 +174,7 @@ public class Chassis extends SubsystemBase {
     }
 
     public static double getEncodersDist() {
-        return (getRightEncoderDist() + getLeftEncoderDist()) / 2;
+        return -(getRightEncoderDist() + getLeftEncoderDist()) / 2;
     }
 
     public static double getRightEncoderDist() {
@@ -230,5 +233,15 @@ public class Chassis extends SubsystemBase {
     public void driveToReflactor(){
         Vector2D target = new Vector2D(calcTargetX(), calcTargetZ());
         getToPos(target.getAngle(), target.getLength());
+    }
+
+
+    public static void setMode(IdleMode mode){
+        m_leftBackEngine.setIdleMode(mode);
+        m_leftMiddleEngine.setIdleMode(mode);
+        m_leftFrontEngine.setIdleMode(mode);
+        m_rightBackEngine.setIdleMode(mode);
+        m_rightMiddleEngine.setIdleMode(mode);
+        m_rightFrontEngine.setIdleMode(mode);
     }
 }

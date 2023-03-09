@@ -109,7 +109,7 @@ public class RobotContainer {
     // Trigger slow = new JoystickButton(m_rightStick, 2).whileTrue(new Slow(m_tankDriveCommand));
 
     righter.onTrue(Commands.toggleConeIn);
-    Trigger trig = new Trigger(Commands::joystick1OutOfRange).onTrue();
+    Trigger trig = new Trigger(Commands::joystick1OutOfRange);
     Trigger trig2 = new Trigger(Commands::joystic2OutOfRange);
     // RobotContainer.up.onTrue(new MoveArmByAngle(-128,160));
     // RobotContainer.down.onTrue(new MoveArmByAngle(-125, -288+360));
