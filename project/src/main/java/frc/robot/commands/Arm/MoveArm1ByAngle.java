@@ -41,7 +41,6 @@ public class MoveArm1ByAngle extends CommandBase{
         if(m_stallSecond){
             Arm.stall2();
         }
-        
         SmartDashboard.putNumber("lastOutp", lastOutput);
         SmartDashboard.putBoolean("atSetPoint", cont.atSetpoint());
 

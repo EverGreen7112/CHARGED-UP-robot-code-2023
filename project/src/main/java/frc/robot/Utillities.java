@@ -2,6 +2,13 @@ package frc.robot;
 
 public class Utillities {
 
+    public static boolean joysticksOutOfRange(){
+        return joystick1OutOfRange() || joystic2OutOfRange();
+    }
+    public static boolean joysticksStrengthOutOfRange(){
+        return joystick1OutOfRangeStrength() || joystick2OutOfRangeStrength();
+    }
+
     // operator left joystick for angle
     public static boolean joystick1OutOfRange() {
         return Math.abs(RobotContainer.m_operator.getRawAxis(Constants.ButtonPorts.OPERATOR_LEFT_JOYSTICK_X)) < Constants.ArmValues.JOYSTICK_ANGLE_TOLERANCE && Math.abs(RobotContainer.m_operator.getRawAxis(Constants.ButtonPorts.OPERATOR_LEFT_JOYSTICK_Y)) < Constants.ArmValues.JOYSTICK_ANGLE_TOLERANCE;

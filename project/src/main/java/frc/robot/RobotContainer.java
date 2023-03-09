@@ -12,6 +12,7 @@ import frc.robot.commands.Gripper.OpenGripper;
 // import frc.robot.commands.CloseGripper;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Balance;
+import frc.robot.commands.Arm.MoveArm1ByAngle;
 // import frc.robot.commands.MotionMagicArmPID;
 // import frc.robot.commands.GripCube;
 // import frc.robot.commands.MoveArmByAngle;
@@ -27,6 +28,7 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Gripper;
+
 
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 
@@ -104,6 +106,17 @@ public class RobotContainer {
     
     Trigger bigArmPlus = new JoystickButton(m_operator, Constants.ButtonPorts.LB).whileTrue(Commands.upperBig);
     Trigger bigArmMinus = new JoystickButton(m_operator, Constants.ButtonPorts.LT).whileTrue(Commands.lowerBig);
+
+    // Trigger leftOperatorJoystick = new Trigger(Utillities::joysticksOutOfRange).onTrue(new ParallelCommandGroup(new MoveArm1ByAngle(Utillities::getLeftJoystickAngle){
+    //   @Override
+    //   public void initialize() {
+    //     super.initialize();
+    //   }
+    // }));
+  
+    //Trigger leftOperatorJoystick = new Trigger(Utillities::joystick1OutOfRange);
+    
+    // Trigger turbo = new JoystickButton(m_leftStick, 1).whileTrue(new Turbo(m_tankDriveCommand));
 
     // Trigger turbo = new JoystickButton(m_leftStick, 1).whileTrue(new Turbo(m_tankDriveCommand));
     // Trigger slow = new JoystickButton(m_rightStick, 2).whileTrue(new Slow(m_tankDriveCommand));
