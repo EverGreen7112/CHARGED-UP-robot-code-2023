@@ -171,12 +171,6 @@ public class Commands {
     public static CommandBase getMoveArm1ToAng(double desierdAng){
         return new MoveArm1ByAngle(desierdAng).andThen(new StallArm1());
     }
-    public static boolean joystick1OutOfRange(){
-        return Math.abs(RobotContainer.m_operator.getY()) > ArmValues.JOYSTICK_TOLERANCE; 
-    }
-    public static boolean joystic2OutOfRange(){
-        return Math.abs(RobotContainer.m_operator.getZ()) > ArmValues.JOYSTICK_TOLERANCE; 
-    }
     public static CommandBase getJoysticControl(){
         return new JoystickArmControll(null);
     }
