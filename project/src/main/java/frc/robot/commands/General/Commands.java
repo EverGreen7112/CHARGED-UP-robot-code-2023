@@ -135,7 +135,7 @@ public class Commands {
     public static CommandBase invertChassis = new InstantCommand(() -> {
         Chassis.m_rightFrontEngine.setInverted(!Chassis.getInstance().m_rightFrontEngine.getInverted());
         Chassis.m_leftFrontEngine.setInverted(!Chassis.getInstance().m_leftFrontEngine.getInverted());
-        SmartDashboard.putBoolean("AaaaAAA", Chassis.getInstance().m_rightFrontEngine.getInverted());
+        // SmartDashboard.putBoolean("AaaaAAA", Chassis.getInstance().m_rightFrontEngine.getInverted());
     });
     public static CommandBase upperBig = new RunCommand(
             () -> Arm.getFirst().set( 0.3), Arm.getInstance()) {
@@ -178,9 +178,6 @@ public class Commands {
     }
     public static CommandBase getJoysticControl(){
         return new JoystickArmControll();
-    }
-    public static CommandBase moveForwordAngles(double ang1, double ang2){
-        return new MoveArm1ByAngle(()->ang1).andThen(new MoveArm2ByAngle(ang2,true).andThen(new StallBoth()));
     }
 
 

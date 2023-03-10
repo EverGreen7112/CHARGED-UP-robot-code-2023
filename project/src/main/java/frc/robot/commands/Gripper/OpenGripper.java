@@ -8,7 +8,6 @@ import frc.robot.subsystems.Gripper;
 
 public class OpenGripper extends CommandBase {
 
-    private Gripper gripper;
     private DigitalInput limitSwitch;
 
     public OpenGripper() {
@@ -18,12 +17,11 @@ public class OpenGripper extends CommandBase {
 
     @Override
     public void initialize() {
-        gripper = Gripper.getInstance();
     }
 
     @Override
     public void execute() {
-        gripper.openGripper();
+        Gripper.openGripper();
     }
 
     @Override
@@ -34,7 +32,7 @@ public class OpenGripper extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        gripper.stop();
+        Gripper.stop();
     }
     
 }

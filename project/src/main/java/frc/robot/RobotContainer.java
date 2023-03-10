@@ -12,6 +12,7 @@ import frc.robot.commands.Gripper.OpenGripper;
 // import frc.robot.commands.CloseGripper;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Balance;
+import frc.robot.commands.Arm.ArmMoveAndStayAtAngle;
 import frc.robot.commands.Arm.MoveArm1ByAngle;
 // import frc.robot.commands.MotionMagicArmPID;
 // import frc.robot.commands.GripCube;
@@ -100,12 +101,18 @@ public class RobotContainer {
     // Trigger openArmToCollectCone = new JoystickButton(m_operator, Constants.ButtonPorts.START).onTrue(new MoveArmByAngle(120, -55));
     // Trigger openArmToCollectCube = new JoystickButton(m_operator, Constants.ButtonPorts.BACK).onTrue(new MoveArmByAngle(105.49851545607983, -61.848));
 
-    Trigger smallArmPlus = new JoystickButton(m_operator, Constants.ButtonPorts.RB).whileTrue(Commands.upperSmall);
-    Trigger smallArmMinus = new JoystickButton(m_operator, Constants.ButtonPorts.RT).whileTrue(Commands.lowerSmall);
-
+    // Trigger smallArmPlus = new JoystickButton(m_operator, Constants.ButtonPorts.RB).whileTrue(Commands.upperSmall);
+    // Trigger smallArmMinus = new JoystickButton(m_operator, Constants.ButtonPorts.RT).whileTrue(Commands.lowerSmall);
+    Trigger upperForward = new JoystickButton(m_operator, Constants.ButtonPorts.RB).onTrue(new ArmMoveAndStayAtAngle   (128, 160,Constants.ArmValues.PICKUP_TOLERANCE, false)); 
+    Trigger lowerForward = new JoystickButton(m_operator, Constants.ButtonPorts.RT).onTrue(new ArmMoveAndStayAtAngle   (125, 72,Constants.ArmValues.PICKUP_TOLERANCE, false));
+    Trigger upperBackward = new JoystickButton(m_operator, Constants.ButtonPorts.LB).onTrue(new ArmMoveAndStayAtAngle  (-128, 160,Constants.ArmValues.PICKUP_TOLERANCE, false));
+    Trigger lowerBackward = new JoystickButton(m_operator, Constants.ButtonPorts.LT).onTrue(new ArmMoveAndStayAtAngle  (-125, 72,Constants.ArmValues.PICKUP_TOLERANCE, false));
+    Trigger setArmToZero = new JoystickButton(m_operator, Constants.ButtonPorts.START).onTrue(new ArmMoveAndStayAtAngle(0, 0,Constants.ArmValues.PICKUP_TOLERANCE, false)); 
     
-    Trigger bigArmPlus = new JoystickButton(m_operator, Constants.ButtonPorts.LB).whileTrue(Commands.upperBig);
-    Trigger bigArmMinus = new JoystickButton(m_operator, Constants.ButtonPorts.LT).whileTrue(Commands.lowerBig);
+    // Trigger bigArmPlus = new JoystickButton(m_operator, Constants.ButtonPorts.LB).whileTrue(Commands.upperBig);\
+
+
+    // Trigger bigArmMinus = new JoystickButton(m_operator, Constants.ButtonPorts.LT).whileTrue(Commands.lowerBig);
 
     // Trigger leftOperatorJoystick = new Trigger(Utillities::joysticksOutOfRange).onTrue(new ParallelCommandGroup(new MoveArm1ByAngle(Utillities::getLeftJoystickAngle){
     //   @Override
@@ -122,7 +129,7 @@ public class RobotContainer {
     // Trigger slow = new JoystickButton(m_rightStick, 2).whileTrue(new Slow(m_tankDriveCommand));
     
     righter.onTrue(Commands.toggleConeIn);
-    // Trigger trig = new Trigger(Commands::joystick1OutOfRange).
+    // Trigger trig = new Trigger(Commands::joystick1OutOfRange);
     // Trigger trig2 = new Trigger(Commands::joystic2OutOfRange);
     // RobotContainer.up.onTrue(new MoveArmByAngle(-128,160));
     // RobotContainer.down.onTrue(new MoveArmByAngle(-125, -288+360));

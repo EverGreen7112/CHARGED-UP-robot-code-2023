@@ -55,8 +55,8 @@ public class DriveDistanceByEncoders extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putNumber("distance", Chassis.getEncodersDist() - (_targetDistance - _distance));
-    SmartDashboard.putNumber("angle: ", Chassis.getRobotAngle());
+    // SmartDashboard.putNumber("distance", Chassis.getEncodersDist() - (_targetDistance - _distance));
+    // SmartDashboard.putNumber("angle: ", Chassis.getRobotAngle());
     double distanceSpeed = _feedForward + (_distancePID.calculate(Chassis.getEncodersDist(), _targetDistance));
     double angleSpeed = _anglePID.calculate(Chassis.getRobotAngle(), 0);
     Vector2D v = new Vector2D(MathUtil.clamp(distanceSpeed - angleSpeed, -1.0, 1.0), MathUtil.clamp(distanceSpeed + angleSpeed, -1.0, 1.0));

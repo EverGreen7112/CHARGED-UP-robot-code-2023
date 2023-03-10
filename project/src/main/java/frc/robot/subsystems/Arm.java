@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.PIDS;
-import frc.robot.Constants.PidOldValuesDontUse;
 
 public class Arm extends SubsystemBase {
 
@@ -58,7 +57,7 @@ public class Arm extends SubsystemBase {
 
   private static ARMCONF m_currentconf = ARMCONF.MID;
 
-  public Arm(CANSparkMax first, CANSparkMax second) {
+  private Arm(CANSparkMax first, CANSparkMax second) {
     m_first = first;
     m_firstMinRange = Constants.ArmValues.FIRST_ARM_MIN;
     m_firstMaxRange = Constants.ArmValues.FIRST_ARM_MAX;
@@ -90,9 +89,6 @@ public class Arm extends SubsystemBase {
   public void periodic() {
     double firstAng = Constants.Conversions.ticksToAngle(m_first.getEncoder().getPosition(),
         Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);
-    SmartDashboard.putNumber("First Angle", firstAng);
-    SmartDashboard.putNumber("Second Angle", Constants.Conversions.ticksToAngle(m_second.getEncoder().getPosition(),
-        Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION));
     if (firstAng < 15 && firstAng > -15) {
       m_currentconf = ARMCONF.MID;
     } else if (firstAng < 15) {
@@ -105,10 +101,11 @@ public class Arm extends SubsystemBase {
   public static ARMCONF getConf() {
     return m_currentconf;
   }
-
+  
   public static double getFirstAngle() {
-    return Constants.Conversions.ticksToAngle(m_first.getEncoder().getPosition(),
-        Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);
+    return Constants.Conversions.ticksToAngle(m_first.getEncoder().getPosition(),  
+       Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);
+      //  Constants.Conversions.ticksToAngle(Arm.getFirst().getEncoder().getPosition(), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION)
   }
 
   public static double getSecondAngle() {

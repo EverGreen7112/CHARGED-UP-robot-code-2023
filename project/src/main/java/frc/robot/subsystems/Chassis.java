@@ -169,6 +169,10 @@ public class Chassis extends SubsystemBase {
         driveTank(0.0, 0.0);
     }
 
+    public static double getSpeedMagnitude(){
+        return Math.sqrt(leftMotors.get() * leftMotors.get() + rightMotors.get() * rightMotors.get());
+    }
+
     public static double getRobotAngle() {
         return m_navx.getYaw();
     }

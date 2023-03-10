@@ -16,8 +16,8 @@ public class TurnToAnglePID extends CommandBase{
     @Override
     public void execute() {
         Chassis.getInstance().driveTank(kp * (m_targetAngle - Chassis.getGyro().getAngle()),-1 * kp * (m_targetAngle - Chassis.getGyro().getAngle()) );
-        SmartDashboard.putNumber("one",  kp * Chassis.getGyro().getAngle());
-        SmartDashboard.putNumber("two", -1 * kp * Chassis.getGyro().getAngle());
+        // SmartDashboard.putNumber("one",  kp * Chassis.getGyro().getAngle());
+        // SmartDashboard.putNumber("two", -1 * kp * Chassis.getGyro().getAngle());
     }
 
     @Override

@@ -39,7 +39,7 @@ public class Balance extends CommandBase{
         MathUtil.clamp(Math.abs(v.y) * Math.sqrt(2) *  distanceSpeed, -12 * kp, 12 * kp));
         }
         
-        SmartDashboard.putNumber("gyro value", m_gyroValue);
+        // SmartDashboard.putNumber("gyro value", m_gyroValue);
     }
 
     public boolean isFinished(){

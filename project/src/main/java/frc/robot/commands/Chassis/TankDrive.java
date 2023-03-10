@@ -23,7 +23,7 @@ public class TankDrive extends CommandBase{
     
     @Override
     public void execute() {
-        if (Math.abs(m_leftSupllier.get()) < 0.2 && Math.abs(m_rightSupllier.get()) < 0.2) {
+        if (Math.abs(m_leftSupllier.get()) < 0.3 && Math.abs(m_rightSupllier.get()) < 0.3) {
             Chassis.stop();
             return;
         }

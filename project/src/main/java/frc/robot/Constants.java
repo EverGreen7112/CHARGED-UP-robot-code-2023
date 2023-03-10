@@ -47,10 +47,10 @@ public final class Constants {
     //arm ports
     FIRST_ARM_PORT = 13,
     SECOND_ARM_PORT = 15,
-    GRIPPER_PORT = 1,
+    GRIPPER_PORT = 11,
     //limit switch ports
-    CLOSED_LIMIT_SWITCH = 7,
-    OPENED_LIMIT_SWITCH = 9,
+    CLOSED_LIMIT_SWITCH = 9,
+    OPENED_LIMIT_SWITCH = 7,
     CUBE_LIMIT_SWITCH = 8,
 
 
@@ -75,16 +75,12 @@ public final class Constants {
             ,JOYSTICK_ANGLE_TOLERANCE = 0.5
             ,JOYSTICK_STRENGTH_TOLERANCE = 0.1
             ,LIMIT_TOLERANCE = 20
-            //angles for the arms
-            ,FIRST_PICKUP_TOP_ANGLE = 120
-            ,SECOND_PICKUP_TOP_ANGLE = 10
-            ,FIRST_PICKUP_DOWN_ANGLE = 0
-            ,SECOND_PICKUP_DONW_ANGLE = 0
+            ,PICKUP_TOLERANCE = 5
             ;
   }
   
   public final static  class Speeds{
-    public final static Supplier<Double> constantSpeed = ()->SmartDashboard.getNumber("changeDriveSpeed",0.7);
+    public final static Supplier<Double> constantSpeed = ()->SmartDashboard.getNumber("changeDriveSpeed",0.4); //0.7
     public final static double constantPropConst = 0.07;
     // public final static Supplier<Double> driveMax = () -> {
     //   return SmartDashboard.getNumber("robot speed", 0.2);
@@ -158,7 +154,7 @@ public final class Constants {
 
 public final class Values {
   public static final double 
-      FIRST_ARM_TICKS_PER_REVOLUTION  = 4096 * 16.9142857 * 9, 
+      FIRST_ARM_TICKS_PER_REVOLUTION  = 16.9142857 * 43200, 
       SECOND_ARM_TICKS_PER_REVOLUTION = 4096 * 10.8 * 9;
   public static final double 
   TANKDRIVE_WHEEL_RADIUS = 0.076,

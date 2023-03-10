@@ -44,7 +44,6 @@ public class MoveArmByAngleSuplliers extends CommandBase {
         m_JoystickAngle = Math.toDegrees(Math.atan2(value1.get(), value2.get()));
         if (m_JoystickAngle <= 0)
             m_JoystickAngle += 360;
-        SmartDashboard.putNumber("joystick angle", m_JoystickAngle);
         if (m_mode == 1){
             // m_armAngle = Arm.getFirstAngle();
             // m_armTarget = Constants.Conversions.angleToTicks(m_armAngle + Constants.Conversions.closestAngle(m_armAngle, m_JoystickAngle), Constants.Values.FIRST_ARM_TICKS_PER_REVOLUTION);    
