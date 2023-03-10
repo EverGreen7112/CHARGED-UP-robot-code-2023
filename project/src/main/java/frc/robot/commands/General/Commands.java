@@ -29,8 +29,10 @@ import frc.robot.commands.Arm.MoveArm2ByAngle;
 import frc.robot.commands.Arm.StallArm1;
 import frc.robot.commands.Arm.StallBoth;
 import frc.robot.commands.ChassisPid.ChasisSetPointPosPID;
+import frc.robot.commands.Gripper.TightenGrip;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Chassis;
+import frc.robot.subsystems.Gripper;
 
 public class Commands {
     /**
@@ -167,6 +169,8 @@ public class Commands {
             Arm.getSecond().set( 0);
         }
     };
+    // public static CommandBase tightenGrip = new RunCommand(() -> Gripper.moveGripper(-0.1), Gripper.getInstance());
+    public static CommandBase tightenGrip = new TightenGrip();
  
     public static CommandBase getMoveArm1ToAng(double desierdAng){
         return getMoveArm1ToAng(()->desierdAng);

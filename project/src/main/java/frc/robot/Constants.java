@@ -86,7 +86,7 @@ public final class Constants {
     //   return SmartDashboard.getNumber("robot speed", 0.2);
     // };
     public static final double GRIPPER_OPEN_SPEED = 0.15;
-    public static final double GRIPPER_CLOSE_SPEED = -0.25;
+    public static final double GRIPPER_CLOSE_SPEED = -0.4;
     public static final double GRIPPER_DEFUALT_CLOSE = -0.15;
 
     public static final double GRIPPER_CLOSE_CUBE = -0.14;

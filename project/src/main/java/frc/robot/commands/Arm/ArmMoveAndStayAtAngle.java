@@ -12,33 +12,30 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Chassis;
 
 public class ArmMoveAndStayAtAngle extends CommandBase {
-  private double _kfArm1 = 0.05, _arm1Kp = 0.005, _kfArm2 = 0.03, _kpArm2 = 0.006;
+  private double _kfArm1 = 0.06, _arm1Kp = 0.0045, _kfArm2 = 0.05, _kpArm2 = 0.006;
   private double _arm1SetPoint, _arm2SetPoint, _tolerance;
   private boolean _allowEnd = true;
   
   /** Creates a new MoveAndStayAtAngle. */
   public ArmMoveAndStayAtAngle(double desiredAngle, double tolerance) {
-    addRequirements(Arm.getInstance());
     setArm1Setpoint(desiredAngle);
     _tolerance = tolerance;
     // Use addRequirements() here to declare subsystem dependencies.
   }
-  public ArmMoveAndStayAtAngle(double desiredAngleArm1, double desiredAngleArm2, double tolerance) {
-    addRequirements(Arm.getInstance());
+  public ArmMoveAndStayAtAngle(double desiredAngleArm1, double desiredAngleArm2, double tolerance) {;
     setArm1Setpoint(desiredAngleArm1);
     setArm2Setpoint(desiredAngleArm2);
     _tolerance = tolerance;
     // Use addRequirements() here to declare subsystem dependencies.
   }
   public ArmMoveAndStayAtAngle(double desiredAngle, double tolerance, boolean allowEnd) {
-    addRequirements(Arm.getInstance());
     setArm1Setpoint(desiredAngle);
     _tolerance = tolerance;
     _allowEnd = allowEnd;
     // Use addRequirements() here to declare subsystem dependencies.
   }
   public ArmMoveAndStayAtAngle(double desiredAngleArm1, double desiredAngleArm2, double tolerance, boolean allowEnd) {
-    addRequirements(Arm.getInstance());
+    
     setArm1Setpoint(desiredAngleArm1);
     setArm2Setpoint(desiredAngleArm2);
     _tolerance = tolerance;
@@ -49,6 +46,7 @@ public class ArmMoveAndStayAtAngle extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    addRequirements(Arm.getInstance());
     // SmartDashboard.putNumber("arm-kf", 0.05);
     // SmartDashboard.putNumber("arm-kp", 0.001);
     // SmartDashboard.putNumber("arm2-kf", 0.0);
@@ -77,6 +75,7 @@ public class ArmMoveAndStayAtAngle extends CommandBase {
       Arm.getSecond().set(output2);
     }
   }
+  
 
   // Called once the command ends or is interrupted.
   @Override
@@ -98,6 +97,6 @@ public class ArmMoveAndStayAtAngle extends CommandBase {
   @Override
   public boolean isFinished() {
     return (Math.abs(Arm.getFirstAngle() - _arm1SetPoint) <= _tolerance) && _allowEnd && 
-    (Math.abs(Arm.getSecondAngle() - _arm2SetPoint) <= _tolerance);
+           (Math.abs(Arm.getSecondAngle() - _arm2SetPoint) <= _tolerance);
   }
 }

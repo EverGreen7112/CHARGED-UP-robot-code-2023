@@ -15,8 +15,10 @@ public final class Autos {
     // return new SequentialCommandGroup(new MoveArmByAngle(128,160),new AutoMove(1.6, 0.3), new OpenGripper(), new CloseGripper(),new AutoMove(1.6, -0.3));
     //return new SequentialCommandGroup(new MoveArmByAngle(-128,160), new OpenGripper(), new CloseGripper());
     //return new SequentialCommandGroup( new TurnArmTwo(-25), new OpenGripper(), new CloseGripper(), new AutoMove(1.6, 0.3));
-    return new SequentialCommandGroup(new DriveUntilIsTilted(), new Balance());
-}
+   // return new SequentialCommandGroup(new DriveUntilIsTilted(), new Balance()); balance auto
+   // return new SequentialCommandGroup(new DriveDistanceByEncoders(2, 0.05));
+      return null;
+  }
 
 
   private Autos() {

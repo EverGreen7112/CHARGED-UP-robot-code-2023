@@ -8,12 +8,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.Autos;
 import frc.robot.commands.DriveDistanceByEncoders;
 import frc.robot.commands.Arm.ArmMoveAndStayAtAngle;
 import frc.robot.commands.Arm.MoveArm1ByAngle;
 import frc.robot.commands.Arm.MoveArmByAngleSuplliers;
 import frc.robot.commands.Arm.StallArm1;
 import frc.robot.commands.Chassis.TankDrive;
+import frc.robot.commands.Gripper.CloseGripper;
+import frc.robot.commands.Gripper.OpenGripper;
+import frc.robot.commands.Gripper.TightenGrip;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.Gripper;
@@ -113,10 +120,10 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     CommandScheduler.getInstance().cancelAll();
     Chassis.getGyro().reset();
-    moveAndStay = new ArmMoveAndStayAtAngle(90, 3, false);
-    moveAndStay.schedule();
-    SmartDashboard.putNumber("arm1-desired-value", -90);
-    SmartDashboard.putNumber("arm2-desired-value", 90);
+   // moveAndStay = new ArmMoveAndStayAtAngle(90, 3, false);
+   // moveAndStay.schedule();
+   // SmartDashboard.putNumber("arm1-desired-value", -90);
+   // SmartDashboard.putNumber("arm2-desired-value", 90);
   //   m_autonomousCommand = m_robotContainer.getAutonomousCommand();
   //   Chassis.m_leftFrontEngine.getEncoder().setPosition(0);
   //   Chassis.m_rightFrontEngine.getEncoder().setPosition(0);
@@ -125,19 +132,26 @@ public class Robot extends TimedRobot {
   //   Chassis.m_leftBackEngine.getEncoder().setPosition(0);
   //   Chassis.m_rightBackEngine.getEncoder().setPosition(0);
   //  // schedule the autonomous command (example)
-  //   if (m_autonomousCommand != null) {
-  //   }
-  //     m_autonomousCommand.schedule();
-  //   // (new DriveDistanceByEncoders(1, 0.01, 0.05)).schedule();
- }
+   
+  new SequentialCommandGroup(
+  new ArmMoveAndStayAtAngle(0, 0, Constants.ArmValues.PICKUP_TOLERANCE, true) ,
+  new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-124, 170,Constants.ArmValues.PICKUP_TOLERANCE, true), new TightenGrip()),
+  new DriveDistanceByEncoders(-1, 0.05, 0.05),
+  new OpenGripper().withTimeout(0.5),
+  new CloseGripper(),
+  new DriveDistanceByEncoders(2, 0.01, 0.05),
+  new ArmMoveAndStayAtAngle(0, 0, Constants.ArmValues.PICKUP_TOLERANCE, true)).schedule();
+ 
+// new DriveDistanceByEncoders(-1, 0.05, 0.05).schedule();
+}
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    double desiredAngle = SmartDashboard.getNumber("arm1-desired-value", 0);
-    moveAndStay.setArm1Setpoint(desiredAngle);
-    desiredAngle = SmartDashboard.getNumber("arm2-desired-value", 0);
-    moveAndStay.setArm2Setpoint(desiredAngle);
+    // double desiredAngle = SmartDashboard.getNumber("arm1-desired-value", 0);
+    // moveAndStay.setArm1Setpoint(desiredAngle);
+    // desiredAngle = SmartDashboard.getNumber("arm2-desired-value", 0);
+    // moveAndStay.setArm2Setpoint(desiredAngle);
   }
   
   @Override
