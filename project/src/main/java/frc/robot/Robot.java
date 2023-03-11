@@ -136,10 +136,10 @@ public class Robot extends TimedRobot {
   new SequentialCommandGroup(
   new ArmMoveAndStayAtAngle(0, 0, Constants.ArmValues.PICKUP_TOLERANCE, true) ,
   new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-124, 170,Constants.ArmValues.PICKUP_TOLERANCE, true), new TightenGrip()),
-  new DriveDistanceByEncoders(-1, 0.05, 0.05),
-  new OpenGripper().withTimeout(0.5),
-  new CloseGripper(),
-  new DriveDistanceByEncoders(2, 0.01, 0.05),
+  new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-124, 170,Constants.ArmValues.PICKUP_TOLERANCE, false), new DriveDistanceByEncoders(-1, 0.05, 0.05)),
+  new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-124, 170,Constants.ArmValues.PICKUP_TOLERANCE, false),new OpenGripper().withTimeout(0.5)),
+  new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-124, 170,Constants.ArmValues.PICKUP_TOLERANCE, false),new CloseGripper()),
+  new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-124, 170,Constants.ArmValues.PICKUP_TOLERANCE, false),new DriveDistanceByEncoders(3, 0.01, 0.05)),
   new ArmMoveAndStayAtAngle(0, 0, Constants.ArmValues.PICKUP_TOLERANCE, true)).schedule();
  
 // new DriveDistanceByEncoders(-1, 0.05, 0.05).schedule();
