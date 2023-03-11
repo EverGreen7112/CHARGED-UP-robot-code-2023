@@ -13,7 +13,7 @@ import frc.robot.subsystems.Chassis;
 public class Balance extends CommandBase{
     
     private double m_gyroValue;
-    private double kp = 0.11/16;
+    private double kp = 0.11/20;
     private PIDController _anglePID;
     private double _initYaw;
     @Override
