@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Balance;
 import frc.robot.commands.DriveDistanceByEncoders;
@@ -20,7 +22,9 @@ import frc.robot.commands.Arm.MoveArm1ByAngle;
 import frc.robot.commands.Arm.MoveArmByAngleSuplliers;
 import frc.robot.commands.Arm.StallArm1;
 import frc.robot.commands.Chassis.TankDrive;
+import frc.robot.commands.General.Commands;
 import frc.robot.commands.Gripper.CloseGripper;
+import frc.robot.commands.Gripper.GripCube;
 import frc.robot.commands.Gripper.OpenGripper;
 import frc.robot.commands.Gripper.TightenGrip;
 import frc.robot.subsystems.Arm;
@@ -50,6 +54,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
+    SmartDashboard.putNumber("changeDriveSpeed", 0.4);
     m_robotContainer = new RobotContainer();
     Chassis.getInstance();
     Arm.getInstance();
@@ -165,6 +170,7 @@ public class Robot extends TimedRobot {
     // moveAndStay.setArm2Setpoint(desiredAngle);
   }
   
+  ArmMoveAndStayAtAngle manualMove = new ArmMoveAndStayAtAngle(0, 0, 1, false);
   @Override
   public void teleopInit() {
     Chassis.resetGyro();
@@ -174,9 +180,9 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().cancelAll();
 
     // CommandScheduler.getInstance().schedule(new SetArmAngleToStartPos());
-   new TankDrive(RobotContainer.m_rightStick::getY, RobotContainer.m_leftStick::getY).schedule();
+  //  new TankDrive(RobotContainer.m_rightStick::getY, RobotContainer.m_leftStick::getY).schedule();
    //  new TurnToAnglePID(Chassis.getGyro().getAngle() + 180).schedule();1
-   
+   RobotContainer.m_tankDriveCommand.schedule();
     
   }
 
@@ -187,12 +193,15 @@ public class Robot extends TimedRobot {
     // j.schedule();
   //  Chassis.m_leftFrontEngine.set(0.3);
   }
-  CommandBase m1Ang = frc.robot.commands.General.Commands.getMoveArm1ToAng(90);
+  // CommandBase m1Ang = frc.robot.commands.General.Commands.getMoveArm1ToAng(90);
 
-  private CommandBase m_com = new MoveArmByAngleSuplliers(()->RobotContainer.m_operator.getRawAxis(Constants.ButtonPorts.OPERATOR_LEFT_JOYSTICK_X), ()->RobotContainer.m_operator.getRawAxis(Constants.ButtonPorts.OPERATOR_LEFT_JOYSTICK_Y), 1);
+  // private CommandBase m_com = new MoveArmByAngleSuplliers(()->RobotContainer.m_operator.getRawAxis(Constants.ButtonPorts.OPERATOR_LEFT_JOYSTICK_X), ()->RobotContainer.m_operator.getRawAxis(Constants.ButtonPorts.OPERATOR_LEFT_JOYSTICK_Y), 1);
   @Override
   public void testInit() {
-   
+    Trigger closeGripper = new JoystickButton(RobotContainer.m_operator, Constants.ButtonPorts.Y).onTrue(new CloseGripper());
+    Trigger openGripper = new JoystickButton(RobotContainer.m_operator, Constants.ButtonPorts.B).onTrue(new OpenGripper());
+    Trigger closeToCube = new JoystickButton(RobotContainer.m_operator, Constants.ButtonPorts.X).onTrue(new GripCube());
+    Trigger tightenGrip = new JoystickButton(RobotContainer.m_operator, Constants.ButtonPorts.A).whileTrue(Commands.tightenGrip);
     // Cancels all running commands at the start of test mode.
     // CommandScheduler.getInstance().cancelAll();
     // (new DriveDistanceByEncoders(1.2, 0.1)).schedule();
@@ -201,7 +210,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    Arm.getSecond().set(0.2);
+    // Arm.getSecond().set(0.2);
   }
 
   /** This function i++++++++++++++++++++s called once when the robot is first started up. */

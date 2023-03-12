@@ -7,6 +7,7 @@ package frc.robot;
 import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.Arm;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -152,7 +153,7 @@ public final class Constants {
 
   }
 
-public final class Values {
+public final static class Values {
   public static final double 
       FIRST_ARM_TICKS_PER_REVOLUTION  = 16.9142857 * 43200, 
       SECOND_ARM_TICKS_PER_REVOLUTION = 4096 * 10.8 * 9;
@@ -179,7 +180,8 @@ public final class Values {
   ,BALANCE_COMMAND_TOLERANCE = 5
   ,X_AXIS_OFFSET = 1.5
   ;
-  
+  public static Supplier<Double> arm1Target = ()->Arm.getFirstAngle();
+  public static Supplier<Double> arm2Target = ()->Arm.getSecondAngle();
 }
 
 public static class PidOldValuesDontUse {

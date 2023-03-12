@@ -12,8 +12,8 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Chassis;
 
 public class ArmMoveAndStayAtAngle extends CommandBase {
-  private double _kfArm1 = 0.06, _arm1Kp = 0.0045, _kfArm2 = 0.05, _kpArm2 = 0.006;
-  private double _arm1SetPoint, _arm2SetPoint, _tolerance;
+  private double _kfArm1 = 0.06, _arm1Kp = 0.0045, _kfArm2 = 0.04, _kpArm2 = 0.0032;
+  private double _arm1SetPoint, _arm2SetPoint, _tolerance, _arm2Tolerancefor;
   private boolean _allowEnd = true;
   
   /** Creates a new MoveAndStayAtAngle. */
@@ -62,6 +62,7 @@ public class ArmMoveAndStayAtAngle extends CommandBase {
     double output = (_kfArm1 * Math.sin(Math.toRadians(_arm1SetPoint)) +
     _arm1Kp * (_arm1SetPoint - Arm.getFirstAngle())) * (1 - Chassis.getSpeedMagnitude());
     Arm.getFirst().set(output);
+    
     if (Math.abs(Arm.getFirstAngle() - _arm1SetPoint) <= _tolerance) { // goes to target when big arm within tolerance
       double output2 = _kfArm2 * Math.sin(Math.toRadians(_arm2SetPoint)) +
       _kpArm2 * (_arm2SetPoint * -1 * Math.signum(_arm1SetPoint) - Arm.getSecondAngle());
@@ -85,8 +86,7 @@ public class ArmMoveAndStayAtAngle extends CommandBase {
 
   public void setArm1Setpoint(double setPoint){
     // _setPoint = MathUtil.clamp(setPoint, Constants.ArmValues.FIRST_ARM_L_MIN, Constants.ArmValues.FIRST_ARM_R_MAX);
-    _arm1SetPoint = MathUtil.clamp(setPoint, Constants.ArmValues.FIRST_ARM_L_MIN,
-     Constants.ArmValues.FIRST_ARM_R_MAX);
+    _arm1SetPoint = MathUtil.clamp(setPoint, Constants.ArmValues.FIRST_ARM_L_MIN, Constants.ArmValues.FIRST_ARM_R_MAX);
   }
   public void setArm2Setpoint(double setpoint) {
 

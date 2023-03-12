@@ -11,12 +11,10 @@ public class Turbo extends CommandBase{
     @Override
     public void initialize(){
         m_instance.setTurbo(true);
-        m_instance.setSlow(false);
     }
     @Override
     public void end(boolean a){
         m_instance.setTurbo(false);
-        m_instance.setSlow(false);
     }
     
 

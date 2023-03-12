@@ -2,6 +2,7 @@ package frc.robot.commands.Chassis;
 
 import java.util.function.Supplier;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Vector2D;
@@ -37,8 +38,9 @@ public class TankDrive extends CommandBase{
         //     v.x*=Constants.Speeds.constantSpeed.get();
         //     v.y*=Constants.Speeds.constantSpeed.get();
         // }
-        lSpeed=v.x * ((m_turbo) ? Constants.Speeds.TURBO : (m_slow) ? Constants.Speeds.SLOW : 1);
-        rSpeed=v.y * ((m_turbo) ? Constants.Speeds.TURBO : (m_slow) ? Constants.Speeds.SLOW : 1);
+        lSpeed=v.x * ((m_turbo) ? Constants.Speeds.TURBO : ((m_slow) ? Constants.Speeds.SLOW : 1));
+        rSpeed=v.y * ((m_turbo) ? Constants.Speeds.TURBO : ((m_slow) ? Constants.Speeds.SLOW : 1));
+        // SmartDashboard.putNumberArray("l, r", new double[] {lSpeed, rSpeed});
         Chassis.driveTank(lSpeed * Constants.Speeds.constantSpeed.get(), rSpeed * Constants.Speeds.constantSpeed.get());
         
     }
