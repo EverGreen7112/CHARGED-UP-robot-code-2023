@@ -90,6 +90,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("open", !Gripper.getOpened().get());
     SmartDashboard.putBoolean("cube", !Gripper.getCube().get());
     SmartDashboard.putBoolean("close", !Gripper.getClosed().get());
+    SmartDashboard.putString("brake", Chassis.getMode().name());
     // SmartDashboard.putNumber("ticks", Chassis.getEncodersDist());
     // SmartDashboard.putNumber("Vision", Chassis.getInstance().calcTargetX());
     // SmartDashboard.putNumber("Vision2", Chassis.getInstance().calcTargetZ());
@@ -178,11 +179,14 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     CommandScheduler.getInstance().cancelAll();
+    Chassis.setMode(IdleMode.kCoast);
 
     // CommandScheduler.getInstance().schedule(new SetArmAngleToStartPos());
   //  new TankDrive(RobotContainer.m_rightStick::getY, RobotContainer.m_leftStick::getY).schedule();
    //  new TurnToAnglePID(Chassis.getGyro().getAngle() + 180).schedule();1
    RobotContainer.m_tankDriveCommand.schedule();
+   RobotContainer.m_arm1Joystick.schedule();
+   RobotContainer.m_arm2Joystick.schedule();
     
   }
 

@@ -28,6 +28,7 @@ import frc.robot.commands.Arm.MoveArm1ByAngle;
 import frc.robot.commands.Arm.MoveArm2ByAngle;
 import frc.robot.commands.Arm.StallArm1;
 import frc.robot.commands.Arm.StallBoth;
+import frc.robot.commands.Chassis.LockWheels;
 import frc.robot.commands.ChassisPid.ChasisSetPointPosPID;
 import frc.robot.commands.Gripper.TightenGrip;
 import frc.robot.subsystems.Arm;
@@ -134,6 +135,7 @@ public class Commands {
     }
 */
     public static CommandBase toggleConeIn = new InstantCommand(() -> Arm.toggleConeIn());
+    public static CommandBase lockWheels = new LockWheels();
     public static CommandBase invertChassis = new InstantCommand(() -> {
         Chassis.m_rightFrontEngine.setInverted(!Chassis.getInstance().m_rightFrontEngine.getInverted());
         Chassis.m_leftFrontEngine.setInverted(!Chassis.getInstance().m_leftFrontEngine.getInverted());

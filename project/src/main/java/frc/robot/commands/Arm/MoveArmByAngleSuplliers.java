@@ -51,17 +51,12 @@ public class MoveArmByAngleSuplliers extends CommandBase {
         } else if (m_mode == 2){
             // m_armAngle = Arm.getSecondAngle();
             // m_armTarget = Constants.Conversions.angleToTicks(m_armAngle + Constants.Conversions.closestAngle(m_armAngle, m_JoystickAngle), Constants.Values.SECOND_ARM_TICKS_PER_REVOLUTION);
-            new MoveArm2ByAngle(m_JoystickAngle).schedule();
+            new MoveArm2ByAngle(()->m_JoystickAngle).schedule();
         }
     }
 
     @Override
     public boolean isFinished() {
         return false;
-    }
-
-    @Override
-    public void end(boolean interrupted) {
-        
     }
 }

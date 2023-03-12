@@ -248,4 +248,8 @@ public class Chassis extends SubsystemBase {
         m_rightMiddleEngine.setIdleMode(mode);
         m_rightFrontEngine.setIdleMode(mode);
     }
+
+    public static IdleMode getMode(){
+        return m_leftBackEngine.getIdleMode();
+    }
 }

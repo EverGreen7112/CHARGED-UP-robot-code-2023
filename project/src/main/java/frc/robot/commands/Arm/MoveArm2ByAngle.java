@@ -1,5 +1,7 @@
 package frc.robot.commands.Arm;
 
+import java.util.function.Supplier;
+
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
@@ -15,10 +17,10 @@ public class MoveArm2ByAngle extends CommandBase {
     private CANSparkMax m_second;
     private boolean m_stallFirst = false;
     private StallArm1 sta1;
-    public MoveArm2ByAngle(double desierdAngle) {
+    public MoveArm2ByAngle(Supplier<Double> desierdAngle) {
         addRequirements(Arm.getInstance());
-        m_desierdAngle = desierdAngle;
-        cont.setSetpoint(desierdAngle);
+        m_desierdAngle = desierdAngle.get();
+        cont.setSetpoint(m_desierdAngle);
         m_second = Arm.getSecond();
         
     }
