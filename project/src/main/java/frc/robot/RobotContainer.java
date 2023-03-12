@@ -5,7 +5,6 @@
 package frc.robot;
 import frc.robot.commands.General.Commands;
 import frc.robot.commands.Gripper.CloseGripper;
-import frc.robot.commands.Gripper.CloseGripperOnZero;
 import frc.robot.commands.Gripper.GripCube;
 import frc.robot.commands.Gripper.OpenGripper;
 // import frc.robot.commands.ArmTwoStayInZero;
@@ -37,6 +36,7 @@ import frc.robot.subsystems.Gripper;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -68,12 +68,12 @@ public class RobotContainer {
   public static final Joystick m_leftStick = new Joystick(Constants.JoystickPorts.leftJoystick);
   public static final Joystick m_rightStick = new Joystick(Constants.JoystickPorts.rightJoystick);
   public static final Joystick m_operator = new Joystick(Constants.JoystickPorts.operator);
-  public static final TankDrive m_tankDriveCommand = new TankDrive(m_leftStick::getY, m_rightStick::getY);
+  public static TankDrive m_tankDriveCommand = new TankDrive(m_leftStick::getY, m_rightStick::getY);
   public static Trigger up = new POVButton(m_operator, 0);
   public static Trigger down = new POVButton(m_operator, 180);
   public static Trigger lefter = new POVButton(m_operator, 270);
   public static Trigger righter = new POVButton(m_operator, 90);
-
+  
  
 
   /**
@@ -94,6 +94,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+
     // Trigger rtButton = new JoystickButton(m_operator, 12).onTrue(new MotionMagicArmPID());
     Trigger closeGripper = new JoystickButton(m_operator, Constants.ButtonPorts.Y).onTrue(new CloseGripper());
     Trigger openGripper = new JoystickButton(m_operator, Constants.ButtonPorts.B).onTrue(new OpenGripper());
@@ -109,15 +110,10 @@ public class RobotContainer {
     // Trigger smallArmMinus = new JoystickButton(m_operator, Constants.ButtonPorts.RT).whileTrue(Commands.lowerSmall);
     Trigger upperBackward = new JoystickButton(m_operator, Constants.ButtonPorts.RB).onTrue(new ArmMoveAndStayAtAngle  (-124, 170,Constants.ArmValues.PICKUP_TOLERANCE, false));
     Trigger lowerBackward = new JoystickButton(m_operator, Constants.ButtonPorts.RT).onTrue(new ArmMoveAndStayAtAngle  (-125, 78,Constants.ArmValues.PICKUP_TOLERANCE, false));
-    // Trigger setArmToZero = new JoystickButton(m_operator, Constants.ButtonPorts.START).onTrue(new SequentialCommandGroup(new CloseGripperOnZero(),
-    // new ArmMoveAndStayAtAngle(0, 0,Constants.ArmValues.PICKUP_TOLERANCE, false))); 
-    Trigger setArmToZero = new JoystickButton(m_operator, Constants.ButtonPorts.START).onTrue(new ArmMoveAndStayAtAngle(0, 0,Constants.ArmValues.PICKUP_TOLERANCE, false));
-    Trigger pickUpCone = new JoystickButton(m_operator, Constants.ButtonPorts.LT).onTrue(new ArmMoveAndStayAtAngle(115, 70, 5, false));
+    Trigger setArmToZero = new JoystickButton(m_operator, Constants.ButtonPorts.START).onTrue(new ArmMoveAndStayAtAngle(0, 0,Constants.ArmValues.PICKUP_TOLERANCE, false)); 
+    Trigger pickUpCone = new JoystickButton(m_operator, Constants.ButtonPorts.LT).onTrue(new ArmMoveAndStayAtAngle(119, 60, 5, false));
     Trigger pickUpCube = new JoystickButton(m_operator, Constants.ButtonPorts.LB).onTrue(new ArmMoveAndStayAtAngle(125.5, 61.8, 5, false));
-
-    Trigger manual1Arm = new JoystickButton(m_operator, 0).whileTrue(new ArmMoveAndStayAtAngle(Constants.Values.arm1Target.get()+1, Constants.Values.arm2Target.get(), 2, false));
-    Trigger manual2Arm = new JoystickButton(m_operator, 0).whileTrue(new ArmMoveAndStayAtAngle(Constants.Values.arm1Target.get(), Constants.Values.arm2Target.get()+1, 2, false));
-    
+    Trigger upperCube = new JoystickButton(m_operator, Constants.ButtonPorts.BACK).onTrue(new ArmMoveAndStayAtAngle(-120, 105, Constants.ArmValues.PICKUP_TOLERANCE, false));
     // Trigger bigArmPlus = new JoystickButton(m_operator, Constants.ButtonPorts.LB).whileTrue(Commands.upperBig);\
 
 
@@ -146,8 +142,6 @@ public class RobotContainer {
 
     Trigger a = new JoystickButton(m_rightStick, 4).onTrue(Commands.invertChassis);
   }
-
-
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

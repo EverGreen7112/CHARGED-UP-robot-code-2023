@@ -20,18 +20,24 @@ public class ArmMoveAndStayAtAngle extends CommandBase {
   public ArmMoveAndStayAtAngle(double desiredAngle, double tolerance) {
     setArm1Setpoint(desiredAngle);
     _tolerance = tolerance;
+    addRequirements(Arm.getInstance());
+
     // Use addRequirements() here to declare subsystem dependencies.
   }
   public ArmMoveAndStayAtAngle(double desiredAngleArm1, double desiredAngleArm2, double tolerance) {;
     setArm1Setpoint(desiredAngleArm1);
     setArm2Setpoint(desiredAngleArm2);
     _tolerance = tolerance;
+    addRequirements(Arm.getInstance());
+
     // Use addRequirements() here to declare subsystem dependencies.
   }
   public ArmMoveAndStayAtAngle(double desiredAngle, double tolerance, boolean allowEnd) {
     setArm1Setpoint(desiredAngle);
     _tolerance = tolerance;
     _allowEnd = allowEnd;
+    addRequirements(Arm.getInstance());
+
     // Use addRequirements() here to declare subsystem dependencies.
   }
   public ArmMoveAndStayAtAngle(double desiredAngleArm1, double desiredAngleArm2, double tolerance, boolean allowEnd) {
@@ -40,6 +46,8 @@ public class ArmMoveAndStayAtAngle extends CommandBase {
     setArm2Setpoint(desiredAngleArm2);
     _tolerance = tolerance;
     _allowEnd = allowEnd;
+    addRequirements(Arm.getInstance());
+
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
