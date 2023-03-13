@@ -18,6 +18,7 @@ import frc.robot.commands.Arm.MoveArmByAngleSuplliers;
 import frc.robot.commands.Chassis.LockWheels;
 import frc.robot.commands.Chassis.Slow;
 import frc.robot.commands.Chassis.TankDrive;
+import frc.robot.commands.Chassis.Turbo;
 // import frc.robot.commands.MotionMagicArmPID;
 // import frc.robot.commands.GripCube;
 // import frc.robot.commands.MoveArmByAngle;
@@ -143,7 +144,7 @@ public class RobotContainer {
     
     // Trigger turbo = new JoystickButton(m_leftStick, 1).whileTrue(new Turbo(m_tankDriveCommand));
 
-    // Trigger turbo = new JoystickButton(m_leftStick, 1).whileTrue(new Turbo(m_tankDriveCommand));
+    Trigger turbo = new JoystickButton(m_leftStick, 1).whileTrue(new Turbo(m_tankDriveCommand));
     Trigger slow = new JoystickButton(m_rightStick, 2).whileTrue(new Slow(m_tankDriveCommand));
     Trigger lockWheels = new JoystickButton(m_rightStick, 3).onTrue(Commands.lockWheels);
     //Trigger lockWheels2 = new JoystickButton(m_rightStick, 5).onTrue(new LockWheels());

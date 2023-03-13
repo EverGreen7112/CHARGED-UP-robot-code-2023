@@ -81,13 +81,13 @@ public final class Constants {
   }
   
   public final static  class Speeds{
-    public final static Supplier<Double> constantSpeed = ()->SmartDashboard.getNumber("changeDriveSpeed",0.4); //0.7
+    public final static Supplier<Double> constantSpeed = ()->SmartDashboard.getNumber("changeDriveSpeed",0.6); //0.7
     public final static double constantPropConst = 0.07;
     // public final static Supplier<Double> driveMax = () -> {
     //   return SmartDashboard.getNumber("robot speed", 0.2);
     // };
     public static final double GRIPPER_OPEN_SPEED = 0.4;
-    public static final double GRIPPER_CLOSE_SPEED = -0.4;
+    public static final double GRIPPER_CLOSE_SPEED = -0.5;
     public static final double GRIPPER_DEFUALT_CLOSE = -0.25;
 
     public static final double GRIPPER_CLOSE_CUBE = -0.34;

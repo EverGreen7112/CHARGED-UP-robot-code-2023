@@ -27,6 +27,6 @@ public class DriveUntilIsTilted extends CommandBase{
     }
     @Override
     public boolean isFinished() {
-        return Math.abs(Chassis.getGyro().getRoll()) > 7;
+        return Math.abs(Chassis.getGyro().getRoll()) > 9;
     }
 }

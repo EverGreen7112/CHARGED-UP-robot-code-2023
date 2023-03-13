@@ -54,7 +54,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
-    SmartDashboard.putNumber("changeDriveSpeed", 0.4);
+    SmartDashboard.putNumber("changeDriveSpeed", 0.6);
     m_robotContainer = new RobotContainer();
     Chassis.getInstance();
     Arm.getInstance();
@@ -130,18 +130,18 @@ public class Robot extends TimedRobot {
     Chassis.getGyro().reset();
     Command placeConeAuto =  new SequentialCommandGroup(
       new ArmMoveAndStayAtAngle(0, 0, Constants.ArmValues.PICKUP_TOLERANCE, true) ,
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-124, 170,Constants.ArmValues.PICKUP_TOLERANCE, true), new TightenGrip()),
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-124, 170,Constants.ArmValues.PICKUP_TOLERANCE, false), new DriveDistanceByEncoders(-1, 0.05, 0.05)),
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-124, 170,Constants.ArmValues.PICKUP_TOLERANCE, false),new OpenGripper().withTimeout(0.5)),
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-124, 170,Constants.ArmValues.PICKUP_TOLERANCE, false),new CloseGripper()),
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-124, 170,Constants.ArmValues.PICKUP_TOLERANCE, false),new DriveDistanceByEncoders(3, 0.01, 0.05)),
+      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, true), new TightenGrip()),
+      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false), new DriveDistanceByEncoders(-0.3, 0.05, 0.2)),
+      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false),new OpenGripper().withTimeout(0.5)),
+      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false),new CloseGripper()),
+      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false),new DriveDistanceByEncoders(3.2, 0.01, 0.05)),
       new ArmMoveAndStayAtAngle(0, 0, Constants.ArmValues.PICKUP_TOLERANCE, true));
 
     Command placeCubeAndBalanceAuto =  new SequentialCommandGroup(
-      new ArmMoveAndStayAtAngle(-107, 150,Constants.ArmValues.PICKUP_TOLERANCE, true),
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-107, 150,Constants.ArmValues.PICKUP_TOLERANCE, false), new DriveDistanceByEncoders(-0.3, 0.05, 0.2)),
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-107, 150,Constants.ArmValues.PICKUP_TOLERANCE, false), new OpenGripper().withTimeout(0.8)),
-      new DriveDistanceByEncoders(0.3, 0.05, 0.8),
+      new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, true),
+      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false), new DriveDistanceByEncoders(-0.3, 0.05, 0.2)),
+      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false), new OpenGripper().withTimeout(0.8)),
+      new DriveDistanceByEncoders(0.3, 0.05, 0.6),
       new ParallelRaceGroup(new DriveUntilIsTilted(), new ArmMoveAndStayAtAngle(0, 0, 0, false), new CloseGripper()),
       new ParallelRaceGroup(new Balance(), new ArmMoveAndStayAtAngle(0, 0, 0, false)));
    // moveAndStay = new ArmMoveAndStayAtAngle(90, 3, false);
@@ -157,7 +157,8 @@ public class Robot extends TimedRobot {
   //   Chassis.m_rightBackEngine.getEncoder().setPosition(0);
   //  // schedule the autonomous command (example)
    
-    placeCubeAndBalanceAuto.schedule();
+    // placeCubeAndBalanceAuto.schedule();
+    placeConeAuto.schedule();
  
 // new DriveDistanceByEncoders(-1, 0.05, 0.05).schedule();
 }

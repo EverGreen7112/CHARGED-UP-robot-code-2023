@@ -13,23 +13,23 @@ import frc.robot.subsystems.Chassis;
 public class Balance extends CommandBase{
     
     private double m_gyroValue;
-    private double kp = 0.11/20;
+    private double kp = 0.11/16;
     private PIDController _anglePID;
     private double _initYaw;
     @Override
     public void initialize() {
         _anglePID = new PIDController(Constants.PIDS.rotateKp, Constants.PIDS.rotateKi, Constants.PIDS.rotateKd);
         _initYaw = Chassis.getGyro().getAngle();
-        Chassis.setMode(IdleMode.kCoast);
+        // Chassis.setMode(IdleMode.kCoast);
+        Chassis.setMode(IdleMode.kBrake);
     }
     @Override
     public void execute() {
         if(Math.abs(Chassis.getGyro().getRoll()) <= Constants.Values.BALANCE_COMMAND_TOLERANCE){
-            Chassis.setMode(IdleMode.kBrake);
             Chassis.stop();
         }
         else{
-            Chassis.setMode(IdleMode.kCoast);
+            // Chassis.setMode(IdleMode.kCoast);
             m_gyroValue = Chassis.getGyro().getRoll();
             double distanceSpeed = kp * m_gyroValue;
         double angleSpeed = _anglePID.calculate(Chassis.getGyro().getAngle(), _initYaw);
@@ -48,7 +48,7 @@ public class Balance extends CommandBase{
 }
     @Override
     public void end(boolean interrupted) {
-        Chassis.setMode(IdleMode.kCoast);
+        // Chassis.setMode(IdleMode.kCoast);
         Chassis.stop();
     }
 
