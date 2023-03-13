@@ -214,7 +214,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    // Arm.getSecond().set(0.2);
+    Arm.getSecond().set(0.1);
   }
 
   /** This function i++++++++++++++++++++s called once when the robot is first started up. */
