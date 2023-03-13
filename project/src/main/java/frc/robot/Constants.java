@@ -50,7 +50,7 @@ public final class Constants {
     SECOND_ARM_PORT = 15,
     GRIPPER_PORT = 11,
     //limit switch ports
-    CLOSED_LIMIT_SWITCH = 9,
+    CLOSED_LIMIT_SWITCH = 6,
     OPENED_LIMIT_SWITCH = 7,
     CUBE_LIMIT_SWITCH = 8,
 
@@ -86,9 +86,9 @@ public final class Constants {
     // public final static Supplier<Double> driveMax = () -> {
     //   return SmartDashboard.getNumber("robot speed", 0.2);
     // };
-    public static final double GRIPPER_OPEN_SPEED = 0.15;
+    public static final double GRIPPER_OPEN_SPEED = 0.25;
     public static final double GRIPPER_CLOSE_SPEED = -0.4;
-    public static final double GRIPPER_DEFUALT_CLOSE = -0.15;
+    public static final double GRIPPER_DEFUALT_CLOSE = -0.25;
 
     public static final double GRIPPER_CLOSE_CUBE = -0.14;
 

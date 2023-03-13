@@ -12,7 +12,7 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Chassis;
 
 public class ArmMoveAndStayAtAngle extends CommandBase {
-  private double _kfArm1 = 0.06, _arm1Kp = 0.0045, _kfArm2 = 0.04, _kpArm2 = 0.0032;
+  private double _kfArm1 = 0.053, _arm1Kp = 0.0054, _kfArm2 = 0.03, _kpArm2 = 0.0047;
   private double _arm1SetPoint, _arm2SetPoint, _tolerance, _arm2Tolerancefor;
   private boolean _allowEnd = true;
   
@@ -64,6 +64,8 @@ public class ArmMoveAndStayAtAngle extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    SmartDashboard.putNumber("arm1-setpoint", _arm1SetPoint);
+    SmartDashboard.putNumber("arm2-setpoint", _arm2SetPoint);
     // _pid.setP(SmartDashboard.getNumber("arm-kp", 0));
     // double kp = SmartDashboard.getNumber("arm-kp", 0);
     // _kfArm1 = SmartDashboard.getNumber("arm-kf", 0);

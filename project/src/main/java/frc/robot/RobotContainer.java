@@ -71,12 +71,14 @@ public class RobotContainer {
   public static final Joystick m_rightStick = new Joystick(Constants.JoystickPorts.rightJoystick);
   public static final Joystick m_operator = new Joystick(Constants.JoystickPorts.operator);
   public static TankDrive m_tankDriveCommand = new TankDrive(m_rightStick::getY, m_leftStick::getY);
-  public static MoveArmByAngleSuplliers m_arm1Joystick = new  MoveArmByAngleSuplliers(()->m_operator.getRawAxis(Constants.ButtonPorts.OPERATOR_LEFT_JOYSTICK_X), ()->m_operator.getRawAxis(Constants.ButtonPorts.OPERATOR_LEFT_JOYSTICK_Y), 1);
-  public static MoveArmByAngleSuplliers m_arm2Joystick = new  MoveArmByAngleSuplliers(()->m_operator.getRawAxis(Constants.ButtonPorts.OPERATOR_RIGHT_JOYSTICK_X), ()->m_operator.getRawAxis(Constants.ButtonPorts.OPERATOR_RIGHT_JOYSTICK_Y), 2);
+  // public static MoveArmByAngleSuplliers m_arm1Joystick = new  MoveArmByAngleSuplliers(()->m_operator.getRawAxis(Constants.ButtonPorts.OPERATOR_LEFT_JOYSTICK_X), ()->m_operator.getRawAxis(Constants.ButtonPorts.OPERATOR_LEFT_JOYSTICK_Y), 1);
+  // public static MoveArmByAngleSuplliers m_arm2Joystick = new  MoveArmByAngleSuplliers(()->m_operator.getRawAxis(Constants.ButtonPorts.OPERATOR_RIGHT_JOYSTICK_X), ()->m_operator.getRawAxis(Constants.ButtonPorts.OPERATOR_RIGHT_JOYSTICK_Y), 2);
   public static Trigger up = new POVButton(m_operator, 0);
   public static Trigger down = new POVButton(m_operator, 180);
-  public static Trigger lefter = new POVButton(m_operator, 270);
-  public static Trigger righter = new POVButton(m_operator, 90);
+  public static Trigger left= new POVButton(m_operator, 270);
+  public static Trigger right = new POVButton(m_operator, 90);
+  private static final double ARM1_ANGLE_JUMPS = 10;
+  private static final double ARM2_ANGLE_JUMPS = 15;
   
  
 
@@ -104,7 +106,11 @@ public class RobotContainer {
     Trigger openGripper = new JoystickButton(m_operator, Constants.ButtonPorts.B).onTrue(new OpenGripper());
     Trigger closeToCube = new JoystickButton(m_operator, Constants.ButtonPorts.X).onTrue(new GripCube());
     Trigger tightenGrip = new JoystickButton(m_operator, Constants.ButtonPorts.A).whileTrue(Commands.tightenGrip);
-   
+    
+    up.onTrue(new InstantCommand(() -> new ArmMoveAndStayAtAngle(  Math.round(Arm.getFirstAngle()),   Math.abs(Arm.getSecondAngle()) + ARM2_ANGLE_JUMPS, 30, false).schedule()));
+    down.onTrue(new InstantCommand(() -> new ArmMoveAndStayAtAngle(Math.round(Arm.getFirstAngle()), Math.abs(Arm.getSecondAngle()) - ARM2_ANGLE_JUMPS, 30, false).schedule()));
+    left.onTrue(new InstantCommand(() -> new ArmMoveAndStayAtAngle(Arm.getFirstAngle() - ARM1_ANGLE_JUMPS,  Math.abs(Math.round(Arm.getSecondAngle())), 30, false).schedule()));
+    right.onTrue(new InstantCommand(() -> new ArmMoveAndStayAtAngle(Arm.getFirstAngle() + ARM1_ANGLE_JUMPS, Math.abs(Math.round(Arm.getSecondAngle())), 30, false).schedule()));
   //  Trigger armTwoToZero = new JoystickButton(m_operator, Constants.ButtonPorts.A).onTrue(new ArmTwoStayInZero());
 
     // Trigger balance = new JoystickButton(m_operator, Constants.ButtonPorts.RB).whileTrue(new Balance());
@@ -142,7 +148,7 @@ public class RobotContainer {
     Trigger lockWheels = new JoystickButton(m_rightStick, 3).onTrue(Commands.lockWheels);
     //Trigger lockWheels2 = new JoystickButton(m_rightStick, 5).onTrue(new LockWheels());
     
-    righter.onTrue(Commands.toggleConeIn);
+    // righter.onTrue(Commands.toggleConeIn);
     // Trigger trig = new Trigger(Commands::joystick1OutOfRange);
     // Trigger trig2 = new Trigger(Commands::joystic2OutOfRange);
     // RobotContainer.up.onTrue(new MoveArmByAngle(-128,160));
