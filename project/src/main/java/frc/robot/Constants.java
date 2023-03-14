@@ -177,7 +177,7 @@ public final static class Values {
   ,SWERVE_WIDTH = 0
   ,MAX_SWERVE_SPEED = 3 //in m/s
   ,DISTANCE_PER_TICK= 1 / 22.3 //2 * Math.PI *TANKDRIVE_WHEEL_RADIUS/10.97;  // TODO: check
-  ,BALANCE_COMMAND_TOLERANCE = 5
+  ,BALANCE_COMMAND_TOLERANCE = 6
   ,X_AXIS_OFFSET = 1.5
   ;
   public static Supplier<Double> arm1Target = ()->Arm.getFirstAngle();

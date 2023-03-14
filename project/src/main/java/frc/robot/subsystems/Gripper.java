@@ -22,6 +22,7 @@ public class Gripper extends SubsystemBase{
 
     public Gripper(TalonSRX motor){
         m_motor = motor;
+        m_motor.setInverted(true);
         m_open = new DigitalInput(Constants.Ports.OPENED_LIMIT_SWITCH);
         m_close = new DigitalInput(Constants.Ports.CLOSED_LIMIT_SWITCH);
         m_cube = new DigitalInput(Constants.Ports.CUBE_LIMIT_SWITCH);

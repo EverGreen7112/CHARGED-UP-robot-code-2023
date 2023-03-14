@@ -91,6 +91,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("cube", !Gripper.getCube().get());
     SmartDashboard.putBoolean("close", !Gripper.getClosed().get());
     SmartDashboard.putString("chassis mode", Chassis.getMode().name());
+    SmartDashboard.putBoolean("centered on charging station",Chassis.getRobotLocation()[2] >= 0.5 &&
+    Chassis.getRobotLocation()[2] <= 1.7);
     // SmartDashboard.putNumber("ticks", Chassis.getEncodersDist());
     // SmartDashboard.putNumber("Vision", Chassis.getInstance().calcTargetX());
     // SmartDashboard.putNumber("Vision2", Chassis.getInstance().calcTargetZ());
@@ -158,7 +160,7 @@ public class Robot extends TimedRobot {
   //  // schedule the autonomous command (example)
    
     // placeCubeAndBalanceAuto.schedule();
-    placeConeAuto.schedule();
+    placeCubeAndBalanceAuto.schedule();
  
 // new DriveDistanceByEncoders(-1, 0.05, 0.05).schedule();
 }
@@ -215,7 +217,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    Arm.getSecond().set(0.1);
+    Gripper.moveGripper(0.4);
   }
 
   /** This function i++++++++++++++++++++s called once when the robot is first started up. */

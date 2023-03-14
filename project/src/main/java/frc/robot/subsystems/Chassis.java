@@ -172,6 +172,9 @@ public class Chassis extends SubsystemBase {
     public static double getSpeedMagnitude(){
         return Math.sqrt(leftMotors.get() * leftMotors.get() + rightMotors.get() * rightMotors.get());
     }
+    public static float[] getRobotLocation() {
+        return m_robotLocation.getXYZ();
+    }
 
     public static double getRobotAngle() {
         return m_navx.getYaw();
