@@ -217,7 +217,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    Gripper.moveGripper(0.4);
+    Gripper.moveGripper(-0.4);
   }
 
   /** This function i++++++++++++++++++++s called once when the robot is first started up. */

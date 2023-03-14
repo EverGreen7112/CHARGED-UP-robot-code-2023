@@ -103,7 +103,7 @@ public class RobotContainer {
   private void configureBindings() {
 
     // Trigger rtButton = new JoystickButton(m_operator, 12).onTrue(new MotionMagicArmPID());
-    Trigger closeGripper = new JoystickButton(m_operator, Constants.ButtonPorts.Y).onTrue(new CloseGripper());
+    // Trigger closeGripper = new JoystickButton(m_operator, Constants.ButtonPorts.Y).onTrue(new CloseGripper());
     Trigger openGripper = new JoystickButton(m_operator, Constants.ButtonPorts.B).onTrue(new OpenGripper());
     Trigger closeToCube = new JoystickButton(m_operator, Constants.ButtonPorts.X).onTrue(new GripCube());
     // Trigger tightenGrip = new JoystickButton(m_operator, Constants.ButtonPorts.A).whileTrue(Commands.tightenGrip);
