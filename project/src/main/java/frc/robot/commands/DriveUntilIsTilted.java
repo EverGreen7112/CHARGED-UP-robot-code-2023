@@ -19,7 +19,7 @@ public class DriveUntilIsTilted extends CommandBase{
     }
     @Override
     public void execute() {
-        double speed = 0.5;
+        double speed = 0.45;
         double angleSpeed = _anglePID.calculate(Chassis.getGyro().getAngle(), _initYaw);
         Vector2D v = new Vector2D(speed + angleSpeed, speed - angleSpeed);
         v.normalize();

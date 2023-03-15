@@ -41,6 +41,11 @@ public class Gripper extends SubsystemBase{
     @Override
     public  void periodic() {
         lastCom = Gripper.getInstance().getCurrentCommand() == null?lastCom :Gripper.getInstance().getCurrentCommand();
+   
+        SmartDashboard.putBoolean("open limitSwitch", m_open.get());
+        SmartDashboard.putBoolean("close limitSwitch", m_close.get());
+        SmartDashboard.putBoolean("cube limitSwitch", m_cube.get());
+   
     }
     public static void moveGripper(double speed){
         m_motor.set(ControlMode.PercentOutput, speed);

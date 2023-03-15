@@ -13,7 +13,7 @@ import frc.robot.subsystems.Chassis;
 
 public class ArmMoveAndStayAtAngle extends CommandBase {
   private double _kfArm1 = 0.053, _arm1Kp = 0.0054, _kfArm2 = 0.03, _kpArm2 = 0.0047;
-  private double _arm1SetPoint, _arm2SetPoint, _tolerance, _arm2Tolerancefor;
+  private double _arm1SetPoint, _arm2SetPoint, _tolerance;
   private boolean _allowEnd = true;
   
   /** Creates a new MoveAndStayAtAngle. */

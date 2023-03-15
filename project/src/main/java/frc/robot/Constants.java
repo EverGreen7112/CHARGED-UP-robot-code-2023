@@ -71,7 +71,7 @@ public final class Constants {
             ,FIRST_ARM_MAX = 360,
             FIRST_ARM_R_MAX = 127,
             FIRST_ARM_L_MIN =-130
-            ,SECOND_ARM_MIN = 0
+            ,SECOND_ARM_MIN = -180
             ,SECOND_ARM_MAX = 180
             ,JOYSTICK_ANGLE_TOLERANCE = 0.5
             ,JOYSTICK_STRENGTH_TOLERANCE = 0.1

@@ -3,12 +3,14 @@ package frc.robot;
 
 import com.revrobotics.CANSparkMax.IdleMode;
 
+import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -51,6 +53,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    PortForwarder.add(5801, "limelight.local", 5801);
+    PortForwarder.add(5800, "limelight.local", 5800);
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
@@ -116,9 +120,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledPeriodic() {
-    
-  }
+  public void disabledPeriodic() {}
 
   /**
    * This autonomous runs the autonomous command selected by your
@@ -135,37 +137,42 @@ public class Robot extends TimedRobot {
       new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, true), new TightenGrip()),
       new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false), new DriveDistanceByEncoders(-0.3, 0.05, 0.2)),
       new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false),new OpenGripper().withTimeout(0.5)),
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false),new CloseGripper()),
+      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false),new GripCube()),
       new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false),new DriveDistanceByEncoders(3.2, 0.01, 0.05)),
       new ArmMoveAndStayAtAngle(0, 0, Constants.ArmValues.PICKUP_TOLERANCE, true));
 
     Command placeCubeAndBalanceAuto =  new SequentialCommandGroup(
       new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, true),
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false), new DriveDistanceByEncoders(-0.3, 0.05, 0.2)),
+      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false), new DriveDistanceByEncoders(-0.3, 0.05, 0.1)),
       new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false), new OpenGripper().withTimeout(0.8)),
-      new DriveDistanceByEncoders(0.3, 0.05, 0.6),
-      new ParallelRaceGroup(new DriveUntilIsTilted(), new ArmMoveAndStayAtAngle(0, 0, 0, false), new CloseGripper()),
-      new ParallelRaceGroup(new Balance(), new ArmMoveAndStayAtAngle(0, 0, 0, false)));
+      new DriveDistanceByEncoders(0.5, 0.05, 0.4),
+      new ParallelDeadlineGroup(new DriveUntilIsTilted(), new ArmMoveAndStayAtAngle(0, 0, 0, false), new GripCube()),
+      new ParallelCommandGroup(new Balance(), new ArmMoveAndStayAtAngle(0, 0, 0, false)));
+    
    // moveAndStay = new ArmMoveAndStayAtAngle(90, 3, false);
    // moveAndStay.schedule();
    // SmartDashboard.putNumber("arm1-desired-value", -90);
    // SmartDashboard.putNumber("arm2-desired-value", 90);
-  //   m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-  //   Chassis.m_leftFrontEngine.getEncoder().setPosition(0);
-  //   Chassis.m_rightFrontEngine.getEncoder().setPosition(0);
-  //   Chassis.m_leftMiddleEngine.getEncoder().setPosition(0);
-  //   Chassis.m_rightMiddleEngine.getEncoder().setPosition(0);
-  //   Chassis.m_leftBackEngine.getEncoder().setPosition(0);
-  //   Chassis.m_rightBackEngine.getEncoder().setPosition(0);
+  //  m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+  //  Chassis.m_leftFrontEngine.getEncoder().setPosition(0);
+  //  Chassis.m_rightFrontEngine.getEncoder().setPosition(0);
+  //  Chassis.m_leftMiddleEngine.getEncoder().setPosition(0);
+  //  Chassis.m_rightMiddleEngine.getEncoder().setPosition(0);
+  //  Chassis.m_leftBackEngine.getEncoder().setPosition(0);
+  //  Chassis.m_rightBackEngine.getEncoder().setPosition(0);
   //  // schedule the autonomous command (example)
-   
-    // placeCubeAndBalanceAuto.schedule();
+   Command balance =
+   new SequentialCommandGroup( new ParallelRaceGroup(new DriveUntilIsTilted(), new ArmMoveAndStayAtAngle(0, 0, 0, false), new GripCube()),
+   new ParallelRaceGroup(new Balance(), new ArmMoveAndStayAtAngle(0, 0, 0, false)));
+
+   Command drive = new ParallelRaceGroup(new DriveDistanceByEncoders(3, 0.05 , 0.05), new ArmMoveAndStayAtAngle(0, 0, 0, false));
     placeCubeAndBalanceAuto.schedule();
+    // placeConeAuto.schedule();
  
 // new DriveDistanceByEncoders(-1, 0.05, 0.05).schedule();
 }
 
-  /** This function is called periodically during autonomous. */
+
   @Override
   public void autonomousPeriodic() {
     // double desiredAngle = SmartDashboard.getNumber("arm1-desired-value", 0);
@@ -201,7 +208,6 @@ public class Robot extends TimedRobot {
   //  Chassis.m_leftFrontEngine.set(0.3);
   }
   // CommandBase m1Ang = frc.robot.commands.General.Commands.getMoveArm1ToAng(90);
-
   // private CommandBase m_com = new MoveArmByAngleSuplliers(()->RobotContainer.m_operator.getRawAxis(Constants.ButtonPorts.OPERATOR_LEFT_JOYSTICK_X), ()->RobotContainer.m_operator.getRawAxis(Constants.ButtonPorts.OPERATOR_LEFT_JOYSTICK_Y), 1);
   @Override
   public void testInit() {
@@ -217,7 +223,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    Gripper.moveGripper(-0.4);
+ //   Gripper.moveGripper(-0.4);
   }
 
   /** This function i++++++++++++++++++++s called once when the robot is first started up. */
