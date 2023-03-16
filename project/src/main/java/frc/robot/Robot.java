@@ -45,8 +45,8 @@ import frc.robot.subsystems.Gripper;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
-
-  /**
+  private boolean m_placeCubeAndBalanceAuto, m_drive,m_balance, m_placeConeAuto; 
+  /*
    * This function is run when the robot is first started up and should be used
    * for any
    * initialization code.
@@ -65,6 +65,7 @@ public class Robot extends TimedRobot {
     Gripper.getInstance();
     Arm.getFirst().getEncoder().setPosition(0);
     Arm.getSecond().getEncoder().setPosition(0);
+    
   }
   @Override
   public void disabledExit() {
@@ -97,6 +98,38 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString("chassis mode", Chassis.getMode().name());
     SmartDashboard.putBoolean("centered on charging station",Chassis.getRobotLocation()[2] >= 0.5 &&
     Chassis.getRobotLocation()[2] <= 1.7);
+    // m_placeCubeAndBalanceAuto = SmartDashboard.getBoolean("placeCubeAndBalance", false);
+    // m_balance = SmartDashboard.getBoolean("only balance", false);
+    // m_drive = SmartDashboard.getBoolean("only drive", false);
+    // m_placeConeAuto = SmartDashboard.getBoolean("placeConeAuto", false);
+
+    // m_balance = SmartDashboard.getBoolean("only balance", false);
+    // m_drive = SmartDashboard.getBoolean("only drive", false);
+    // m_placeConeAuto = SmartDashboard.getBoolean("placeConeAuto", false);
+    // if(m_placeConeAuto){
+    //   SmartDashboard.putBoolean("only balance", false);
+    //   SmartDashboard.putBoolean("only drive", false);
+    //   SmartDashboard.putBoolean("placeCubeAndBalanceAuto", false);
+    // }
+    // else if(m_balance){
+    //   SmartDashboard.putBoolean("only balance", false);
+    //   SmartDashboard.putBoolean("only drive", false);
+    //   SmartDashboard.putBoolean("placeConeAuto", false);
+    // }
+    // else if(m_drive){
+    //   m_balance = false;
+    //   m_placeConeAuto = false;
+    //   m_placeCubeAndBalanceAuto = false;
+    //   SmartDashboard.putBoolean("only balance", false);
+    //   SmartDashboard.putBoolean("placeConeAuto", false);
+    //   SmartDashboard.putBoolean("placeCubeAndBalanceAuto", false);
+    // }
+    // else if(m_placeCubeAndBalanceAuto){
+    //   SmartDashboard.putBoolean("only balance", false);
+    //   SmartDashboard.putBoolean("only drive", false);
+    //   SmartDashboard.putBoolean("placeConeAuto", false);
+      
+    // }
     // SmartDashboard.putNumber("ticks", Chassis.getEncodersDist());
     // SmartDashboard.putNumber("Vision", Chassis.getInstance().calcTargetX());
     // SmartDashboard.putNumber("Vision2", Chassis.getInstance().calcTargetZ());
@@ -148,7 +181,7 @@ public class Robot extends TimedRobot {
       new DriveDistanceByEncoders(0.5, 0.05, 0.4),
       new ParallelDeadlineGroup(new DriveUntilIsTilted(), new ArmMoveAndStayAtAngle(0, 0, 0, false), new GripCube()),
       new ParallelCommandGroup(new Balance(), new ArmMoveAndStayAtAngle(0, 0, 0, false)));
-    
+  
    // moveAndStay = new ArmMoveAndStayAtAngle(90, 3, false);
    // moveAndStay.schedule();
    // SmartDashboard.putNumber("arm1-desired-value", -90);
@@ -166,7 +199,37 @@ public class Robot extends TimedRobot {
    new ParallelRaceGroup(new Balance(), new ArmMoveAndStayAtAngle(0, 0, 0, false)));
 
    Command drive = new ParallelRaceGroup(new DriveDistanceByEncoders(3, 0.05 , 0.05), new ArmMoveAndStayAtAngle(0, 0, 0, false));
+    
+    
+    // if(m_placeConeAuto){
+    //   SmartDashboard.putBoolean("only balance", false);
+    //   SmartDashboard.putBoolean("only drive", false);
+    //   SmartDashboard.putBoolean("placeCubeAndBalanceAuto", false);
+    //   placeConeAuto.schedule();
+    // }
+    // else if(m_balance){
+    //   SmartDashboard.putBoolean("only balance", false);
+    //   SmartDashboard.putBoolean("only drive", false);
+    //   SmartDashboard.putBoolean("placeConeAuto", false);
+    //   balance.schedule();
+    // }
+    // else if(m_drive){
+    //   m_balance = false;
+    //   m_placeConeAuto = false;
+    //   m_placeCubeAndBalanceAuto = false;
+    //   SmartDashboard.putBoolean("only balance", false);
+    //   SmartDashboard.putBoolean("placeConeAuto", false);
+    //   SmartDashboard.putBoolean("placeCubeAndBalanceAuto", false);
+    //   drive.schedule();
+    // }
+    // else if(m_placeCubeAndBalanceAuto){
+    //   SmartDashboard.putBoolean("only balance", false);
+    //   SmartDashboard.putBoolean("only drive", false);
+    //   SmartDashboard.putBoolean("placeConeAuto", false);
+    //   placeCubeAndBalanceAuto.schedule();
+    // }
     placeCubeAndBalanceAuto.schedule();
+  
     // placeConeAuto.schedule();
  
 // new DriveDistanceByEncoders(-1, 0.05, 0.05).schedule();
