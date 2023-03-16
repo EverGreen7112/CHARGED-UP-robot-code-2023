@@ -145,7 +145,7 @@ public class RobotContainer {
     
     // Trigger turbo = new JoystickButton(m_leftStick, 1).whileTrue(new Turbo(m_tankDriveCommand));
 
-    Trigger turbo = new JoystickButton(m_leftStick, 1).whileTrue(new Turbo(m_tankDriveCommand));
+    Trigger turbo = new JoystickButton(m_rightStick, 1).whileTrue(new Turbo(m_tankDriveCommand));
     Trigger slow = new JoystickButton(m_rightStick, 2).whileTrue(new Slow(m_tankDriveCommand));
     Trigger lockWheels = new JoystickButton(m_rightStick, 3).onTrue(Commands.lockWheels);
     //Trigger lockWheels2 = new JoystickButton(m_rightStick, 5).onTrue(new LockWheels());
