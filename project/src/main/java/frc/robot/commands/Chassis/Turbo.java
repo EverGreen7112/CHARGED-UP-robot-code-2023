@@ -13,6 +13,10 @@ public class Turbo extends CommandBase{
         m_instance.setTurbo(true);
     }
     @Override
+    public void execute() {
+        m_instance.setTurbo(true);
+    }
+    @Override
     public void end(boolean a){
         m_instance.setTurbo(false);
     }

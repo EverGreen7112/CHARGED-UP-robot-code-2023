@@ -5,6 +5,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -46,6 +47,9 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
   private boolean m_placeCubeAndBalanceAuto, m_drive,m_balance, m_placeConeAuto; 
+  private final SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+
   /*
    * This function is run when the robot is first started up and should be used
    * for any
@@ -58,14 +62,18 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
-    SmartDashboard.putNumber("changeDriveSpeed", 0.6);
     m_robotContainer = new RobotContainer();
     Chassis.getInstance();
     Arm.getInstance();
     Gripper.getInstance();
     Arm.getFirst().getEncoder().setPosition(0);
     Arm.getSecond().getEncoder().setPosition(0);
-    
+    m_chooser.setDefaultOption("placeGamePieceAuto", Commands.placeGamePieceAuto);
+    m_chooser.addOption("placeGamePieceAuto", Commands.placeGamePieceAuto);
+    m_chooser.addOption("placeGamePieceAndBalanceAuto", Commands.placeGamePieceAndBalanceAuto);
+    m_chooser.addOption("driveOnlyAuto", Commands.driveOnlyAuto);
+    m_chooser.addOption("balanceOnlyAuto", Commands.balanceOnlyAuto);
+    SmartDashboard.putData("Auto choices", m_chooser);
   }
   @Override
   public void disabledExit() {
@@ -87,17 +95,11 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     //SmartDashboard.putNumber("distance", Constants.Conversions.ticksToMeters(Chassis.getInstance().getEncodersDist(), Constants.Values.DISTANCE_PER_TICK)); 
-    SmartDashboard.putNumber("pitch", Chassis.getGyro().getPitch());
-    SmartDashboard.putNumber("roll", Chassis.getGyro().getRoll());
-    SmartDashboard.putNumber("yaw", Chassis.getGyro().getYaw());
+   
     SmartDashboard.putNumber("First Angle", Arm.getFirstAngle());
-    SmartDashboard.putNumber("Second Angle", Arm.getSecondAngle());
-    SmartDashboard.putBoolean("open", !Gripper.getOpened().get());
-    SmartDashboard.putBoolean("cube", !Gripper.getCube().get());
-    SmartDashboard.putBoolean("close", !Gripper.getClosed().get());
+    SmartDashboard.putNumber("Second Angle", Arm.getSecondAngle());   
     SmartDashboard.putString("chassis mode", Chassis.getMode().name());
-    SmartDashboard.putBoolean("centered on charging station",Chassis.getRobotLocation()[2] >= 0.5 &&
-    Chassis.getRobotLocation()[2] <= 1.7);
+
     // m_placeCubeAndBalanceAuto = SmartDashboard.getBoolean("placeCubeAndBalance", false);
     // m_balance = SmartDashboard.getBoolean("only balance", false);
     // m_drive = SmartDashboard.getBoolean("only drive", false);
@@ -165,41 +167,6 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     CommandScheduler.getInstance().cancelAll();
     Chassis.getGyro().reset();
-    Command placeConeAuto =  new SequentialCommandGroup(
-      new ArmMoveAndStayAtAngle(0, 0, Constants.ArmValues.PICKUP_TOLERANCE, true) ,
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, true), new TightenGrip()),
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false), new DriveDistanceByEncoders(-0.3, 0.05, 0.2)),
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false),new OpenGripper().withTimeout(0.5)),
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false),new GripCube()),
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false),new DriveDistanceByEncoders(3.2, 0.01, 0.05)),
-      new ArmMoveAndStayAtAngle(0, 0, Constants.ArmValues.PICKUP_TOLERANCE, true));
-
-    Command placeCubeAndBalanceAuto =  new SequentialCommandGroup(
-      new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, true),
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false), new DriveDistanceByEncoders(-0.3, 0.05, 0.1)),
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false), new OpenGripper().withTimeout(0.8)),
-      new DriveDistanceByEncoders(0.5, 0.05, 0.4),
-      new ParallelDeadlineGroup(new DriveUntilIsTilted(), new ArmMoveAndStayAtAngle(0, 0, 0, false), new GripCube()),
-      new ParallelCommandGroup(new Balance(), new ArmMoveAndStayAtAngle(0, 0, 0, false)));
-  
-   // moveAndStay = new ArmMoveAndStayAtAngle(90, 3, false);
-   // moveAndStay.schedule();
-   // SmartDashboard.putNumber("arm1-desired-value", -90);
-   // SmartDashboard.putNumber("arm2-desired-value", 90);
-  //  m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-  //  Chassis.m_leftFrontEngine.getEncoder().setPosition(0);
-  //  Chassis.m_rightFrontEngine.getEncoder().setPosition(0);
-  //  Chassis.m_leftMiddleEngine.getEncoder().setPosition(0);
-  //  Chassis.m_rightMiddleEngine.getEncoder().setPosition(0);
-  //  Chassis.m_leftBackEngine.getEncoder().setPosition(0);
-  //  Chassis.m_rightBackEngine.getEncoder().setPosition(0);
-  //  // schedule the autonomous command (example)
-   Command balance =
-   new SequentialCommandGroup( new ParallelRaceGroup(new DriveUntilIsTilted(), new ArmMoveAndStayAtAngle(0, 0, 0, false), new GripCube()),
-   new ParallelRaceGroup(new Balance(), new ArmMoveAndStayAtAngle(0, 0, 0, false)));
-
-   Command drive = new ParallelRaceGroup(new DriveDistanceByEncoders(3, 0.05 , 0.05), new ArmMoveAndStayAtAngle(0, 0, 0, false));
-    
     
     // if(m_placeConeAuto){
     //   SmartDashboard.putBoolean("only balance", false);
@@ -228,7 +195,7 @@ public class Robot extends TimedRobot {
     //   SmartDashboard.putBoolean("placeConeAuto", false);
     //   placeCubeAndBalanceAuto.schedule();
     // }
-    placeCubeAndBalanceAuto.schedule();
+    m_chooser.getSelected().schedule();
   
     // placeConeAuto.schedule();
  

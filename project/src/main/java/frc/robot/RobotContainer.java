@@ -107,8 +107,8 @@ public class RobotContainer {
     Trigger closeToCube = new JoystickButton(m_operator, Constants.ButtonPorts.X).onTrue(new GripCube().withTimeout(20));
     // Trigger tightenGrip = new JoystickButton(m_operator, Constants.ButtonPorts.A).whileTrue(Commands.tightenGrip);
     
-    up.onTrue(new InstantCommand(() -> new ArmMoveAndStayAtAngle(  Math.round(Arm.getFirstAngle()),   Math.abs(Arm.getSecondAngle()) + ARM2_ANGLE_JUMPS, 30, false).schedule()));
-    down.onTrue(new InstantCommand(() -> new ArmMoveAndStayAtAngle(Math.round(Arm.getFirstAngle()), Math.abs(Arm.getSecondAngle()) - ARM2_ANGLE_JUMPS, 30, false).schedule()));
+    up.onTrue(new InstantCommand(() -> new ArmMoveAndStayAtAngle( Math.round(Arm.getFirstAngle()),   Math.abs(Arm.getSecondAngle()) + ARM2_ANGLE_JUMPS, 30, false).schedule()));
+    down.onTrue(new InstantCommand(() -> new ArmMoveAndStayAtAngle( Math.round(Arm.getFirstAngle()), Math.abs(Arm.getSecondAngle()) - ARM2_ANGLE_JUMPS, 30, false).schedule()));
     left.onTrue(new InstantCommand(() -> new ArmMoveAndStayAtAngle(Arm.getFirstAngle() - ARM1_ANGLE_JUMPS,  Math.abs(Math.round(Arm.getSecondAngle())), 30, false).schedule()));
     right.onTrue(new InstantCommand(() -> new ArmMoveAndStayAtAngle(Arm.getFirstAngle() + ARM1_ANGLE_JUMPS, Math.abs(Math.round(Arm.getSecondAngle())), 30, false).schedule()));
   //  Trigger armTwoToZero = new JoystickButton(m_operator, Constants.ButtonPorts.A).onTrue(new ArmTwoStayInZero());
@@ -119,17 +119,20 @@ public class RobotContainer {
 
     // Trigger smallArmPlus = new JoystickButton(m_operator, Constants.ButtonPorts.RB).whileTrue(Commands.upperSmall);
     // Trigger smallArmMinus = new JoystickButton(m_operator, Constants.ButtonPorts.RT).whileTrue(Commands.lowerSmall);
-    Trigger upperBackward = new JoystickButton(m_operator, Constants.ButtonPorts.RB).onTrue(new ArmMoveAndStayAtAngle  (-124, 170,Constants.ArmValues.PICKUP_TOLERANCE, false));
+    Trigger upperCone = new JoystickButton(m_operator, Constants.ButtonPorts.RB).onTrue(new ArmMoveAndStayAtAngle  (-124, 120,Constants.ArmValues.PICKUP_TOLERANCE, false));
     Trigger lowerBackward = new JoystickButton(m_operator, Constants.ButtonPorts.RT).onTrue(new ArmMoveAndStayAtAngle  (-105, 83,Constants.ArmValues.PICKUP_TOLERANCE, false));
     Trigger setArmToZero = new JoystickButton(m_operator, Constants.ButtonPorts.START).onTrue(new ArmMoveAndStayAtAngle(0, 0,Constants.ArmValues.PICKUP_TOLERANCE, false)); 
-    Trigger pickUpCone = new JoystickButton(m_operator, Constants.ButtonPorts.LT).onTrue(new ArmMoveAndStayAtAngle(119, 60, 5, false));
-    Trigger pickUpCube = new JoystickButton(m_operator, Constants.ButtonPorts.LB).onTrue(new ArmMoveAndStayAtAngle(115, 75, 5, false));
+    // Trigger pickUpCone = new JoystickButton(m_operator, Constants.ButtonPorts.LT).onTrue(new ArmMoveAndStayAtAngle(119, 60, 5, false));
+    Trigger lowerCone = new JoystickButton(m_operator, Constants.ButtonPorts.LT).onTrue(new ArmMoveAndStayAtAngle(-124, 70, 5, false));
+    Trigger pickUpCube = new JoystickButton(m_operator, Constants.ButtonPorts.LB).onTrue(new ArmMoveAndStayAtAngle(115, 70, 5, false));
     Trigger upperCube = new JoystickButton(m_operator, Constants.ButtonPorts.BACK).onTrue(new ArmMoveAndStayAtAngle(-120, 105, Constants.ArmValues.PICKUP_TOLERANCE, false));
     Trigger collectFromFloor = new JoystickButton(m_operator, Constants.ButtonPorts.A).onTrue(new ArmMoveAndStayAtAngle(-20, -125, Constants.ArmValues.PICKUP_TOLERANCE, false));
   //  Trigger a = new JoystickButton(m_operator, 12).onTrue(new ArmMoveAndStayAtAngle(93, 270 - 93, Constants.ArmValues.PICKUP_TOLERANCE, false));
     // Trigger pickUpFloor = new JoystickButton(m_operator, Constants.ButtonPorts.A).onTrue(new ArmMoveAndStayAtAngle(ARM2_ANGLE_JUMPS, ARM1_ANGLE_JUMPS))
     // Trigger bigArmPlus = new JoystickButton(m_operator, Constants.ButtonPorts.LB).whileTrue(Commands.upperBig);\
-
+    /* -124, 120 put upper cone
+     * 
+     */
 
 
     // Trigger bigArmMinus = new JoystickButton(m_operator, Constants.ButtonPorts.LT).whileTrue(Commands.lowerBig);

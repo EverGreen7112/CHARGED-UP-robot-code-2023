@@ -27,7 +27,6 @@ public class Gripper extends SubsystemBase{
         m_close = new DigitalInput(Constants.Ports.CLOSED_LIMIT_SWITCH);
         m_cube = new DigitalInput(Constants.Ports.CUBE_LIMIT_SWITCH);
         mode =false;
-        SmartDashboard.putBoolean("mode", mode);
         motor.setNeutralMode(NeutralMode.Brake);
     }
 
@@ -41,10 +40,7 @@ public class Gripper extends SubsystemBase{
     @Override
     public  void periodic() {
         lastCom = Gripper.getInstance().getCurrentCommand() == null?lastCom :Gripper.getInstance().getCurrentCommand();
-   
-        SmartDashboard.putBoolean("open limitSwitch", m_open.get());
-        SmartDashboard.putBoolean("close limitSwitch", m_close.get());
-        SmartDashboard.putBoolean("cube limitSwitch", m_cube.get());
+
    
     }
     public static void moveGripper(double speed){
@@ -83,14 +79,14 @@ public class Gripper extends SubsystemBase{
     }
     public static void switchModes(){
         mode = !mode;
-        SmartDashboard.putBoolean("mode", mode);
         if(mode){ 
         Constants.PidOldValuesDontUse.SECOND_ARM_KP *=1.3;
         Constants.PidOldValuesDontUse.SECOND_ARM_KI *=1.3;
         Constants.PidOldValuesDontUse.SECOND_ARM_KD *=1.3;
         Constants.PidOldValuesDontUse.SECOND_ARM_KF *=1.4;
         Constants.PidOldValuesDontUse.SECOND_ARM_STALL_SPEED *=1.7;
-        }else{
+        }
+        else{
             Constants.PidOldValuesDontUse.SECOND_ARM_KP =Constants.PidOldValuesDontUse._SECOND_ARM_KP;
             Constants.PidOldValuesDontUse.SECOND_ARM_KI= Constants.PidOldValuesDontUse._SECOND_ARM_KI;
             Constants.PidOldValuesDontUse.SECOND_ARM_KD =Constants.PidOldValuesDontUse._SECOND_ARM_KD;

@@ -64,13 +64,13 @@ public class ArmMoveAndStayAtAngle extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putNumber("arm1-setpoint", _arm1SetPoint);
-    SmartDashboard.putNumber("arm2-setpoint", _arm2SetPoint);
+    //SmartDashboard.putNumber("arm1-setpoint", _arm1SetPoint);
+    //SmartDashboard.putNumber("arm2-setpoint", _arm2SetPoint);
     // _pid.setP(SmartDashboard.getNumber("arm-kp", 0));
     // double kp = SmartDashboard.getNumber("arm-kp", 0);
     // _kfArm1 = SmartDashboard.getNumber("arm-kf", 0);
     double output = (_kfArm1 * Math.sin(Math.toRadians(_arm1SetPoint)) +
-    _arm1Kp * (_arm1SetPoint - Arm.getFirstAngle())) * (1 - Chassis.getSpeedMagnitude());
+    _arm1Kp * (_arm1SetPoint - Arm.getFirstAngle())) * (1 - Chassis.getSpeedMagnitude() * 0.2);
     Arm.getFirst().set(output);
     
     if (Math.abs(Arm.getFirstAngle() - _arm1SetPoint) <= _tolerance) { // goes to target when big arm within tolerance

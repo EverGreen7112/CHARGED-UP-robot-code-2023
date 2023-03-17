@@ -71,8 +71,8 @@ public final class Constants {
             ,FIRST_ARM_MAX = 360,
             FIRST_ARM_R_MAX = 127,
             FIRST_ARM_L_MIN =-130
-            ,SECOND_ARM_MIN = -180
-            ,SECOND_ARM_MAX = 180
+            ,SECOND_ARM_MIN = -210
+            ,SECOND_ARM_MAX = 210
             ,JOYSTICK_ANGLE_TOLERANCE = 0.5
             ,JOYSTICK_STRENGTH_TOLERANCE = 0.1
             ,LIMIT_TOLERANCE = 20
@@ -81,7 +81,7 @@ public final class Constants {
   }
   
   public final static  class Speeds{
-    public final static Supplier<Double> constantSpeed = ()->SmartDashboard.getNumber("changeDriveSpeed",0.6); //0.7
+    public final static Supplier<Double> constantSpeed = ()->SmartDashboard.getNumber("normal",0.6); //0.7
     public final static double constantPropConst = 0.07;
     // public final static Supplier<Double> driveMax = () -> {
     //   return SmartDashboard.getNumber("robot speed", 0.2);
@@ -92,8 +92,8 @@ public final class Constants {
 
     public static final double GRIPPER_CLOSE_CUBE = -0.34;
 
-    public static final double TURBO = 1.5;
-    public static final double SLOW = 0.5;
+    public static final double TURBO = 0.7;
+    public static final double SLOW = 0.3;
 
     public static final double ARM2SPEED = 0.3;
   }
