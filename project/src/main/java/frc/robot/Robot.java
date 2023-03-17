@@ -57,6 +57,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    SmartDashboard.putNumber("slow", SmartDashboard.getNumber("slow", 0.2));
+    SmartDashboard.putNumber("normal", SmartDashboard.getNumber("normal", 0.6));
+    SmartDashboard.putNumber("Turbo", SmartDashboard.getNumber("Turbo", Constants.Speeds.TURBO));
     PortForwarder.add(5801, "limelight.local", 5801);
     PortForwarder.add(5800, "limelight.local", 5800);
     // Instantiate our RobotContainer. This will perform all our button bindings,

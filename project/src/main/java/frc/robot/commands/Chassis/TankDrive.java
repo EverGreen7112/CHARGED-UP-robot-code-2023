@@ -38,7 +38,7 @@ public class TankDrive extends CommandBase{
         //     v.x*=Constants.Speeds.constantSpeed.get();
         //     v.y*=Constants.Speeds.constantSpeed.get();
         // }
-        double turboFactor = SmartDashboard.getNumber("turbo", Constants.Speeds.TURBO);
+        double turboFactor = SmartDashboard.getNumber("Turbo", Constants.Speeds.TURBO);
         double slowFactor = SmartDashboard.getNumber("slow", Constants.Speeds.SLOW);
         lSpeed=v.x * ((m_turbo) ? turboFactor : ((m_slow) ? slowFactor : 1));
         rSpeed=v.y * ((m_turbo) ? turboFactor : ((m_slow) ? slowFactor : 1));

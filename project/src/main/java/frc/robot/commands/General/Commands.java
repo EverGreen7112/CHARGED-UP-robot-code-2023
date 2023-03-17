@@ -31,6 +31,7 @@ import frc.robot.commands.Balance;
 import frc.robot.commands.DriveDistanceByEncoders;
 import frc.robot.commands.DriveUntilIsTilted;
 import frc.robot.commands.Arm.ArmMoveAndStayAtAngle;
+import frc.robot.commands.Arm.ArmMoveAndStayAtAngleAuto;
 import frc.robot.commands.Arm.JoystickArmControll;
 import frc.robot.commands.Arm.MoveArm1ByAngle;
 import frc.robot.commands.Arm.MoveArm2ByAngle;
@@ -197,26 +198,26 @@ public class Commands {
     }
 
     public static Command placeGamePieceAuto =  new SequentialCommandGroup(
-      new ArmMoveAndStayAtAngle(0, 0, Constants.ArmValues.PICKUP_TOLERANCE, true) ,
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, true), new TightenGrip()),
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false), new DriveDistanceByEncoders(-0.3, 0.05, 0.2)),
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false),new OpenGripper().withTimeout(0.5)),
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false),new GripCube()),
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false),new DriveDistanceByEncoders(3.2, 0.01, 0.05)),
-      new ArmMoveAndStayAtAngle(0, 0, Constants.ArmValues.PICKUP_TOLERANCE, true));
+      new ArmMoveAndStayAtAngleAuto(0, 0, 5, true) ,
+      new ParallelRaceGroup(new ArmMoveAndStayAtAngleAuto(-115, 120, 5, true), new TightenGrip()),
+      new ParallelRaceGroup(new ArmMoveAndStayAtAngleAuto(-115, 120, 5, false), new DriveDistanceByEncoders(-0.3, 0.05, 0.2)),
+      new ParallelRaceGroup(new ArmMoveAndStayAtAngleAuto(-115, 120, 5, false),new OpenGripper().withTimeout(0.5)),
+      new ParallelRaceGroup(new ArmMoveAndStayAtAngleAuto(-115, 120, 5, false),new GripCube()),
+      new ParallelRaceGroup(new ArmMoveAndStayAtAngleAuto(-115, 120, 5, false),new DriveDistanceByEncoders(3.2, 0.01, 0.05)),
+      new ArmMoveAndStayAtAngleAuto(0, 0, 5, true));
 
     public static Command placeGamePieceAndBalanceAuto =  new SequentialCommandGroup(
-      new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, true),
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false), new DriveDistanceByEncoders(-0.3, 0.05, 0.1)),
-      new ParallelRaceGroup(new ArmMoveAndStayAtAngle(-115, 120,Constants.ArmValues.PICKUP_TOLERANCE, false), new OpenGripper().withTimeout(0.8)),
+      new ArmMoveAndStayAtAngleAuto(-115, 120, 5, true),
+      new ParallelRaceGroup(new ArmMoveAndStayAtAngleAuto(-115, 120, 5, false), new DriveDistanceByEncoders(-0.3, 0.05, 0.1)),
+      new ParallelRaceGroup(new ArmMoveAndStayAtAngleAuto(-115, 120, 5, false), new OpenGripper().withTimeout(0.8)),
       new DriveDistanceByEncoders(0.5, 0.05, 0.4),
-      new ParallelDeadlineGroup(new DriveUntilIsTilted(), new ArmMoveAndStayAtAngle(0, 0, 0, false), new GripCube()),
-      new ParallelCommandGroup(new Balance(), new ArmMoveAndStayAtAngle(0, 0, 0, false)));
+      new ParallelDeadlineGroup(new DriveUntilIsTilted(), new ArmMoveAndStayAtAngleAuto(0, 0, 0, false), new GripCube()),
+      new ParallelCommandGroup(new Balance(), new ArmMoveAndStayAtAngleAuto(0, 0, 0, false)));
   
   
       public static Command balanceOnlyAuto =
-   new SequentialCommandGroup( new ParallelRaceGroup(new DriveUntilIsTilted(), new ArmMoveAndStayAtAngle(0, 0, 0, false), new GripCube()),
-   new ParallelRaceGroup(new Balance(), new ArmMoveAndStayAtAngle(0, 0, 0, false)));
+   new SequentialCommandGroup( new ParallelRaceGroup(new DriveUntilIsTilted(), new ArmMoveAndStayAtAngleAuto(0, 0, 0, false), new GripCube()),
+   new ParallelRaceGroup(new Balance(), new ArmMoveAndStayAtAngleAuto(0, 0, 0, false)));
 
    public static Command driveOnlyAuto = new ParallelRaceGroup(new DriveDistanceByEncoders(3, 0.05 , 0.05), new ArmMoveAndStayAtAngle(0, 0, 0, false));
     

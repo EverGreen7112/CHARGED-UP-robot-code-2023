@@ -11,20 +11,20 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Chassis;
 
-public class ArmMoveAndStayAtAngle extends CommandBase {
-  private double _kfArm1 = 0.053, _arm1Kp = 0.008, _kfArm2 = 0.00, _kpArm2 = 0.006;
+public class ArmMoveAndStayAtAngleAuto extends CommandBase {
+  private double _kfArm1 = 0.053, _arm1Kp = 0.0054, _kfArm2 = 0.03, _kpArm2 = 0.0047;
   private double _arm1SetPoint, _arm2SetPoint, _tolerance;
   private boolean _allowEnd = true;
   
   /** Creates a new MoveAndStayAtAngle. */
-  public ArmMoveAndStayAtAngle(double desiredAngle, double tolerance) {
+  public ArmMoveAndStayAtAngleAuto(double desiredAngle, double tolerance) {
     setArm1Setpoint(desiredAngle);
     _tolerance = tolerance;
     addRequirements(Arm.getInstance());
 
     // Use addRequirements() here to declare subsystem dependencies.
   }
-  public ArmMoveAndStayAtAngle(double desiredAngleArm1, double desiredAngleArm2, double tolerance) {;
+  public ArmMoveAndStayAtAngleAuto(double desiredAngleArm1, double desiredAngleArm2, double tolerance) {;
     setArm1Setpoint(desiredAngleArm1);
     setArm2Setpoint(desiredAngleArm2);
     _tolerance = tolerance;
@@ -32,7 +32,7 @@ public class ArmMoveAndStayAtAngle extends CommandBase {
 
     // Use addRequirements() here to declare subsystem dependencies.
   }
-  public ArmMoveAndStayAtAngle(double desiredAngle, double tolerance, boolean allowEnd) {
+  public ArmMoveAndStayAtAngleAuto(double desiredAngle, double tolerance, boolean allowEnd) {
     setArm1Setpoint(desiredAngle);
     _tolerance = tolerance;
     _allowEnd = allowEnd;
@@ -40,7 +40,7 @@ public class ArmMoveAndStayAtAngle extends CommandBase {
 
     // Use addRequirements() here to declare subsystem dependencies.
   }
-  public ArmMoveAndStayAtAngle(double desiredAngleArm1, double desiredAngleArm2, double tolerance, boolean allowEnd) {
+  public ArmMoveAndStayAtAngleAuto(double desiredAngleArm1, double desiredAngleArm2, double tolerance, boolean allowEnd) {
     
     setArm1Setpoint(desiredAngleArm1);
     setArm2Setpoint(desiredAngleArm2);
