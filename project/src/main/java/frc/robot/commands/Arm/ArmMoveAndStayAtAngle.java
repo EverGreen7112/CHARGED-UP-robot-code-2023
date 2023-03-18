@@ -12,8 +12,8 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Chassis;
 
 public class ArmMoveAndStayAtAngle extends CommandBase {
-  private double _kfArm1 = 0.053, _arm1Kp = 0.008, _kfArm2 = 0.00, _kpArm2 = 0.006;
-  private double _arm1SetPoint, _arm2SetPoint, _tolerance;
+  private double _kfArm1 = 0.053, _arm1Kp = 0.009, _kdArm1 = 0.025, _kfArm2 = 0.00, _kpArm2 = 0.006;
+  private double _arm1SetPoint, _arm2SetPoint, _tolerance, _lastArm1 = 0;
   private boolean _allowEnd = true;
   
   /** Creates a new MoveAndStayAtAngle. */
@@ -70,10 +70,14 @@ public class ArmMoveAndStayAtAngle extends CommandBase {
     // double kp = SmartDashboard.getNumber("arm-kp", 0);
     // _kfArm1 = SmartDashboard.getNumber("arm-kf", 0);
     double output = (_kfArm1 * Math.sin(Math.toRadians(_arm1SetPoint)) +
-    _arm1Kp * (_arm1SetPoint - Arm.getFirstAngle())) * (1 - Chassis.getSpeedMagnitude() * 0.2);
+    _arm1Kp * (_arm1SetPoint - Arm.getFirstAngle())) -
+     _kdArm1 * (_lastArm1 - Arm.getFirstAngle());
+     _lastArm1 = Arm.getFirstAngle();
+    // * (1 - Chassis.getSpeedMagnitude() * 0.2);
     Arm.getFirst().set(output);
     
     if (Math.abs(Arm.getFirstAngle() - _arm1SetPoint) <= _tolerance) { // goes to target when big arm within tolerance
+      // SmartDashboard.putNumber("tolerance", _tolerance);
       double output2 = _kfArm2 * Math.sin(Math.toRadians(_arm2SetPoint)) +
       _kpArm2 * (_arm2SetPoint * -1 * Math.signum(_arm1SetPoint) - Arm.getSecondAngle());
       Arm.getSecond().set(output2);

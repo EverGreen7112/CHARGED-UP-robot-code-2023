@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import org.opencv.core.Mat;
+
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -92,10 +94,11 @@ public class Chassis extends SubsystemBase {
     public static AHRS getGyro(){
         return getInstance().m_navx;
     }
-
+    public static void test(){
+        m_leftBackEngine.set(0.4);
+    }
     @Override
     public void periodic() {
-
         // double deltaRight = Chassis.getInstance().getRightEncoderDist() - m_lastRightDist;
         // m_lastRightDist = Chassis.getInstance().getRightEncoderDist();
 
@@ -225,6 +228,9 @@ public class Chassis extends SubsystemBase {
         m_navx.reset();
     }
 
+    public static double getAngleToReflector() {
+        return Math.atan2(m_reflector.getX(), m_reflector.getZ()) * 180 / Math.PI;
+    }
    
 
     public double calcTargetX(){

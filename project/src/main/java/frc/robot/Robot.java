@@ -46,9 +46,8 @@ import frc.robot.subsystems.Gripper;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
-  private boolean m_placeCubeAndBalanceAuto, m_drive,m_balance, m_placeConeAuto; 
+  private boolean m_placeCubeAndBalanceAuto, m_drive, m_balance, m_placeConeAuto;
   private final SendableChooser<Command> m_chooser = new SendableChooser<>();
-
 
   /*
    * This function is run when the robot is first started up and should be used
@@ -78,32 +77,42 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("balanceOnlyAuto", Commands.balanceOnlyAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
   }
+
   @Override
   public void disabledExit() {
     Arm.getInstance();
     Arm.getFirst().setIdleMode(IdleMode.kBrake);
     Arm.getSecond().setIdleMode(IdleMode.kBrake);
   }
+
   /**
-   * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
+   * This function is called every 20 ms, no matter the mode. Use this for items
+   * like diagnostics
    * that you want ran during disabled, autonomous, teleoperated and test.
    *
-   * <p>This runs after the mode specific periodic functions, but before LiveWindow and
+   * <p>
+   * This runs after the mode specific periodic functions, but before LiveWindow
+   * and
    * SmartDashboard integrated updating.
    */
   @Override
   public void robotPeriodic() {
-    // commands, running already-scheduled commands, removing finished or interrupted commands,
-    // and running subsystem periodic() methods. This must be called from the robot's periodic
+    // commands, running already-scheduled commands, removing finished or
+    // interrupted commands,
+    // and running subsystem periodic() methods. This must be called from the
+    // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    //SmartDashboard.putNumber("distance", Constants.Conversions.ticksToMeters(Chassis.getInstance().getEncodersDist(), Constants.Values.DISTANCE_PER_TICK)); 
-   
+    // SmartDashboard.putNumber("distance",
+    // Constants.Conversions.ticksToMeters(Chassis.getInstance().getEncodersDist(),
+    // Constants.Values.DISTANCE_PER_TICK));
+
     SmartDashboard.putNumber("First Angle", Arm.getFirstAngle());
-    SmartDashboard.putNumber("Second Angle", Arm.getSecondAngle());   
+    SmartDashboard.putNumber("Second Angle", Arm.getSecondAngle());
     SmartDashboard.putString("chassis mode", Chassis.getMode().name());
 
-    // m_placeCubeAndBalanceAuto = SmartDashboard.getBoolean("placeCubeAndBalance", false);
+    // m_placeCubeAndBalanceAuto = SmartDashboard.getBoolean("placeCubeAndBalance",
+    // false);
     // m_balance = SmartDashboard.getBoolean("only balance", false);
     // m_drive = SmartDashboard.getBoolean("only drive", false);
     // m_placeConeAuto = SmartDashboard.getBoolean("placeConeAuto", false);
@@ -112,40 +121,46 @@ public class Robot extends TimedRobot {
     // m_drive = SmartDashboard.getBoolean("only drive", false);
     // m_placeConeAuto = SmartDashboard.getBoolean("placeConeAuto", false);
     // if(m_placeConeAuto){
-    //   SmartDashboard.putBoolean("only balance", false);
-    //   SmartDashboard.putBoolean("only drive", false);
-    //   SmartDashboard.putBoolean("placeCubeAndBalanceAuto", false);
+    // SmartDashboard.putBoolean("only balance", false);
+    // SmartDashboard.putBoolean("only drive", false);
+    // SmartDashboard.putBoolean("placeCubeAndBalanceAuto", false);
     // }
     // else if(m_balance){
-    //   SmartDashboard.putBoolean("only balance", false);
-    //   SmartDashboard.putBoolean("only drive", false);
-    //   SmartDashboard.putBoolean("placeConeAuto", false);
+    // SmartDashboard.putBoolean("only balance", false);
+    // SmartDashboard.putBoolean("only drive", false);
+    // SmartDashboard.putBoolean("placeConeAuto", false);
     // }
     // else if(m_drive){
-    //   m_balance = false;
-    //   m_placeConeAuto = false;
-    //   m_placeCubeAndBalanceAuto = false;
-    //   SmartDashboard.putBoolean("only balance", false);
-    //   SmartDashboard.putBoolean("placeConeAuto", false);
-    //   SmartDashboard.putBoolean("placeCubeAndBalanceAuto", false);
+    // m_balance = false;
+    // m_placeConeAuto = false;
+    // m_placeCubeAndBalanceAuto = false;
+    // SmartDashboard.putBoolean("only balance", false);
+    // SmartDashboard.putBoolean("placeConeAuto", false);
+    // SmartDashboard.putBoolean("placeCubeAndBalanceAuto", false);
     // }
     // else if(m_placeCubeAndBalanceAuto){
-    //   SmartDashboard.putBoolean("only balance", false);
-    //   SmartDashboard.putBoolean("only drive", false);
-    //   SmartDashboard.putBoolean("placeConeAuto", false);
-      
+    // SmartDashboard.putBoolean("only balance", false);
+    // SmartDashboard.putBoolean("only drive", false);
+    // SmartDashboard.putBoolean("placeConeAuto", false);
+
     // }
     // SmartDashboard.putNumber("ticks", Chassis.getEncodersDist());
     // SmartDashboard.putNumber("Vision", Chassis.getInstance().calcTargetX());
     // SmartDashboard.putNumber("Vision2", Chassis.getInstance().calcTargetZ());
     // SmartDashboard.putNumber("first goofy ahhngle", Arm.getFirstAngle());
     // SmartDashboard.putNumber("second goofy ahhngle", Arm.getSecondAngle());
-    // SmartDashboard.putNumber("first position", Arm.getFirst().getEncoder().getPosition());
-    // SmartDashboard.putNumber("second position", Arm.getSecond().getEncoder().getPosition());
-    // SmartDashboard.putNumber("xControoler", RobotContainer.m_operator.getRawAxis(0));
-    // SmartDashboard.putNumber("yControoler", RobotContainer.m_operator.getRawAxis(1));
-    // SmartDashboard.putNumber("zControoler", RobotContainer.m_operator.getRawAxis(2));
-    // SmartDashboard.putNumber("wControoler", RobotContainer.m_operator.getRawAxis(3));
+    // SmartDashboard.putNumber("first position",
+    // Arm.getFirst().getEncoder().getPosition());
+    // SmartDashboard.putNumber("second position",
+    // Arm.getSecond().getEncoder().getPosition());
+    // SmartDashboard.putNumber("xControoler",
+    // RobotContainer.m_operator.getRawAxis(0));
+    // SmartDashboard.putNumber("yControoler",
+    // RobotContainer.m_operator.getRawAxis(1));
+    // SmartDashboard.putNumber("zControoler",
+    // RobotContainer.m_operator.getRawAxis(2));
+    // SmartDashboard.putNumber("wControoler",
+    // RobotContainer.m_operator.getRawAxis(3));
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -158,7 +173,8 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+  }
 
   /**
    * This autonomous runs the autonomous command selected by your
@@ -166,45 +182,45 @@ public class Robot extends TimedRobot {
    */
 
   ArmMoveAndStayAtAngle moveAndStay;
+
   @Override
   public void autonomousInit() {
     CommandScheduler.getInstance().cancelAll();
     Chassis.getGyro().reset();
-    
+
     // if(m_placeConeAuto){
-    //   SmartDashboard.putBoolean("only balance", false);
-    //   SmartDashboard.putBoolean("only drive", false);
-    //   SmartDashboard.putBoolean("placeCubeAndBalanceAuto", false);
-    //   placeConeAuto.schedule();
+    // SmartDashboard.putBoolean("only balance", false);
+    // SmartDashboard.putBoolean("only drive", false);
+    // SmartDashboard.putBoolean("placeCubeAndBalanceAuto", false);
+    // placeConeAuto.schedule();
     // }
     // else if(m_balance){
-    //   SmartDashboard.putBoolean("only balance", false);
-    //   SmartDashboard.putBoolean("only drive", false);
-    //   SmartDashboard.putBoolean("placeConeAuto", false);
-    //   balance.schedule();
+    // SmartDashboard.putBoolean("only balance", false);
+    // SmartDashboard.putBoolean("only drive", false);
+    // SmartDashboard.putBoolean("placeConeAuto", false);
+    // balance.schedule();
     // }
     // else if(m_drive){
-    //   m_balance = false;
-    //   m_placeConeAuto = false;
-    //   m_placeCubeAndBalanceAuto = false;
-    //   SmartDashboard.putBoolean("only balance", false);
-    //   SmartDashboard.putBoolean("placeConeAuto", false);
-    //   SmartDashboard.putBoolean("placeCubeAndBalanceAuto", false);
-    //   drive.schedule();
+    // m_balance = false;
+    // m_placeConeAuto = false;
+    // m_placeCubeAndBalanceAuto = false;
+    // SmartDashboard.putBoolean("only balance", false);
+    // SmartDashboard.putBoolean("placeConeAuto", false);
+    // SmartDashboard.putBoolean("placeCubeAndBalanceAuto", false);
+    // drive.schedule();
     // }
     // else if(m_placeCubeAndBalanceAuto){
-    //   SmartDashboard.putBoolean("only balance", false);
-    //   SmartDashboard.putBoolean("only drive", false);
-    //   SmartDashboard.putBoolean("placeConeAuto", false);
-    //   placeCubeAndBalanceAuto.schedule();
+    // SmartDashboard.putBoolean("only balance", false);
+    // SmartDashboard.putBoolean("only drive", false);
+    // SmartDashboard.putBoolean("placeConeAuto", false);
+    // placeCubeAndBalanceAuto.schedule();
     // }
     m_chooser.getSelected().schedule();
-  
-    // placeConeAuto.schedule();
- 
-// new DriveDistanceByEncoders(-1, 0.05, 0.05).schedule();
-}
 
+    // placeConeAuto.schedule();
+
+    // new DriveDistanceByEncoders(-1, 0.05, 0.05).schedule();
+  }
 
   @Override
   public void autonomousPeriodic() {
@@ -213,8 +229,9 @@ public class Robot extends TimedRobot {
     // desiredAngle = SmartDashboard.getNumber("arm2-desired-value", 0);
     // moveAndStay.setArm2Setpoint(desiredAngle);
   }
-  
+
   ArmMoveAndStayAtAngle manualMove = new ArmMoveAndStayAtAngle(0, 0, 1, false);
+
   @Override
   public void teleopInit() {
     Chassis.resetGyro();
@@ -225,12 +242,13 @@ public class Robot extends TimedRobot {
     Chassis.setMode(IdleMode.kCoast);
 
     // CommandScheduler.getInstance().schedule(new SetArmAngleToStartPos());
-  //  new TankDrive(RobotContainer.m_rightStick::getY, RobotContainer.m_leftStick::getY).schedule();
-   //  new TurnToAnglePID(Chassis.getGyro().getAngle() + 180).schedule();1
-   RobotContainer.m_tankDriveCommand.schedule();
-  //  RobotContainer.m_arm1Joystick.schedule();
-  //  RobotContainer.m_arm2Joystick.schedule();
-    
+    // new TankDrive(RobotContainer.m_rightStick::getY,
+    // RobotContainer.m_leftStick::getY).schedule();
+    // new TurnToAnglePID(Chassis.getGyro().getAngle() + 180).schedule();1
+    RobotContainer.m_tankDriveCommand.schedule();
+    // RobotContainer.m_arm1Joystick.schedule();
+    // RobotContainer.m_arm2Joystick.schedule();
+
   }
 
   // JoyStickSum j = new JoyStickSum();
@@ -238,32 +256,47 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     // j.schedule();
-  //  Chassis.m_leftFrontEngine.set(0.3);
+    // Chassis.m_leftFrontEngine.set(0.3);
   }
+
   // CommandBase m1Ang = frc.robot.commands.General.Commands.getMoveArm1ToAng(90);
-  // private CommandBase m_com = new MoveArmByAngleSuplliers(()->RobotContainer.m_operator.getRawAxis(Constants.ButtonPorts.OPERATOR_LEFT_JOYSTICK_X), ()->RobotContainer.m_operator.getRawAxis(Constants.ButtonPorts.OPERATOR_LEFT_JOYSTICK_Y), 1);
+  // private CommandBase m_com = new
+  // MoveArmByAngleSuplliers(()->RobotContainer.m_operator.getRawAxis(Constants.ButtonPorts.OPERATOR_LEFT_JOYSTICK_X),
+  // ()->RobotContainer.m_operator.getRawAxis(Constants.ButtonPorts.OPERATOR_LEFT_JOYSTICK_Y),
+  // 1);
   @Override
   public void testInit() {
-    Trigger closeGripper = new JoystickButton(RobotContainer.m_operator, Constants.ButtonPorts.Y).onTrue(new CloseGripper());
-    Trigger openGripper = new JoystickButton(RobotContainer.m_operator, Constants.ButtonPorts.B).onTrue(new OpenGripper());
-    Trigger closeToCube = new JoystickButton(RobotContainer.m_operator, Constants.ButtonPorts.X).onTrue(new GripCube());
-    Trigger tightenGrip = new JoystickButton(RobotContainer.m_operator, Constants.ButtonPorts.A).whileTrue(Commands.tightenGrip);
+    // Trigger closeGripper = new JoystickButton(RobotContainer.m_operator,
+    // Constants.ButtonPorts.Y).onTrue(new CloseGripper());
+    // Trigger openGripper = new JoystickButton(RobotContainer.m_operator,
+    // Constants.ButtonPorts.B).onTrue(new OpenGripper());
+    // Trigger closeToCube = new JoystickButton(RobotContainer.m_operator,
+    // Constants.ButtonPorts.X).onTrue(new GripCube());
+    // Trigger tightenGrip = new JoystickButton(RobotContainer.m_operator,
+    // Constants.ButtonPorts.A).whileTrue(Commands.tightenGrip);
+
     // Cancels all running commands at the start of test mode.
     // CommandScheduler.getInstance().cancelAll();
+    // Arm.getSecond().set(1);
     // (new DriveDistanceByEncoders(1.2, 0.1)).schedule();
   }
 
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
- //   Gripper.moveGripper(-0.4);
+    Chassis.test();
   }
 
-  /** This function i++++++++++++++++++++s called once when the robot is first started up. */
+  /**
+   * This function i++++++++++++++++++++s called once when the robot is first
+   * started up.
+   */
   @Override
-  public void simulationInit() {}
+  public void simulationInit() {
+  }
 
   /** This function is called periodically whilst in simulation. */
   @Override
-  public void simulationPeriodic() {}
+  public void simulationPeriodic() {
+  }
 }
