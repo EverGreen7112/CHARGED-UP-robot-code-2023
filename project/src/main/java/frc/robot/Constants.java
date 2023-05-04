@@ -66,8 +66,7 @@ public final class Constants {
             ,JOYSTICK_ANGLE_TOLERANCE = 0.5
             ,JOYSTICK_STRENGTH_TOLERANCE = 0.1
             ,LIMIT_TOLERANCE = 20
-            ,PICKUP_TOLERANCE = 5
-            ;
+            ,PICKUP_TOLERANCE = 50;
   }
   
   public final static  class Speeds{

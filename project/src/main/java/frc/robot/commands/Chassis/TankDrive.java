@@ -31,20 +31,16 @@ public class TankDrive extends CommandBase{
         double rSpeed=-m_rightSupllier.get();
         double lSpeed=-m_leftSupllier.get();
         Vector2D v=new Vector2D(lSpeed, rSpeed);
-        // if(v.getLength()>Constants.Speeds.constantSpeed.get()){
-        //     //normalizing the vector.
-        //     v.x/=(v.getLength());
-        //     v.y/=(v.getLength());
-        //     v.x*=Constants.Speeds.constantSpeed.get();
-        //     v.y*=Constants.Speeds.constantSpeed.get();
-        // }
-        double turboFactor = SmartDashboard.getNumber("Turbo", Constants.Speeds.TURBO);
-        double slowFactor = SmartDashboard.getNumber("slow", Constants.Speeds.SLOW);
-        lSpeed=v.x * ((m_turbo) ? turboFactor : ((m_slow) ? slowFactor : 1));
-        rSpeed=v.y * ((m_turbo) ? turboFactor : ((m_slow) ? slowFactor : 1));
 
+         double turboSpeed = SmartDashboard.getNumber("Turbo", Constants.Speeds.TURBO);
+         double slowSpeed  = SmartDashboard.getNumber("slow", Constants.Speeds.SLOW);
+         double normalSpeed = Constants.Speeds.constantSpeed.get();
+        // lSpeed=v.x * ((m_turbo) ? turboFactor : ((m_slow) ? slowFactor : 1));
+        // rSpeed=v.y * ((m_turbo) ? turboFactor : ((m_slow) ? slowFactor : 1));
+
+        double cosntantSpeed = ((m_turbo) ? turboSpeed : ((m_slow) ? slowSpeed : normalSpeed));
         // SmartDashboard.putNumberArray("l, r", new double[] {lSpeed, rSpeed});
-        Chassis.driveTank(lSpeed * Constants.Speeds.constantSpeed.get(), rSpeed * Constants.Speeds.constantSpeed.get());
+        Chassis.driveTank(lSpeed * cosntantSpeed, rSpeed * cosntantSpeed);
         
     }
 

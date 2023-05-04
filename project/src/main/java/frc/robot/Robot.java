@@ -1,10 +1,13 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -32,9 +35,8 @@ import frc.robot.subsystems.Gripper;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
-  private boolean m_placeCubeAndBalanceAuto, m_drive,m_balance, m_placeConeAuto; 
+  private boolean m_placeCubeAndBalanceAuto, m_drive, m_balance, m_placeConeAuto;
   private final SendableChooser<Command> m_chooser = new SendableChooser<>();
-
 
   /*
    * This function is run when the robot is first started up and should be used
@@ -64,28 +66,35 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("balanceOnlyAuto", Commands.balanceOnlyAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
   }
+
   @Override
   public void disabledExit() {
     Arm.getInstance();
     Arm.getFirst().setIdleMode(IdleMode.kBrake);
     Arm.getSecond().setIdleMode(IdleMode.kBrake);
   }
+
   /**
-   * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
+   * This function is called every 20 ms, no matter the mode. Use this for items
+   * like diagnostics
    * that you want ran during disabled, autonomous, teleoperated and test.
    *
-   * <p>This runs after the mode specific periodic functions, but before LiveWindow and
+   * <p>
+   * This runs after the mode specific periodic functions, but before LiveWindow
+   * and
    * SmartDashboard integrated updating.
    */
   @Override
   public void robotPeriodic() {
-    // commands, running already-scheduled commands, removing finished or interrupted commands,
-    // and running subsystem periodic() methods. This must be called from the robot's periodic
+    // commands, running already-scheduled commands, removing finished or
+    // interrupted commands,
+    // and running subsystem periodic() methods. This must be called from the
+    // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     
     SmartDashboard.putNumber("First Angle", Arm.getFirstAngle());
-    SmartDashboard.putNumber("Second Angle", Arm.getSecondAngle());   
+    SmartDashboard.putNumber("Second Angle", Arm.getSecondAngle());
     SmartDashboard.putString("chassis mode", Chassis.getMode().name());
   }
   /** This function is called once each time the robot enters Disabled mode. */
@@ -98,7 +107,8 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+  }
 
   /**
    * This autonomous runs the autonomous command selected by your
@@ -106,6 +116,7 @@ public class Robot extends TimedRobot {
    */
 
   ArmMoveAndStayAtAngle moveAndStay;
+
   @Override
   public void autonomousInit() {
     CommandScheduler.getInstance().cancelAll();
@@ -114,6 +125,8 @@ public class Robot extends TimedRobot {
     m_chooser.getSelected().schedule();
 }
 
+    // new DriveDistanceByEncoders(-1, 0.05, 0.05).schedule();
+  }
 
   @Override
   public void autonomousPeriodic() {}
@@ -144,14 +157,18 @@ public class Robot extends TimedRobot {
   }
 
   /** This function is called periodically during test mode. */
+  // CANSparkMax _test = new CANSparkMax(14, MotorType.kBrushless);
+
   @Override
   public void testPeriodic() {  }
 
   /** This functionv is called once when the robot is first started up. */
   @Override
-  public void simulationInit() {}
+  public void simulationInit() {
+  }
 
   /** This function is called periodically whilst in simulation. */
   @Override
-  public void simulationPeriodic() {}
+  public void simulationPeriodic() {
+  }
 }

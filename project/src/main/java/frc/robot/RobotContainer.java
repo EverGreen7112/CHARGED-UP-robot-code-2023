@@ -71,17 +71,20 @@ public class RobotContainer {
     right.onTrue(new InstantCommand(() -> new ArmMoveAndStayAtAngle(SmartDashboard.getNumber("arm1-setpoint", Arm.getFirstAngle()) + ARM1_ANGLE_JUMPS, SmartDashboard.getNumber("arm2-setpoint", Math.abs(Math.round(Arm.getSecondAngle()/6)) * 6), 30, false).schedule()));
  
     Trigger upperCone = new JoystickButton(m_operator, Constants.ButtonPorts.RB).onTrue(new ArmMoveAndStayAtAngle  (-124, 120,Constants.ArmValues.PICKUP_TOLERANCE, false));
+    Trigger upperCone = new JoystickButton(m_operator, Constants.ButtonPorts.RB).onTrue(new ArmMoveAndStayAtAngle  (-124, 135,Constants.ArmValues.PICKUP_TOLERANCE, false));
     Trigger lowerBackward = new JoystickButton(m_operator, Constants.ButtonPorts.RT).onTrue(new ArmMoveAndStayAtAngle  (-105, 83,Constants.ArmValues.PICKUP_TOLERANCE, false));
     Trigger setArmToZero = new JoystickButton(m_operator, Constants.ButtonPorts.START).onTrue(new ArmMoveAndStayAtAngle(0, 0,Constants.ArmValues.PICKUP_TOLERANCE, false)); 
 
+    Trigger setArmToZero = new JoystickButton(m_operator, Constants.ButtonPorts.START).onTrue(new ArmMoveAndStayAtAngleAuto(0, 0,Constants.ArmValues.PICKUP_TOLERANCE, false)); 
     Trigger lowerCone = new JoystickButton(m_operator, Constants.ButtonPorts.LT).onTrue(new ArmMoveAndStayAtAngle(-124, 70, Constants.ArmValues.PICKUP_TOLERANCE, false));
-    Trigger pickUpCube = new JoystickButton(m_operator, Constants.ButtonPorts.LB).onTrue(new ArmMoveAndStayAtAngle(115, 70, 5, false));
+    Trigger pickUpCube = new JoystickButton(m_operator, Constants.ButtonPorts.LB).onTrue(new ArmMoveAndStayAtAngle(115, 70, Constants.ArmValues.PICKUP_TOLERANCE, false));
     Trigger upperCube = new JoystickButton(m_operator, Constants.ButtonPorts.BACK).onTrue(new ArmMoveAndStayAtAngle(-120, 105, Constants.ArmValues.PICKUP_TOLERANCE, false));
     Trigger collectFromFloor = new JoystickButton(m_operator, Constants.ButtonPorts.A).onTrue(new ArmMoveAndStayAtAngle(-10, -110, Constants.ArmValues.PICKUP_TOLERANCE, false));
  
     Trigger turbo = new JoystickButton(m_rightStick, 1).whileTrue(new Turbo(m_tankDriveCommand));
     Trigger slow = new JoystickButton(m_rightStick, 2).whileTrue(new Slow(m_tankDriveCommand));
     Trigger lockWheels = new JoystickButton(m_rightStick, 3).onTrue(Commands.lockWheels);
+    Trigger gotoReflector = new JoystickButton(m_leftStick, 4).whileTrue(new GoToReflectorSmallBrain());
     
   }
 
