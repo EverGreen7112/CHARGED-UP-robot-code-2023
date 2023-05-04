@@ -125,8 +125,7 @@ public class Robot extends TimedRobot {
     m_chooser.getSelected().schedule();
 }
 
-    // new DriveDistanceByEncoders(-1, 0.05, 0.05).schedule();
-  }
+    // new DriveDistanceByEncoders(-1, 0.05, 0.05).schedule();.
 
   @Override
   public void autonomousPeriodic() {}
