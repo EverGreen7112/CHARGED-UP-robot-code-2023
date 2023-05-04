@@ -11,8 +11,8 @@ import frc.robot.subsystems.Chassis;
 
 public class GoToReflectorSmallBrain extends CommandBase {
   /** Creates a new GoToReflectorSmallBrain. */
-  PIDController pid = new PIDController(0.05 / 44, 0.00006, 0.00004);
-  double driveSpeed = -0.0;
+  PIDController pid = new PIDController(0.05 / 35, 0.000000001, 0.00008);
+  private double _kpDrive = -0.0;
   public GoToReflectorSmallBrain() {
     addRequirements(Chassis.getInstance());
     // Use addRequirements() here to declare subsystem dependencies.
@@ -26,6 +26,7 @@ public class GoToReflectorSmallBrain extends CommandBase {
   @Override
   public void execute() {
     double angleSpeed = pid.calculate(Chassis.getAngleToReflector(), 0);
+    double driveSpeed = _kpDrive * (Chassis.getInstance().calcTargetZ() - 1.25);
     Chassis.driveTank(driveSpeed + angleSpeed, driveSpeed - angleSpeed);
 
   }

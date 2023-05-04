@@ -118,7 +118,7 @@ public class RobotContainer {
     // down.onTrue(new InstantCommand(() -> new ArmMoveAndStayAtAngle(SmartDashboard.getNumber("arm1-setpoint", Math.round(Arm.getFirstAngle())), SmartDashboard.getNumber("arm2-setpoint", Math.abs(Arm.getSecondAngle())) - ARM2_ANGLE_JUMPS, 30, false).schedule()));
     // left.onTrue(new InstantCommand(() -> new ArmMoveAndStayAtAngle(SmartDashboard.getNumber("arm1-setpoint", Arm.getFirstAngle()) - ARM1_ANGLE_JUMPS,  SmartDashboard.getNumber("arm2-setpoint", Math.abs(Math.round(Arm.getSecondAngle()/6)) * 6), 30, false).schedule()));
     // right.onTrue(new InstantCommand(() -> new ArmMoveAndStayAtAngle(SmartDashboard.getNumber("arm1-setpoint", Arm.getFirstAngle()) + ARM1_ANGLE_JUMPS, SmartDashboard.getNumber("arm2-setpoint", Math.abs(Math.round(Arm.getSecondAngle()/6)) * 6), 30, false).schedule()));
-    
+
     up.onTrue(new InstantCommand(() -> new    ArmMoveAndStayAtAngleAuto(  SmartDashboard.getNumber("arm1-setpoint", Math.round(Arm.getFirstAngle())), Math.signum(SmartDashboard.getNumber("arm2-setpoint", Math.abs(Math.round(Arm.getSecondAngle()/6)) * 6)) * Math.abs(Arm.getSecondAngle()) + ARM2_ANGLE_JUMPS, 30, false).schedule()));
     down.onTrue(new InstantCommand(() -> new  ArmMoveAndStayAtAngleAuto(SmartDashboard.getNumber("arm1-setpoint", Math.round(Arm.getFirstAngle())),   Math.signum(SmartDashboard.getNumber("arm2-setpoint", Math.abs(Math.round(Arm.getSecondAngle()/6)) * 6)) * Math.abs(Arm.getSecondAngle()) - ARM2_ANGLE_JUMPS, 30, false).schedule()));
     left.onTrue(new InstantCommand(() -> new  ArmMoveAndStayAtAngleAuto( Arm.getFirstAngle()- ARM1_ANGLE_JUMPS,  SmartDashboard.getNumber("arm2-setpoint", Math.abs(Math.round(Arm.getSecondAngle()/6)) * 6), 30, false).schedule()));
@@ -136,7 +136,7 @@ public class RobotContainer {
 
     // Trigger smallArmPlus = new JoystickButton(m_operator, Constants.ButtonPorts.RB).whileTrue(Commands.upperSmall);
     // Trigger smallArmMinus = new JoystickButton(m_operator, Constants.ButtonPorts.RT).whileTrue(Commands.lowerSmall);
-    Trigger upperCone = new JoystickButton(m_operator, Constants.ButtonPorts.RB).onTrue(new ArmMoveAndStayAtAngle  (-124, 120,Constants.ArmValues.PICKUP_TOLERANCE, false));
+    Trigger upperCone = new JoystickButton(m_operator, Constants.ButtonPorts.RB).onTrue(new ArmMoveAndStayAtAngle  (-124, 135,Constants.ArmValues.PICKUP_TOLERANCE, false));
     Trigger lowerBackward = new JoystickButton(m_operator, Constants.ButtonPorts.RT).onTrue(new ArmMoveAndStayAtAngle  (-105, 83,Constants.ArmValues.PICKUP_TOLERANCE, false));
     Trigger setArmToZero = new JoystickButton(m_operator, Constants.ButtonPorts.START).onTrue(new ArmMoveAndStayAtAngleAuto(0, 0,Constants.ArmValues.PICKUP_TOLERANCE, false)); 
     // Trigger pickUpCone = new JoystickButton(m_operator, Constants.ButtonPorts.LT).onTrue(new ArmMoveAndStayAtAngle(119, 60, 5, false));

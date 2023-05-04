@@ -1,10 +1,13 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -110,6 +113,11 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("First Angle", Arm.getFirstAngle());
     SmartDashboard.putNumber("Second Angle", Arm.getSecondAngle());
     SmartDashboard.putString("chassis mode", Chassis.getMode().name());
+
+    SmartDashboard.putBoolean("closed", Gripper.getClosed().get());
+    SmartDashboard.putBoolean("opened", Gripper.getOpened().get());
+    SmartDashboard.putBoolean("cube", Gripper.getCube().get());
+    
 
     // m_placeCubeAndBalanceAuto = SmartDashboard.getBoolean("placeCubeAndBalance",
     // false);
@@ -282,8 +290,12 @@ public class Robot extends TimedRobot {
   }
 
   /** This function is called periodically during test mode. */
+  // CANSparkMax _test = new CANSparkMax(14, MotorType.kBrushless);
+
   @Override
   public void testPeriodic() {
+    Chassis.m_leftFrontEngine.set(0.1);
+    // _test.set(0.1);
     // Chassis.test();
   }
 
