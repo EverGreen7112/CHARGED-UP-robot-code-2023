@@ -35,16 +35,6 @@ public final class Constants {
     RIGHT_FRONT_PORT = 12,
     RIGHT_MIDDLE_PORT = 3,
     RIGHT_BACK_PORT = 4,
-    //swerve constants 
-    FLY_WHEEL_PORT = 0,
-    RIGHT_UP_DRIVE_MOTOR_PORT = 0,
-    RIGHT_UP_TURN_MOTOR_PORT = 0,
-    LEFT_UP_DRIVE_MOTOR_PORT = 0,
-    LEFT_UP_TURN_MOTOR_PORT = 0,
-    RIGHT_DOWN_DRIVE_MOTOR_PORT = 0,
-    RIGHT_DOWN_TURN_MOTOR_PORT = 0,
-    LEFT_DOWN_DRIVE_MOTOR_PORT = 0,
-    LEFT_DOWN_TURN_MOTOR_PORT = 0,
     //arm ports
     FIRST_ARM_PORT = 13,
     SECOND_ARM_PORT = 15,
@@ -124,9 +114,6 @@ public final class Constants {
         OPERATOR_RIGHT_JOYSTICK_Y = 3;
   }
 
-  public static class MotorPorts {
-    public static final int FLY_WHEEL_PORT = 0, FIRST_ARM_PORT = 0, SECOND_ARM_PORT = 0, GRIPPER_PORT = 0;
-  }
 
   public static class PIDS {
 

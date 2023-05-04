@@ -28,11 +28,7 @@ public class Chassis extends SubsystemBase {
     // front are leaders
     public static CANSparkMax m_leftFrontEngine, m_leftMiddleEngine, m_leftBackEngine;
     public static CANSparkMax m_rightFrontEngine, m_rightMiddleEngine, m_rightBackEngine;
-    private static double m_deltaTime;
-    private static double m_time;
-    private static double m_lastRightDist;
-    private static double m_lastLeftDist;
-    private static Vector2D m_pos;
+
     private static Vision m_robotLocation, m_reflector;
 
     private static Chassis m_instance = null;
@@ -42,7 +38,7 @@ public class Chassis extends SubsystemBase {
         m_leftMiddleEngine = new CANSparkMax(Constants.Ports.LEFT_MIDDLE_PORT, MotorType.kBrushless);
         m_leftBackEngine = new CANSparkMax(Constants.Ports.LEFT_BACK_PORT, MotorType.kBrushless);
         m_rightFrontEngine = new CANSparkMax(Constants.Ports.RIGHT_FRONT_PORT, MotorType.kBrushless);
-       m_rightMiddleEngine = new CANSparkMax(Constants.Ports.RIGHT_MIDDLE_PORT, MotorType.kBrushless);
+        m_rightMiddleEngine = new CANSparkMax(Constants.Ports.RIGHT_MIDDLE_PORT, MotorType.kBrushless);
         m_rightBackEngine = new CANSparkMax(Constants.Ports.RIGHT_BACK_PORT, MotorType.kBrushless);
 
         leftMotors = new MotorControllerGroup(m_leftFrontEngine, m_leftMiddleEngine, m_leftBackEngine);
@@ -77,13 +73,8 @@ public class Chassis extends SubsystemBase {
 
         m_leftFrontEngine.getEncoder().setPosition(0);
         m_rightFrontEngine.getEncoder().setPosition(0);
-        m_time = System.currentTimeMillis();
-        m_lastRightDist = m_rightFrontEngine.getEncoder().getPosition();
-        m_lastLeftDist = m_leftFrontEngine.getEncoder().getPosition();
-        m_pos = new Vector2D(0,0);
+ 
         m_navx = new AHRS(edu.wpi.first.wpilibj.SPI.Port.kMXP);
-
-        m_deltaTime = 0;
 
         m_robotLocation = new Vision(Constants.Ports.RECIEVE_LOCATION_PORT);
         m_reflector = new Vision(Constants.Ports.REFLECTOR_PORT);
@@ -96,49 +87,6 @@ public class Chassis extends SubsystemBase {
     @Override
     public void periodic() {
 
-        // double deltaRight = Chassis.getInstance().getRightEncoderDist() - m_lastRightDist;
-        // m_lastRightDist = Chassis.getInstance().getRightEncoderDist();
-
-        // double deltaLeft = Chassis.getInstance().getRightEncoderDist() - m_lastLeftDist;
-        // m_lastLeftDist = Chassis.getInstance().getLeftEncoderDist();
-
-        // double leftSideAngle = deltaLeft / Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT;
-        // double rightSideAngle = deltaRight / Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT;
-
-        // Vector2D left = new Vector2D(
-        //         Math.cos(0.5 * leftSideAngle) * Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT,
-        //         2 * Math.sin(0.5 * leftSideAngle) * Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT);
-
-        // Vector2D right = new Vector2D(
-        //         Math.cos(0.5 * rightSideAngle) * Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT,
-        //         2 * Math.sin(0.5 *rightSideAngle) * Constants.Values.DISTANCE_BETWEEN_LEFT_TO_RIGHT);
-
-        // Vector2D robotDelta = right.getAdded(left).getDivided(2);
-        // Vector2D fieldDelta = Constants.Conversions.rotateZ(robotDelta, -Chassis.getInstance().getRobotAngle());
-        // m_pos.add(fieldDelta);
-        // SmartDashboard.putNumber("x", m_pos.x);
-        // SmartDashboard.putNumber("y", m_pos.y);
-        // SmartDashboard.putNumber("RPM left velocity",
-        // Chassis.getInstance().getLeftVelocity() / 10.97);
-        // SmartDashboard.putNumber("RPM right velocity",
-        // Chassis.getInstance().getRightVelocity() / 10.97);
-        // SmartDashboard.putNumber("ms left velocity",
-        // Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS,
-        // Chassis.getInstance().getLeftVelocity()/ 10.97));
-        // SmartDashboard.putNumber("ms right velocity",
-        // Constants.Conversions.rpm2ms(Constants.Values.TANKDRIVE_WHEEL_RADIUS,
-        // Chassis.getInstance().getRightVelocity()/ 10.97));
-        // SmartDashboard.putNumber("left Angle", Math.toDegrees(leftSideAngle));
-        // SmartDashboard.putNumber("right Angle", Math.toDegrees(rightSideAngle));
-        // SmartDashboard.putNumber("leftSideDistance", this.getLeftEncoderDist());
-        // SmartDashboard.putNumber("rightSideDistance", this.getRightEncoderDist());
-        
-        // SmartDashboard.putNumber("x", m_vision.getX());
-        // SmartDashboard.putNumber("y", m_vision.getY());
-        // SmartDashboard.putNumber("z", m_vision.getZ());
-        
-      //  SmartDashboard.putNumber("distanceR",Chassis.getInstance().getRightEncoderDist());
-      //  SmartDashboard.putNumber("distanceL",Chassis.getInstance().getLeftEncoderDist());
     }
 
     public static Chassis getInstance() {
@@ -224,8 +172,6 @@ public class Chassis extends SubsystemBase {
     public static void resetGyro(){
         m_navx.reset();
     }
-
-   
 
     public double calcTargetX(){
         return m_reflector.getX() + Constants.Values.X_AXIS_OFFSET * -Math.signum(m_robotLocation.getX());
