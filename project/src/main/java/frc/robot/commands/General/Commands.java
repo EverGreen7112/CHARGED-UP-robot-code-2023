@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Vector2D;
@@ -37,6 +38,7 @@ import frc.robot.commands.Arm.MoveArm1ByAngle;
 import frc.robot.commands.Arm.MoveArm2ByAngle;
 import frc.robot.commands.Arm.StallArm1;
 import frc.robot.commands.Arm.StallBoth;
+import frc.robot.commands.Chassis.DriveToGamePiece;
 import frc.robot.commands.Chassis.LockWheels;
 import frc.robot.commands.ChassisPid.ChasisSetPointPosPID;
 import frc.robot.commands.Gripper.GripCube;
@@ -221,7 +223,14 @@ public class Commands {
 
    public static Command driveOnlyAuto = new ParallelRaceGroup(new DriveDistanceByEncoders(3, 0.05 , 0.05), new ArmMoveAndStayAtAngle(0, 0, 0, false));
     
-    
+    public static Command pickUpGamePieceAuto = new SequentialCommandGroup(
+    new ArmMoveAndStayAtAngle(0, 0,Constants.ArmValues.PICKUP_TOLERANCE, true)
+    ,new DriveToGamePiece()
+    ,new ArmMoveAndStayAtAngle(-10, -110, Constants.ArmValues.PICKUP_TOLERANCE, true)
+    ,new WaitCommand(1)
+    ,new GripCube()
+    ,new ArmMoveAndStayAtAngle(0, 0,Constants.ArmValues.PICKUP_TOLERANCE, true)
+    );
 
    
     

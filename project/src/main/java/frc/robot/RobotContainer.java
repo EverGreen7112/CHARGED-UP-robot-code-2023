@@ -74,7 +74,7 @@ public class RobotContainer {
     Trigger upperCone = new JoystickButton(m_operator, Constants.ButtonPorts.RB).onTrue(new ArmMoveAndStayAtAngle  (-124, 120,Constants.ArmValues.PICKUP_TOLERANCE, false));
     Trigger lowerBackward = new JoystickButton(m_operator, Constants.ButtonPorts.RT).onTrue(new ArmMoveAndStayAtAngle  (-105, 83,Constants.ArmValues.PICKUP_TOLERANCE, false));
     Trigger setArmToZero = new JoystickButton(m_operator, Constants.ButtonPorts.START).onTrue(new ArmMoveAndStayAtAngle(0, 0,Constants.ArmValues.PICKUP_TOLERANCE, false)); 
-
+    Trigger pickUpFromFloorAuto = new JoystickButton(m_operator, Constants.ButtonPorts.RIGHT_JOYSTICK).onTrue(Commands.pickUpGamePieceAuto); 
     Trigger lowerCone = new JoystickButton(m_operator, Constants.ButtonPorts.LT).onTrue(new ArmMoveAndStayAtAngle(-124, 70, Constants.ArmValues.PICKUP_TOLERANCE, false));
     Trigger pickUpCube = new JoystickButton(m_operator, Constants.ButtonPorts.LB).onTrue(new ArmMoveAndStayAtAngle(115, 70, Constants.ArmValues.PICKUP_TOLERANCE, false));
     Trigger upperCube = new JoystickButton(m_operator, Constants.ButtonPorts.BACK).onTrue(new ArmMoveAndStayAtAngle(-120, 105, Constants.ArmValues.PICKUP_TOLERANCE, false));

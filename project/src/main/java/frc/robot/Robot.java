@@ -96,6 +96,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("First Angle", Arm.getFirstAngle());
     SmartDashboard.putNumber("Second Angle", Arm.getSecondAngle());
     SmartDashboard.putString("chassis mode", Chassis.getMode().name());
+    
   }
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
@@ -124,8 +125,6 @@ public class Robot extends TimedRobot {
     
     m_chooser.getSelected().schedule();
 }
-
-    // new DriveDistanceByEncoders(-1, 0.05, 0.05).schedule();.
 
   @Override
   public void autonomousPeriodic() {}

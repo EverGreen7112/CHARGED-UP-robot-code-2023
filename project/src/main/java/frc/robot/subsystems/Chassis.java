@@ -31,7 +31,7 @@ public class Chassis extends SubsystemBase {
     public static CANSparkMax m_leftFrontEngine, m_leftMiddleEngine, m_leftBackEngine;
     public static CANSparkMax m_rightFrontEngine, m_rightMiddleEngine, m_rightBackEngine;
 
-    private static Vision m_robotLocation, m_reflector;
+    private static Vision m_robotLocation, m_reflector, m_gamePieces;
 
     private static Chassis m_instance = null;
 
@@ -47,9 +47,6 @@ public class Chassis extends SubsystemBase {
         rightMotors = new MotorControllerGroup(m_rightFrontEngine, m_rightMiddleEngine, m_rightBackEngine);
 
         leftMotors.setInverted(true);
-
-
-
 
         m_leftMiddleEngine.follow(m_leftFrontEngine);
         m_leftBackEngine.follow(m_leftFrontEngine);
@@ -80,6 +77,7 @@ public class Chassis extends SubsystemBase {
 
         m_robotLocation = new Vision(Constants.Ports.RECIEVE_LOCATION_PORT);
         m_reflector = new Vision(Constants.Ports.REFLECTOR_PORT);
+        m_gamePieces = new Vision(Constants.Ports.GAMEPIECES_PORT);
     }
 
     public static AHRS getGyro(){
@@ -223,8 +221,15 @@ public class Chassis extends SubsystemBase {
     public static double getAngleToReflector() {
         return Math.atan2(m_reflector.getX(), m_reflector.getZ()) * 180 / Math.PI;
     }
-   
+ 
+    public Vision getGamePieces(){
+        return m_gamePieces;
+    }
 
+    public void driveToGamePiece(){
+        Vector2D target = new Vector2D(m_gamePieces.getX(), m_gamePieces.getZ());
+        getToPos(target.getAngle(), target.getLength());
+    }
     public double calcTargetX(){
         return m_reflector.getX() + Constants.Values.X_AXIS_OFFSET * -Math.signum(m_robotLocation.getX());
     }

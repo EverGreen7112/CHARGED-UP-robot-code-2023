@@ -47,7 +47,8 @@ public final class Constants {
 
     // vision ports
     REFLECTOR_PORT = 5802,
-    RECIEVE_LOCATION_PORT = 5800
+    RECIEVE_LOCATION_PORT = 5800,
+    GAMEPIECES_PORT = 5801
     ;
   }
 
