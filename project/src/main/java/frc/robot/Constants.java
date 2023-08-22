@@ -198,7 +198,7 @@ public static class PidOldValuesDontUse {
 }
 
 public final static class Conversions {
-  public static double rpm2ms(double wheelRadius, double rpm){
+  public static double rpmToMs(double wheelRadius, double rpm){
     double rps = rpm / 60;
     return wheelRadius * 2 * Math.PI * rps;
   }
